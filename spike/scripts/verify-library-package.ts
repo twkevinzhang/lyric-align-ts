@@ -50,9 +50,20 @@ assert.equal(
 for (const path of paths)
   assert.match(
     path,
-    /^(?:index\.(?:js|d\.ts)|package\.json|README\.md|LICENSE|THIRD_PARTY_NOTICES\.md|assets\/[^/]+\.js|types\/.+\.d\.ts|licenses\/[^/]+)$/,
+    /^(?:index\.(?:js|d\.ts)|package\.json|README\.md|LICENSE|THIRD_PARTY_NOTICES\.md|assets\/[^/]+\.(?:js|mjs|wasm)|types\/.+\.d\.ts|licenses\/[^/]+)$/,
     "Unexpected package file: " + path,
   );
+for (const extension of ["mjs", "wasm"])
+  for (const variant of ["\\.asyncify", ""])
+    assert.equal(
+      paths.filter((path) =>
+        new RegExp(
+          `^assets/ort-wasm-simd-threaded${variant}-[^/]+\\.${extension}$`,
+        ).test(path),
+      ).length,
+      1,
+      `Missing static runtime ${extension}`,
+    );
 console.log(
   JSON.stringify(
     {

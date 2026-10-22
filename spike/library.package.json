@@ -15,7 +15,7 @@
     "index.js",
     "index.d.ts",
     "types/**/*.d.ts",
-    "assets/*.js",
+    "assets/*",
     "licenses/",
     "THIRD_PARTY_NOTICES.md"
   ],

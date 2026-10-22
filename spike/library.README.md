@@ -36,7 +36,7 @@ try {
 
 需要支援 module Worker、WebAssembly 及所選後端的桌面瀏覽器、安全來源與足夠記憶體。這不是 Node.js 推論套件。包內含固定版 Transformers.js、ONNX Runtime Web 與壓縮 runtime，沒有額外 npm runtime dependencies。模型權重不含於 npm 包，prepare 首次向 Hugging Face 下載固定 revision 並由瀏覽器快取；音訊及歌詞不會上傳至推論服務。
 
-使用支援 Worker／`new URL(..., import.meta.url)` 資源處理的 bundler。若直接靜態載入，完整複製安裝目錄並保留 index.js 與 assets/ 的相對路徑。其他 bundler、extension offscreen/CSP 需自行驗證。host 啟用 COEP 時，Worker 回應必須使用相符 header；CSP 與 host permissions 必須允許 Worker、WASM、模型取得及 runtime 必要資源。
+使用支援 Worker／`new URL(..., import.meta.url)` 資源處理的 bundler。若直接靜態載入，完整複製安裝目錄並保留 index.js 與 assets/ 的相對路徑，包含 runtime `.mjs`／`.wasm`，不要只複製 Worker。runtime 使用同來源靜態資產，關閉 Transformers 的 JS Blob factory cache，模型快取仍保留。extension CSP 可維持 `script-src 'self' 'wasm-unsafe-eval'; worker-src 'self'; object-src 'none'`，並允許模型下載；不需允許遠端 JavaScript、Blob script 或 unsafe-eval。host 啟用 COEP 時，Worker 回應必須使用相符 header。其他 bundler 與裝置仍須自行驗證。
 
 ## 生命週期
 

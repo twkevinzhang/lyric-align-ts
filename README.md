@@ -16,9 +16,9 @@ npm install @twkevinzhang/lyric-align-ts@0.1.0
 
 在 `spike/` 執行 `npm run pack:library`，會先完整建置，再產生 `dist/twkevinzhang-lyric-align-ts-0.1.0.tgz`。發布 metadata 來源為 `spike/library.package.json`，套件專用說明為 `spike/library.README.md`。原創程式碼 MIT；打包時保留上游演算法與 runtime 的授權及 notices。模型權重不包入 npm，仍於 prepare 時下載固定 revision。
 
-本機包可用 `npm install ./spike/dist/twkevinzhang-lyric-align-ts-0.1.0.tgz` 安裝。包內只有入口、型別、Worker、README 與授權文件；不包含測試素材、模型快取、開發工具、source maps 或應用 UI。發布前執行 `npm publish ./spike/dist/twkevinzhang-lyric-align-ts-0.1.0.tgz --dry-run` 檢查；正式發布使用相同 tarball 與 `--access public`，需要具備 npm scope 權限及有效登入。0.1.0 已完成 2FA 與正式公開發布，不應重複發布同一版本。
+本機包可用 `npm install ./spike/dist/twkevinzhang-lyric-align-ts-0.1.0.tgz` 安裝。包內包含入口、型別、Worker、靜態 runtime `.mjs`／`.wasm`、README 與授權文件；不包含測試素材、模型快取、開發工具、source maps 或應用 UI。0.1.0 已公開發布，不應重複發布同一版本；目前原始碼的 MV3 修正只以本地 tarball 驗證，尚未發布 npm，後續正式發布必須另升版本。
 
-tarball 已在乾淨專案實際 npm 安裝，通過 TypeScript 契約相容性／16000 Hz 限制、Vite production build，以及 Chrome 中實際 Worker 啟動、UNSUPPORTED_LANGUAGE 錯誤與重複 dispose。公開 registry 的 tarball 已下載核對，與測試候選包逐 byte 相同，另以獨立 npm cache 實際安裝 0.1.0 並匯入入口成功。`npm run verify:library-package` 可重跑檔案白名單與 metadata 核對。包約 20.1 MB，解壓約 72.6 MB，包含 runtime WASM；模型權重另行下載。
+`npm run verify:library-package` 可重跑檔案白名單、靜態 runtime 資產與 metadata 核對。本地修正包約 10.5 MB、解壓約 42.1 MB，包含 asyncify 與舊 Safari WASM 所需的 standard runtime；模型權重另行下載。公開 registry 0.1.0 的 JS Blob runtime 載入不相容 MV3；目前原始碼改為同來源靜態 runtime，詳見 [MV3 整合與本地測試](docs/mv3-runtime.md)。
 
 使用方式及限制見 [npm 套件說明](spike/library.README.md)。以下範例為靜態複製方式；bundler 使用 npm 包時可直接從 `@twkevinzhang/lyric-align-ts` 匯入。
 

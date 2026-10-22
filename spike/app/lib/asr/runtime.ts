@@ -18,6 +18,11 @@ import {
   type TimedWord,
 } from "./word-timing.ts";
 import { wholeSongFeatures, featureWindow, type Features } from "./features.ts";
+import runtimeModule from "onnxruntime-web/ort-wasm-simd-threaded.asyncify.mjs?url&no-inline";
+import runtimeWasm from "onnxruntime-web/ort-wasm-simd-threaded.asyncify.wasm?url&no-inline";
+import standardModule from "onnxruntime-web/ort-wasm-simd-threaded.mjs?url&no-inline";
+import standardWasm from "onnxruntime-web/ort-wasm-simd-threaded.wasm?url&no-inline";
+import { configureRuntime } from "./runtime-environment.ts";
 export type Backend = "wasm" | "webgpu";
 type Cache = Record<string, Tensor>;
 export class WhisperRuntime {
@@ -70,8 +75,14 @@ export class WhisperRuntime {
       : (t.data as Float32Array);
   }
   async load(backend: Backend, progress?: (data: unknown) => void) {
-    env.allowLocalModels = false;
-    env.backends.onnx.wasm!.numThreads = 1;
+    configureRuntime(env, {
+      mjs: new URL(runtimeModule, import.meta.url).href,
+      wasm: new URL(runtimeWasm, import.meta.url).href,
+      standard: {
+        mjs: new URL(standardModule, import.meta.url).href,
+        wasm: new URL(standardWasm, import.meta.url).href,
+      },
+    });
     const options = { revision: MODEL.revision, progress_callback: progress };
     try {
       this.tokenizer = await AutoTokenizer.from_pretrained(MODEL.id, options);
