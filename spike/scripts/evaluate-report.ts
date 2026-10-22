@@ -16,8 +16,8 @@ const report = JSON.parse(readFileSync(reportPath, "utf8"));
 const reference: HumanReference = JSON.parse(
   readFileSync(referencePath, "utf8"),
 );
-if (report.schema !== 3 || !Array.isArray(report.runs) || !report.runs.length)
-  throw new Error("Expected a schema 3 report with runs");
+if (report.schema !== 4 || !Array.isArray(report.runs) || !report.runs.length)
+  throw new Error("Expected a schema 4 report with runs");
 if (
   report.profile?.model?.id !== MODEL.id ||
   report.profile?.model?.revision !== MODEL.revision ||
@@ -42,14 +42,7 @@ const results = complete.map((run: Run) => {
     startedAt: run.startedAt,
     elapsedMs: run.elapsedMs,
     wordErrors: recomputed.wordErrors,
-    wordRecords: recomputed.analysis!.words.length,
-    zeroLengthWords: recomputed.analysis!.words.filter(
-      (w) => w.start !== null && w.end === w.start,
-    ).length,
-    timedLyricWords: recomputed
-      .lines!.flatMap((l) => l.words)
-      .filter((w) => w.start !== null).length,
-    lyricWords: recomputed.lines!.flatMap((l) => l.words).length,
+    segmentRecords: recomputed.analysis!.segments.length,
     anomalies: recomputed.analysis!.anomalies.length,
     lineTiming: scoreLineStarts(recomputed.lines!, reference.references),
   };
@@ -61,7 +54,7 @@ console.log(
       results,
       excluded,
       limits:
-        "Known-lyrics prompt; not blind ASR. Human line starts do not validate word starts/ends. Error statistics exclude unmatched lines; success rates include all eligible lines.",
+        "No lyrics supplied to ASR. Native segment boundaries; no corrections. Human line starts do not validate line ends. Error statistics exclude unmatched lines; success rates include all eligible lines.",
     },
     null,
     2,

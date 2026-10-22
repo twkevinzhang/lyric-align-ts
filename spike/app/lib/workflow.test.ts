@@ -42,7 +42,7 @@ test("reference scoring rejects partial audio even with matching identity and ly
   );
 });
 
-test("a completed run exposes raw anomalies, missing lyric words and recognition errors independently", () => {
+test("a completed run uses segment boundaries independently of lyric wording and WER", () => {
   const result = completeRun(
     {
       startedAt: "test",
@@ -59,17 +59,15 @@ test("a completed run exposes raw anomalies, missing lyric words and recognition
     },
     {
       text: "Open the door",
-      chunks: [
-        { text: "Open", timestamp: [1, 2] },
-        { text: "the", timestamp: [2, 3] },
-        { text: "door", timestamp: [3, 3] },
-      ],
+      chunks: [{ text: "Open the door", timestamp: [1, 9] }],
     },
     123,
   );
   assert.equal(result.lines![0].matched, true);
-  assert.equal(result.lines![0].words[2].start, null);
-  assert.equal(result.analysis!.anomalies.length, 1);
+  assert.equal(result.lines![0].start, 1);
+  assert.equal(result.lines![0].end, 9);
+  assert.equal(result.lines![0].segmentIndex, 0);
+  assert.equal(result.analysis!.segments.length, 1);
   assert.equal(result.wordErrors!.substitutions, 1);
   assert.equal(result.elapsedMs, 123);
 });

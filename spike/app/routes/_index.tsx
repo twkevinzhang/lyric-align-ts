@@ -179,11 +179,7 @@ export default function Workspace() {
         if (!run) return;
         try {
           const completed = completeRun(run, data.output, data.elapsedMs);
-          append({
-            ...completed,
-            promptTokens: data.promptTokens,
-            contextTokens: data.contextTokens,
-          });
+          append(completed);
           current.current = null;
           setElapsed(data.elapsedMs);
           finish("全曲辨識與配對完成");
@@ -272,10 +268,9 @@ export default function Workspace() {
     };
     const copy = pcm.current.slice();
     try {
-      getWorker().postMessage(
-        { type: "run", audio: copy, lyrics: lines } satisfies Command,
-        [copy.buffer],
-      );
+      getWorker().postMessage({ type: "run", audio: copy } satisfies Command, [
+        copy.buffer,
+      ]);
     } catch (e) {
       fail(String(e));
     }
@@ -309,7 +304,7 @@ export default function Workspace() {
       : null;
   const exportReport = () =>
     saveReport({
-      schema: 3,
+      schema: 4,
       profile: { model: MODEL, settings: SETTINGS },
       device,
       audio,
@@ -321,7 +316,7 @@ export default function Workspace() {
         ? { audioSha256: reference.audioSha256, source: reference.source }
         : null,
       limits:
-        "Known English lyrics supplied as prompt. Raw word times retained. Line-level reference does not validate every word. No backend inference.",
+        "No lyrics supplied to ASR. Native ASR segments matched with pairing 1/window 4. Original segment boundaries retained; no acoustic realignment or correction. No backend inference.",
     });
 
   return (
@@ -330,7 +325,7 @@ export default function Workspace() {
         <div>
           <div className="eyebrow">LYRIC ALIGN / BROWSER WORKSPACE</div>
           <h1>從歌聲到歌詞時間</h1>
-          <p>英文歌詞提示 · 全域順序配對 · 全曲處理</p>
+          <p>獨立辨識 · 段落順序配對 · 全曲處理</p>
         </div>
         <span className="pill">small.en · q4 · WebGPU</span>
       </header>
@@ -386,7 +381,8 @@ export default function Workspace() {
             />
           </label>
           <p className="note">
-            歌詞只在瀏覽器內用作提示與配對。辨識結果不會直接複製成提供的歌詞；未辨識到的詞保留缺失。
+            歌詞只在辨識完成後配對，不傳入
+            ASR。採用原始段落時間，未匹配行保持空值。
           </p>
         </section>
         <section className="panel">
@@ -466,7 +462,7 @@ export default function Workspace() {
         </div>
         {!selected && (
           <p className="empty">
-            載入模型並開始全曲對齊。結果保留原始時間，不補猜缺失詞。
+            載入模型並開始全曲對齊。結果保留原始時間，未匹配行不補時間。
           </p>
         )}
         {selected?.error && <p className="error">{selected.error}</p>}
@@ -474,7 +470,7 @@ export default function Workspace() {
           <>
             <div className="metrics">
               <p>
-                <strong>{selected.analysis.words.length}</strong> 原始詞記錄
+                <strong>{selected.analysis.segments.length}</strong> 原始段落
               </p>
               <p>
                 <strong>
@@ -490,27 +486,21 @@ export default function Workspace() {
                 <strong>
                   {((selected.wordErrors?.rate ?? 0) * 100).toFixed(1)}%
                 </strong>{" "}
-                提示條件 WER
+                ASR WER
               </p>
             </div>
             <p className="note">
-              本次使用執行當下的歌詞快照。行配對要求行首兩詞連續一致、至少半行吻合與有效順序起點。展開各行可看逐詞配對；空值不插補。WER
-              的歌詞參考也用於提示，不能當盲辨識品質。
+              每行搜尋接下來最多 4 個 ASR 段落，英文字元相似度須大於 0.50。
+              成功時沿用段落起訖；未匹配行不補時間。WER 使用獨立 ASR 文字計算。
             </p>
-            {selected.contextTokens! > selected.promptTokens! && (
-              <p className="note">
-                歌詞共 {selected.contextTokens} tokens；提示僅保留最後{" "}
-                {selected.promptTokens} tokens，其餘歌詞仍參與全域配對。
-              </p>
-            )}
             <div className="table-scroll">
               <table>
                 <thead>
                   <tr>
                     <th>行</th>
-                    <th>歌詞與逐詞時間</th>
+                    <th>歌詞與匹配段落</th>
                     <th>起點／終點（秒）</th>
-                    <th>狀態／文字覆蓋</th>
+                    <th>狀態／字元相似度</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -520,26 +510,15 @@ export default function Workspace() {
                       <td>
                         <details>
                           <summary>{line.line}</summary>
-                          <table>
-                            <thead>
-                              <tr>
-                                <th>詞</th>
-                                <th>原始詞索引（0 起算）</th>
-                                <th>起點</th>
-                                <th>終點</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              {line.words.map((w, j) => (
-                                <tr key={j}>
-                                  <td>{w.text}</td>
-                                  <td>{w.sourceIndex ?? "缺失"}</td>
-                                  <td>{sec(w.start)}</td>
-                                  <td>{sec(w.end)}</td>
-                                </tr>
-                              ))}
-                            </tbody>
-                          </table>
+                          {line.segmentIndex !== null && (
+                            <p>
+                              ASR 段落 {line.segmentIndex}（0 起算）：
+                              {
+                                selected.analysis!.segments[line.segmentIndex]
+                                  .text
+                              }
+                            </p>
+                          )}
                         </details>
                       </td>
                       <td>
@@ -547,7 +526,7 @@ export default function Workspace() {
                       </td>
                       <td>
                         {line.matched ? "已配對，時間待核對" : "未配對"} ·{" "}
-                        {(line.coverage * 100).toFixed(0)}%
+                        {(line.score * 100).toFixed(0)}%
                       </td>
                     </tr>
                   ))}
@@ -555,20 +534,20 @@ export default function Workspace() {
               </table>
             </div>
             <details>
-              <summary>原始辨識文字與詞級時間異常</summary>
+              <summary>原始辨識文字與段落時間異常</summary>
               <p>{selected.analysis.text}</p>
               <table>
                 <thead>
                   <tr>
                     <th>索引</th>
-                    <th>詞</th>
+                    <th>段落</th>
                     <th>起點／終點</th>
                     <th>問題</th>
                   </tr>
                 </thead>
                 <tbody>
                   {selected.analysis.anomalies.map((a, i) => {
-                    const w = selected.analysis!.words[a.index];
+                    const w = selected.analysis!.segments[a.index];
                     return (
                       <tr key={i}>
                         <td>{a.index}</td>
@@ -653,7 +632,7 @@ export default function Workspace() {
           </p>
         )}
         <p className="note">
-          人工參考只用於評分，不傳入推論或配對。成功率分母包含所有可評分行；誤差分位數僅計已匹配行。行級參考不能驗證每個詞的起訖。
+          人工參考只用於評分，不傳入推論或配對。成功率分母包含所有可評分行；誤差分位數僅計已匹配行。行級起點參考不能驗證行尾。
         </p>
       </section>
       <footer>桌面 Chrome · 純瀏覽器推論 · GTX 1050 Ti／q4 驗證主線</footer>

@@ -1,5 +1,5 @@
 import { inspectOutput } from "./protocol.ts";
-import { alignMonotonic } from "./monotonic-alignment.ts";
+import { alignSegments } from "./segment-alignment.ts";
 import { wordErrors } from "./word-errors.ts";
 
 export type AudioInfo = {
@@ -16,11 +16,9 @@ export type Run = {
   lyrics: string[];
   secondsTested: number;
   elapsedMs?: number;
-  promptTokens?: number;
-  contextTokens?: number;
   output?: unknown;
   analysis?: ReturnType<typeof inspectOutput>;
-  lines?: ReturnType<typeof alignMonotonic>;
+  lines?: ReturnType<typeof alignSegments>;
   wordErrors?: ReturnType<typeof wordErrors>;
   error?: string;
 };
@@ -32,7 +30,7 @@ export function completeRun(run: Run, output: unknown, elapsedMs: number): Run {
     output,
     elapsedMs,
     analysis,
-    lines: alignMonotonic(analysis.words, run.lyrics, run.secondsTested),
+    lines: alignSegments(analysis.segments, run.lyrics),
     wordErrors: wordErrors(run.lyrics.join(" "), analysis.text),
   };
 }

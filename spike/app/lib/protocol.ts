@@ -1,3 +1,4 @@
+import type { Segment } from "./segment-alignment.ts";
 export const MODEL = {
   id: "onnx-community/whisper-small.en_timestamped",
   revision: "8085393831131554ad978a4e438295a734d3d2c0",
@@ -8,25 +9,19 @@ export const SETTINGS = {
   dtype: "q4",
   chunk_length_s: 30,
   stride_length_s: 5,
-  return_timestamps: "word",
+  return_timestamps: true,
   max_new_tokens: 128,
   no_repeat_ngram_size: 0,
   do_sample: false,
-  promptTextSource: "provided-lyrics",
+  promptTextSource: "none",
   timestampCorrection: "none",
+  pairing: 1,
+  window: 4,
+  karaoke: false,
+  vad: false,
 } as const;
-export function preparePrompt(
-  context: number[],
-  previous: number,
-  initial: number[],
-): number[] {
-  if (!context.length) throw new Error("歌詞提示不可為空。");
-  return [previous, ...context.slice(-224), ...initial];
-}
 export type Command =
-  | { type: "load" }
-  | { type: "run"; audio: Float32Array; lyrics: string[] }
-  | { type: "release" };
+  { type: "load" } | { type: "run"; audio: Float32Array } | { type: "release" };
 export type WorkerEvent =
   | { type: "progress"; data: unknown }
   | { type: "ready"; elapsedMs: number }
@@ -35,16 +30,9 @@ export type WorkerEvent =
       type: "result";
       output: unknown;
       elapsedMs: number;
-      promptTokens: number;
-      contextTokens: number;
     }
   | { type: "released" }
   | { type: "error"; message: string };
-export type TimedWord = {
-  text: string;
-  start: number | null;
-  end: number | null;
-};
 export type Anomaly = { index: number; kind: string };
 export type HeapSample = {
   elapsedMs: number;
@@ -63,15 +51,22 @@ export function jsHeap(): number | null {
 export function inspectOutput(
   output: unknown,
   duration: number,
-): { words: TimedWord[]; anomalies: Anomaly[]; text: string } {
+): { segments: Segment[]; anomalies: Anomaly[]; text: string } {
   const raw = output as {
     text?: unknown;
     chunks?: { text?: unknown; timestamp?: unknown }[];
   };
   if (!raw || !Array.isArray(raw.chunks))
-    throw new Error("辨識結果沒有詞級 chunks；原始結果會保留於報告。");
-  const words = raw.chunks.map((c) => {
-    const t = Array.isArray(c.timestamp) ? c.timestamp : [];
+    throw new Error("辨識結果沒有原始段落 chunks；原始結果會保留於報告。");
+  const segments = raw.chunks.map((c) => {
+    if (
+      !c ||
+      typeof c.text !== "string" ||
+      !Array.isArray(c.timestamp) ||
+      c.timestamp.length !== 2
+    )
+      throw new Error("無效的 ASR 段落");
+    const t = c.timestamp;
     return {
       text: typeof c.text === "string" ? c.text : "",
       start: typeof t[0] === "number" && Number.isFinite(t[0]) ? t[0] : null,
@@ -79,8 +74,8 @@ export function inspectOutput(
     };
   });
   const anomalies: Anomaly[] = [];
-  for (let i = 0; i < words.length; i++) {
-    const w = words[i];
+  for (let i = 0; i < segments.length; i++) {
+    const w = segments[i];
     if (w.start === null || w.end === null) {
       anomalies.push({ index: i, kind: "缺少時間" });
       continue;
@@ -88,7 +83,7 @@ export function inspectOutput(
     if (w.start < 0 || w.end > duration + 0.1)
       anomalies.push({ index: i, kind: "超出音檔範圍" });
     if (w.end <= w.start) anomalies.push({ index: i, kind: "零長度或負長度" });
-    const prev = words[i - 1];
+    const prev = segments[i - 1];
     if (
       prev?.start !== null &&
       prev?.start !== undefined &&
@@ -107,10 +102,10 @@ export function inspectOutput(
       prev.start === w.start &&
       prev.end === w.end
     )
-      anomalies.push({ index: i, kind: "相鄰重複詞與時間" });
+      anomalies.push({ index: i, kind: "相鄰重複段落與時間" });
   }
   return {
-    words,
+    segments,
     anomalies,
     text: typeof raw.text === "string" ? raw.text : "",
   };

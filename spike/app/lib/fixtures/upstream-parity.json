@@ -1,0 +1,1511 @@
+{
+  "upstreamRevision": "ebe62d8a8628d0b2579987598f0442ebffcc68bb",
+  "pairs": [
+    {
+      "a": "空!? !空  bdc。 雨d!",
+      "b": "雨  e雨d!b?」dce「」??」b「「。雨😀「 。😀」!  d空 空」。c空!e 」空b空!😀cc」。 !cd😀空空「 !e  !d空?e ",
+      "score": 0.25
+    },
+    {
+      "a": " 空😀「?雨b雨ed 😀!。c!b?c😀」。空「!😀」c b a空😀「」d雨ca」 空b。b「c「 c a?「  ? b!ad。  。 😀 」空」d  ",
+      "b": " d!d  。bd😀c 。「  😀ec空e e「 acc」  ! ?「ed」c??d?!b😀😀a!d😀b  「「a",
+      "score": 0.41935483870967744
+    },
+    {
+      "a": "ae!?c」「bb 「」ecc「雨cd「 」a!b雨!😀c  」雨?e「 😀空e「d !e 。。a ?ddb 。」 e 。c a雨雨d",
+      "b": "😀?e ?d? 「。雨ab😀空雨雨cb?a雨   😀「? e😀!!😀空。!」!a。😀!?😀",
+      "score": 0.36363636363636365
+    },
+    {
+      "a": "😀d!bb雨b e。c「😀。c?a 」a」c c。c😀d  d?空?edd 」「。「ba😀「雨 ed  c!! ca e😀bad !空😀d? 。e ",
+      "b": "」? 雨b。」  空b ?",
+      "score": 0.18181818181818182
+    },
+    {
+      "a": "eeb! b 雨c雨!ab!a?」! e?。a」b! ?",
+      "b": "「 雨c」d」空空db空雨acbc雨da ?。。?  d😀 !「a 」😀d雨。 c  」?dd。c。ce    空? c「d「空。」雨雨! 空😀雨「 b! d",
+      "score": 0.3076923076923077
+    },
+    {
+      "a": " 」。 !b」😀b b ",
+      "b": "b!!」。 cd空b空」雨c雨」c😀😀。a!雨c空! 」db? 「 😀a😀「a",
+      "score": 0.15384615384615385
+    },
+    {
+      "a": "空「「! 空  !b空d」。空。cb e空 d雨 a空?  dcbab」」😀b 」e「  a  ?  d! d a!「eae!」c!雨aa",
+      "b": " 空!cc 」😀😀「cebaa空!c?」😀😀😀😀edd  c「。😀 😀d!」 ",
+      "score": 0.32142857142857145
+    },
+    {
+      "a": "a d雨😀?「bea ?b。😀雨。  」b   空ad 😀 ",
+      "b": "?」雨空    」😀空?dcc「c😀 雨?b bed。😀」空。。 空c「空 ?    ccc」。c空」」",
+      "score": 0.3076923076923077
+    },
+    {
+      "a": "b 雨! bbed? ? 雨d",
+      "b": "    edae",
+      "score": 0.3333333333333333
+    },
+    {
+      "a": "d 😀「」bd「d。😀 雨?a「」d  」雨「空c?c 」b !d😀! bc!😀 雨a雨  d ?c😀「!?!「」 ",
+      "b": " c「 !?!!空。b。?空c」」c「。「 b  ?  c! 😀」  !空😀a adad「 c!😀edac」a雨c「c  c",
+      "score": 0.4230769230769231
+    },
+    {
+      "a": "a ?」「a」「雨?d d雨d?」雨?ae。 雨aec!  ec",
+      "b": "b。c!。」空。空bbd空?  ",
+      "score": 0.08333333333333333
+    },
+    {
+      "a": "😀。雨d 😀「 空 。雨 。d!e?!ce。d?。空b?  」」e e!d雨 「a。。😀。 b」😀e?「c」d?bbcd b",
+      "b": " 空😀d?cd空」空 😀「「 dc「」d。eb雨「😀?",
+      "score": 0.36363636363636365
+    },
+    {
+      "a": "」 。b?d」c😀c「d」雨空。。ebd「  。dce?c!?",
+      "b": "  」😀dbad 空a空 ?ecdc 「 a雨 」!d。aae。😀a?。雨e」雨。a「e!!d😀?空a。 d ",
+      "score": 0.3111111111111111
+    },
+    {
+      "a": " 雨 ?!「!?雨?  babd😀 a! 雨空!a「」 !c雨c」。😀。",
+      "b": "」a! a 空空空d 」   。a空!b」bca b雨dd」。。",
+      "score": 0.25806451612903225
+    },
+    {
+      "a": "ead空雨c a 空b? d ae!😀 「  空空bad空ab「ca😀空。 a?de d😀。! 空 雨雨 雨「 bb。」d」。!c」。。bb",
+      "b": "?空。?c雨! !!b?be😀be",
+      "score": 0.24489795918367346
+    },
+    {
+      "a": "c。   !!。」ce。😀。 「雨 edb 空? ?空cb」?」  」 ce a!?d?「雨!「aaa。」「 e空 。!edb」",
+      "b": " ea   bab b空a!😀c 😀a雨d😀」空da「d」bcb bb空bb  c「😀",
+      "score": 0.2962962962962963
+    },
+    {
+      "a": "!b?! 😀 a」a雨」  空 「cc   ? ?dde   「b?c「c 雨😀a」d。 「a 」ea」  b",
+      "b": "!?a?雨! 。?空! 空?!??空「a😀d! a。!。」」雨!a。「  空d😀",
+      "score": 0.3888888888888889
+    },
+    {
+      "a": "d。e雨空😀d?  。ae",
+      "b": "雨「。 aade雨e雨! 。😀?😀 雨c!」a?db  !c!雨「a bdd ?? ??c 😀空」ab 」ed?be   。!d」」e空 cb雨a",
+      "score": 0.26666666666666666
+    },
+    {
+      "a": "c」!eb 😀 cb??😀e?「?  」! c」c。bd「cccca空!!d。 「acb「「 e ",
+      "b": "c bee ?。bdec??bb ?「a空eabdc。d d。 d空」 c😀」b「b??d」。😀雨",
+      "score": 0.43137254901960786
+    },
+    {
+      "a": "」",
+      "b": "。 😀ed? a ",
+      "score": 0.0
+    },
+    {
+      "a": "cee😀」b!!「空ce !b雨 😀e!ced e「c  e空",
+      "b": " 雨c ?雨d「e。。d😀e雨」 「a空雨b空 bd e  ?。 e a「😀 」。a😀",
+      "score": 0.24390243902439024
+    },
+    {
+      "a": "!de ",
+      "b": "!」cb😀空eb?",
+      "score": 0.25
+    },
+    {
+      "a": "e空。」 雨d  空」c😀😀」雨d a?",
+      "b": "b  d😀?😀",
+      "score": 0.4
+    },
+    {
+      "a": "c!",
+      "b": "daeee。。。「」c。 」a! 空c空雨? 😀「",
+      "score": 0.15384615384615385
+    },
+    {
+      "a": "e空db  a雨「」 acc 「d「「a! ",
+      "b": "」 b空空 雨c 。b雨?。 😀!。?e b e」。 」e 。  ",
+      "score": 0.17391304347826086
+    },
+    {
+      "a": "a ?。ce😀 雨adc !?c「cb「 雨 空空ec雨「空 c空e😀!。a。! d雨 bdb ceb?空😀雨 b雨」?e b 空「bd?😀!dbb?",
+      "b": " 。」dee空b😀 c。雨空」c !!空!「ccd雨 「e",
+      "score": 0.32786885245901637
+    },
+    {
+      "a": "😀cd 」dae?😀空?? b😀bb「! 「。e雨!。「",
+      "b": "ce「。e雨」ec。?e。 ? c。dd?空!da😀c!e空c空!e「 雨 」😀😀!d  ?😀😀空😀 a",
+      "score": 0.37209302325581395
+    },
+    {
+      "a": " c  」ddd空😀😀。dcb空「 😀。「cb」空b cd e a bccca「b c「?!」 be」 b」空? 😀「 。c雨空」「」d",
+      "b": "  c雨!ba。a」 d。ad ebd雨 e雨a「!😀cd」 ",
+      "score": 0.07407407407407407
+    },
+    {
+      "a": " bb」 a雨 a? 😀d 」a「c!「。d」e 雨a」da空!😀雨」acd?e」e雨。d。😀ae??db雨cc雨a!?",
+      "b": "😀!eb」aa! 「!",
+      "score": 0.15
+    },
+    {
+      "a": "c 😀」d「b」e  ?空?d空c空e「  ?空dbc 空cd雨😀」bec😀?b!a😀😀。「  dd」 b😀 ea雨dd 雨「?😀 ?",
+      "b": "a」a b 😀雨「",
+      "score": 0.18181818181818182
+    },
+    {
+      "a": "xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "b": "yaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "score": 0.0
+    },
+    {
+      "a": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab",
+      "b": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaac",
+      "score": 0.9722222222222222
+    },
+    {
+      "a": "😀a雨",
+      "b": "a😀雨",
+      "score": 0.6666666666666666
+    },
+    {
+      "a": "tide",
+      "b": "diet",
+      "score": 0.25
+    },
+    {
+      "a": "ABC",
+      "b": "abc",
+      "score": 0.0
+    },
+    {
+      "a": "「雨 空！」",
+      "b": "雨空",
+      "score": 1.0
+    },
+    {
+      "a": "",
+      "b": "",
+      "score": 1.0
+    },
+    {
+      "a": "a\u001cb",
+      "b": "ab",
+      "score": 1.0
+    }
+  ],
+  "cases": [
+    {
+      "segments": [
+        {
+          "start": 0.12,
+          "end": 8.36,
+          "text": "c」😀😀😀 雨空!d 」空?e!雨空。ad!",
+          "words": []
+        },
+        {
+          "start": 10.12,
+          "end": 18.36,
+          "text": "! b。e「c「a! 「d空e c😀。雨😀😀",
+          "words": []
+        },
+        {
+          "start": 40.12,
+          "end": 48.36,
+          "text": "a空😀  空  」e 😀雨aa「!e😀a。!",
+          "words": []
+        },
+        {
+          "start": 50.12,
+          "end": 58.36,
+          "text": "d「 a」a?「bc。雨e「😀」空空?! 「",
+          "words": []
+        },
+        {
+          "start": 60.12,
+          "end": 68.36,
+          "text": "😀「空雨雨?edc😀😀」  d。。  空😀空",
+          "words": []
+        },
+        {
+          "start": 70.12,
+          "end": 78.36,
+          "text": "a😀?!「。d」bd 空 !「 ?「雨e😀b",
+          "words": []
+        }
+      ],
+      "lyrics": [
+        "c」😀😀😀 雨空!d 」空?e!雨空。ad!",
+        "! b。e「c「a! 「d空e c😀。雨😀😀",
+        "a。 !空d?bcaaa ?d。bd😀ed雨",
+        " 」  ?a?!😀 a???」「a「」雨ab",
+        "a空😀  空  」e 😀雨aa「!e😀a。!",
+        "d「 a」a?「bc。雨e「😀」空空?! 「",
+        "😀「空雨雨?edc😀😀」  d。。  空😀空",
+        "a😀?!「。d」bd 空 !「 ?「雨e😀b"
+      ],
+      "expected": [
+        {
+          "line": "c」😀😀😀 雨空!d 」空?e!雨空。ad!",
+          "start": 0.12,
+          "end": 8.36,
+          "score": 1.0,
+          "matched": true
+        },
+        {
+          "line": "! b。e「c「a! 「d空e c😀。雨😀😀",
+          "start": 10.12,
+          "end": 18.36,
+          "score": 1.0,
+          "matched": true
+        },
+        {
+          "line": "a。 !空d?bcaaa ?d。bd😀ed雨",
+          "start": 70.12,
+          "end": 78.36,
+          "score": 0.4,
+          "matched": true
+        },
+        {
+          "line": " 」  ?a?!😀 a???」「a「」雨ab",
+          "start": null,
+          "end": null,
+          "score": 0.0,
+          "matched": false
+        },
+        {
+          "line": "a空😀  空  」e 😀雨aa「!e😀a。!",
+          "start": null,
+          "end": null,
+          "score": 0.0,
+          "matched": false
+        },
+        {
+          "line": "d「 a」a?「bc。雨e「😀」空空?! 「",
+          "start": null,
+          "end": null,
+          "score": 0.0,
+          "matched": false
+        },
+        {
+          "line": "😀「空雨雨?edc😀😀」  d。。  空😀空",
+          "start": null,
+          "end": null,
+          "score": 0.0,
+          "matched": false
+        },
+        {
+          "line": "a😀?!「。d」bd 空 !「 ?「雨e😀b",
+          "start": null,
+          "end": null,
+          "score": 0.0,
+          "matched": false
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "start": 0.12,
+          "end": 8.36,
+          "text": "?空!空雨空b。雨空e。「?」d空」 空 a",
+          "words": []
+        },
+        {
+          "start": 10.12,
+          "end": 18.36,
+          "text": " ! 😀!b😀 」 空e😀b「dac雨雨雨雨",
+          "words": []
+        },
+        {
+          "start": 20.12,
+          "end": 28.36,
+          "text": "😀!c雨 。。?e😀?  cb 空「」?!d",
+          "words": []
+        },
+        {
+          "start": 40.12,
+          "end": 48.36,
+          "text": "ee ?c「😀😀dd「d 😀 eb空 空」😀",
+          "words": []
+        },
+        {
+          "start": 50.12,
+          "end": 58.36,
+          "text": "? c!」?d!b」雨cdc😀「😀雨空空e!",
+          "words": []
+        },
+        {
+          "start": 60.12,
+          "end": 68.36,
+          "text": " 「😀 c? 」😀e? ?「?bec」😀「」",
+          "words": []
+        },
+        {
+          "start": 70.12,
+          "end": 78.36,
+          "text": "c  d 空空 空e」雨「?cbc」。d?a",
+          "words": []
+        }
+      ],
+      "lyrics": [
+        "?空!空雨空b。雨空e。「?」d空」 空 a",
+        " ! 😀!b😀 」 空e😀b「dac雨雨雨雨",
+        "😀!c雨 。。?e😀?  cb 空「」?!d",
+        " 雨a空😀😀cee 」 c e!空?ccbc",
+        "ee ?c「😀😀dd「d 😀 eb空 空」😀",
+        "? c!」?d!b」雨cdc😀「😀雨空空e!",
+        " 「😀 c? 」😀e? ?「?bec」😀「」",
+        "c  d 空空 空e」雨「?cbc」。d?a"
+      ],
+      "expected": [
+        {
+          "line": "?空!空雨空b。雨空e。「?」d空」 空 a",
+          "start": 0.12,
+          "end": 8.36,
+          "score": 1.0,
+          "matched": true
+        },
+        {
+          "line": " ! 😀!b😀 」 空e😀b「dac雨雨雨雨",
+          "start": 10.12,
+          "end": 18.36,
+          "score": 1.0,
+          "matched": true
+        },
+        {
+          "line": "😀!c雨 。。?e😀?  cb 空「」?!d",
+          "start": 20.12,
+          "end": 28.36,
+          "score": 1.0,
+          "matched": true
+        },
+        {
+          "line": " 雨a空😀😀cee 」 c e!空?ccbc",
+          "start": 60.12,
+          "end": 68.36,
+          "score": 0.43478260869565216,
+          "matched": true
+        },
+        {
+          "line": "ee ?c「😀😀dd「d 😀 eb空 空」😀",
+          "start": 70.12,
+          "end": 78.36,
+          "score": 0.3076923076923077,
+          "matched": true
+        },
+        {
+          "line": "? c!」?d!b」雨cdc😀「😀雨空空e!",
+          "start": null,
+          "end": null,
+          "score": 0.0,
+          "matched": false
+        },
+        {
+          "line": " 「😀 c? 」😀e? ?「?bec」😀「」",
+          "start": null,
+          "end": null,
+          "score": 0.0,
+          "matched": false
+        },
+        {
+          "line": "c  d 空空 空e」雨「?cbc」。d?a",
+          "start": null,
+          "end": null,
+          "score": 0.0,
+          "matched": false
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "start": 0.12,
+          "end": 8.36,
+          "text": "d  d 😀 雨」!「b「d ?!c?e 。",
+          "words": []
+        },
+        {
+          "start": 10.12,
+          "end": 18.36,
+          "text": "ab!!」雨a!「 雨「」ab😀c  a?「",
+          "words": []
+        },
+        {
+          "start": 20.12,
+          "end": 28.36,
+          "text": " 😀雨 「  😀空。 雨ab?e daa  ",
+          "words": []
+        },
+        {
+          "start": 30.12,
+          "end": 38.36,
+          "text": "」「 」。d」。雨e「d。😀de空c  。😀",
+          "words": []
+        },
+        {
+          "start": 50.12,
+          "end": 58.36,
+          "text": " 。!。 「a   」!😀「😀」c。空d d",
+          "words": []
+        },
+        {
+          "start": 60.12,
+          "end": 68.36,
+          "text": "ca!!  。d  c!😀c」e空雨😀 」 ",
+          "words": []
+        }
+      ],
+      "lyrics": [
+        "d  d 😀 雨」!「b「d ?!c?e 。",
+        "ab!!」雨a!「 雨「」ab😀c  a?「",
+        " 😀雨 「  😀空。 雨ab?e daa  ",
+        "」「 」。d」。雨e「d。😀de空c  。😀",
+        "c?空acc!bc c空be。db。c」😀」",
+        " 。!。 「a   」!😀「😀」c。空d d",
+        "ca!!  。d  c!😀c」e空雨😀 」 ",
+        "?😀 !a a。 a 雨😀」?ce?edd空"
+      ],
+      "expected": [
+        {
+          "line": "d  d 😀 雨」!「b「d ?!c?e 。",
+          "start": 0.12,
+          "end": 8.36,
+          "score": 1.0,
+          "matched": true
+        },
+        {
+          "line": "ab!!」雨a!「 雨「」ab😀c  a?「",
+          "start": 10.12,
+          "end": 18.36,
+          "score": 1.0,
+          "matched": true
+        },
+        {
+          "line": " 😀雨 「  😀空。 雨ab?e daa  ",
+          "start": 20.12,
+          "end": 28.36,
+          "score": 1.0,
+          "matched": true
+        },
+        {
+          "line": "」「 」。d」。雨e「d。😀de空c  。😀",
+          "start": 30.12,
+          "end": 38.36,
+          "score": 1.0,
+          "matched": true
+        },
+        {
+          "line": "c?空acc!bc c空be。db。c」😀」",
+          "start": null,
+          "end": null,
+          "score": 0.4,
+          "matched": false
+        },
+        {
+          "line": " 。!。 「a   」!😀「😀」c。空d d",
+          "start": 50.12,
+          "end": 58.36,
+          "score": 1.0,
+          "matched": true
+        },
+        {
+          "line": "ca!!  。d  c!😀c」e空雨😀 」 ",
+          "start": 60.12,
+          "end": 68.36,
+          "score": 1.0,
+          "matched": true
+        },
+        {
+          "line": "?😀 !a a。 a 雨😀」?ce?edd空",
+          "start": null,
+          "end": null,
+          "score": 0.0,
+          "matched": false
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "start": 0.12,
+          "end": 8.36,
+          "text": "雨「 雨! 「😀  ?  ea a😀a ?」",
+          "words": []
+        },
+        {
+          "start": 10.12,
+          "end": 18.36,
+          "text": "eb bb空a雨a 空雨空? dc空b」 a",
+          "words": []
+        },
+        {
+          "start": 20.12,
+          "end": 28.36,
+          "text": "c  c?雨a b!ec a雨ce😀a 雨b",
+          "words": []
+        },
+        {
+          "start": 30.12,
+          "end": 38.36,
+          "text": "空」「c空a! ?a「d空「!。雨」 ?空。",
+          "words": []
+        },
+        {
+          "start": 40.12,
+          "end": 48.36,
+          "text": "雨?「  ea。 !」bd  b?」ecc😀",
+          "words": []
+        },
+        {
+          "start": 50.12,
+          "end": 58.36,
+          "text": "  ?!雨!  c!空a?! 空  c bb",
+          "words": []
+        },
+        {
+          "start": 60.12,
+          "end": 68.36,
+          "text": " ?雨c?😀」?bbac雨cd」a 😀雨「b",
+          "words": []
+        },
+        {
+          "start": 70.12,
+          "end": 78.36,
+          "text": "雨雨e?e a「c雨 ? ??d「c! d「",
+          "words": []
+        }
+      ],
+      "lyrics": [
+        "雨「 雨! 「😀  ?  ea a😀a ?」",
+        "eb bb空a雨a 空雨空? dc空b」 a",
+        "c  c?雨a b!ec a雨ce😀a 雨b",
+        "空」「c空a! ?a「d空「!。雨」 ?空。",
+        "雨?「  ea。 !」bd  b?」ecc😀",
+        "  ?!雨!  c!空a?! 空  c bb",
+        " ?雨c?😀」?bbac雨cd」a 😀雨「b",
+        "雨雨e?e a「c雨 ? ??d「c! d「"
+      ],
+      "expected": [
+        {
+          "line": "雨「 雨! 「😀  ?  ea a😀a ?」",
+          "start": 0.12,
+          "end": 8.36,
+          "score": 1.0,
+          "matched": true
+        },
+        {
+          "line": "eb bb空a雨a 空雨空? dc空b」 a",
+          "start": 10.12,
+          "end": 18.36,
+          "score": 1.0,
+          "matched": true
+        },
+        {
+          "line": "c  c?雨a b!ec a雨ce😀a 雨b",
+          "start": 20.12,
+          "end": 28.36,
+          "score": 1.0,
+          "matched": true
+        },
+        {
+          "line": "空」「c空a! ?a「d空「!。雨」 ?空。",
+          "start": 30.12,
+          "end": 38.36,
+          "score": 1.0,
+          "matched": true
+        },
+        {
+          "line": "雨?「  ea。 !」bd  b?」ecc😀",
+          "start": 40.12,
+          "end": 48.36,
+          "score": 1.0,
+          "matched": true
+        },
+        {
+          "line": "  ?!雨!  c!空a?! 空  c bb",
+          "start": 50.12,
+          "end": 58.36,
+          "score": 1.0,
+          "matched": true
+        },
+        {
+          "line": " ?雨c?😀」?bbac雨cd」a 😀雨「b",
+          "start": 60.12,
+          "end": 68.36,
+          "score": 1.0,
+          "matched": true
+        },
+        {
+          "line": "雨雨e?e a「c雨 ? ??d「c! d「",
+          "start": 70.12,
+          "end": 78.36,
+          "score": 1.0,
+          "matched": true
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "start": 0.12,
+          "end": 8.36,
+          "text": " 😀。。a? 空 空! 「」d😀😀b😀「dc",
+          "words": []
+        },
+        {
+          "start": 10.12,
+          "end": 18.36,
+          "text": "d「d雨 c a 「「。e「。!!「空」「 ",
+          "words": []
+        },
+        {
+          "start": 20.12,
+          "end": 28.36,
+          "text": "cedabed「? 雨 !c a」 bcc ",
+          "words": []
+        },
+        {
+          "start": 30.12,
+          "end": 38.36,
+          "text": "eab「。。 空   😀「。。雨 bcd 。",
+          "words": []
+        },
+        {
+          "start": 40.12,
+          "end": 48.36,
+          "text": "空d?c。 雨d。 d空雨  dd「e雨b ",
+          "words": []
+        },
+        {
+          "start": 50.12,
+          "end": 58.36,
+          "text": "c。e「?c😀a  」d  」 cb」?d ",
+          "words": []
+        }
+      ],
+      "lyrics": [
+        " 😀。。a? 空 空! 「」d😀😀b😀「dc",
+        "d「d雨 c a 「「。e「。!!「空」「 ",
+        "cedabed「? 雨 !c a」 bcc ",
+        "eab「。。 空   😀「。。雨 bcd 。",
+        "空d?c。 雨d。 d空雨  dd「e雨b ",
+        "c。e「?c😀a  」d  」 cb」?d ",
+        "eda空 ea ceb空😀bd「雨 b空😀e",
+        "空空a 雨 「d😀 da !  bcdd😀」"
+      ],
+      "expected": [
+        {
+          "line": " 😀。。a? 空 空! 「」d😀😀b😀「dc",
+          "start": 0.12,
+          "end": 8.36,
+          "score": 1.0,
+          "matched": true
+        },
+        {
+          "line": "d「d雨 c a 「「。e「。!!「空」「 ",
+          "start": 10.12,
+          "end": 18.36,
+          "score": 1.0,
+          "matched": true
+        },
+        {
+          "line": "cedabed「? 雨 !c a」 bcc ",
+          "start": 20.12,
+          "end": 28.36,
+          "score": 1.0,
+          "matched": true
+        },
+        {
+          "line": "eab「。。 空   😀「。。雨 bcd 。",
+          "start": 30.12,
+          "end": 38.36,
+          "score": 1.0,
+          "matched": true
+        },
+        {
+          "line": "空d?c。 雨d。 d空雨  dd「e雨b ",
+          "start": 40.12,
+          "end": 48.36,
+          "score": 1.0,
+          "matched": true
+        },
+        {
+          "line": "c。e「?c😀a  」d  」 cb」?d ",
+          "start": 50.12,
+          "end": 58.36,
+          "score": 1.0,
+          "matched": true
+        },
+        {
+          "line": "eda空 ea ceb空😀bd「雨 b空😀e",
+          "start": null,
+          "end": null,
+          "score": 0.0,
+          "matched": false
+        },
+        {
+          "line": "空空a 雨 「d😀 da !  bcdd😀」",
+          "start": null,
+          "end": null,
+          "score": 0.0,
+          "matched": false
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "start": 30.12,
+          "end": 38.36,
+          "text": " ab空😀空」a bada😀  」acaa「",
+          "words": []
+        },
+        {
+          "start": 40.12,
+          "end": 48.36,
+          "text": "d 😀雨。ce「「d」」e空e」。? c😀!",
+          "words": []
+        },
+        {
+          "start": 50.12,
+          "end": 58.36,
+          "text": "「 b」  a!a?e」ad!雨雨!b空」a",
+          "words": []
+        },
+        {
+          "start": 60.12,
+          "end": 68.36,
+          "text": "」!雨d「!「!「空😀「雨b空「 c?。! ",
+          "words": []
+        }
+      ],
+      "lyrics": [
+        "!b!「a😀a😀e空c「a 雨「d。空  a",
+        "雨 ? !」bdcadd bc ! 」空?a",
+        " !?😀!a😀 dd空 a雨」「  」c」e",
+        " ab空😀空」a bada😀  」acaa「",
+        "d 😀雨。ce「「d」」e空e」。? c😀!",
+        "「 b」  a!a?e」ad!雨雨!b空」a",
+        "」!雨d「!「!「空😀「雨b空「 c?。! ",
+        "c 😀」a  db!b ?😀e「  e」b」"
+      ],
+      "expected": [
+        {
+          "line": "!b!「a😀a😀e空c「a 雨「d。空  a",
+          "start": 50.12,
+          "end": 58.36,
+          "score": 0.6666666666666666,
+          "matched": true
+        },
+        {
+          "line": "雨 ? !」bdcadd bc ! 」空?a",
+          "start": 60.12,
+          "end": 68.36,
+          "score": 0.3157894736842105,
+          "matched": true
+        },
+        {
+          "line": " !?😀!a😀 dd空 a雨」「  」c」e",
+          "start": null,
+          "end": null,
+          "score": 0.0,
+          "matched": false
+        },
+        {
+          "line": " ab空😀空」a bada😀  」acaa「",
+          "start": null,
+          "end": null,
+          "score": 0.0,
+          "matched": false
+        },
+        {
+          "line": "d 😀雨。ce「「d」」e空e」。? c😀!",
+          "start": null,
+          "end": null,
+          "score": 0.0,
+          "matched": false
+        },
+        {
+          "line": "「 b」  a!a?e」ad!雨雨!b空」a",
+          "start": null,
+          "end": null,
+          "score": 0.0,
+          "matched": false
+        },
+        {
+          "line": "」!雨d「!「!「空😀「雨b空「 c?。! ",
+          "start": null,
+          "end": null,
+          "score": 0.0,
+          "matched": false
+        },
+        {
+          "line": "c 😀」a  db!b ?😀e「  e」b」",
+          "start": null,
+          "end": null,
+          "score": 0.0,
+          "matched": false
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "start": 0.12,
+          "end": 8.36,
+          "text": "空c」? bde?雨! d。?」a?」。a。",
+          "words": []
+        },
+        {
+          "start": 10.12,
+          "end": 18.36,
+          "text": "😀e空a a?d 😀e!d?db「a  「b",
+          "words": []
+        },
+        {
+          "start": 30.12,
+          "end": 38.36,
+          "text": "e😀b😀。雨 a雨空ad!aaa!! 空 ?",
+          "words": []
+        },
+        {
+          "start": 40.12,
+          "end": 48.36,
+          "text": "雨😀空雨」d空dd「  db「雨「!!雨b ",
+          "words": []
+        },
+        {
+          "start": 50.12,
+          "end": 58.36,
+          "text": " bc。。b?ba」!e!c雨雨」b雨a  ",
+          "words": []
+        },
+        {
+          "start": 60.12,
+          "end": 68.36,
+          "text": "eaa空」bd!  e「d空 ac雨b雨雨!",
+          "words": []
+        },
+        {
+          "start": 70.12,
+          "end": 78.36,
+          "text": "空? ed😀」? 空d??b  「b「?空 ",
+          "words": []
+        }
+      ],
+      "lyrics": [
+        "空c」? bde?雨! d。?」a?」。a。",
+        "😀e空a a?d 😀e!d?db「a  「b",
+        "雨!!!ca 」。空b?「雨c。空」「空。。",
+        "e😀b😀。雨 a雨空ad!aaa!! 空 ?",
+        "雨😀空雨」d空dd「  db「雨「!!雨b ",
+        " bc。。b?ba」!e!c雨雨」b雨a  ",
+        "eaa空」bd!  e「d空 ac雨b雨雨!",
+        "空? ed😀」? 空d??b  「b「?空 "
+      ],
+      "expected": [
+        {
+          "line": "空c」? bde?雨! d。?」a?」。a。",
+          "start": 0.12,
+          "end": 8.36,
+          "score": 1.0,
+          "matched": true
+        },
+        {
+          "line": "😀e空a a?d 😀e!d?db「a  「b",
+          "start": 10.12,
+          "end": 18.36,
+          "score": 1.0,
+          "matched": true
+        },
+        {
+          "line": "雨!!!ca 」。空b?「雨c。空」「空。。",
+          "start": 40.12,
+          "end": 48.36,
+          "score": 0.36363636363636365,
+          "matched": true
+        },
+        {
+          "line": "e😀b😀。雨 a雨空ad!aaa!! 空 ?",
+          "start": 70.12,
+          "end": 78.36,
+          "score": 0.34782608695652173,
+          "matched": true
+        },
+        {
+          "line": "雨😀空雨」d空dd「  db「雨「!!雨b ",
+          "start": null,
+          "end": null,
+          "score": 0.0,
+          "matched": false
+        },
+        {
+          "line": " bc。。b?ba」!e!c雨雨」b雨a  ",
+          "start": null,
+          "end": null,
+          "score": 0.0,
+          "matched": false
+        },
+        {
+          "line": "eaa空」bd!  e「d空 ac雨b雨雨!",
+          "start": null,
+          "end": null,
+          "score": 0.0,
+          "matched": false
+        },
+        {
+          "line": "空? ed😀」? 空d??b  「b「?空 ",
+          "start": null,
+          "end": null,
+          "score": 0.0,
+          "matched": false
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "start": 0.12,
+          "end": 8.36,
+          "text": " 。雨?!」。!」雨e雨e c「d c e!",
+          "words": []
+        },
+        {
+          "start": 10.12,
+          "end": 18.36,
+          "text": "d」d ced空d a b空ebe」eb😀?",
+          "words": []
+        },
+        {
+          "start": 20.12,
+          "end": 28.36,
+          "text": "?」雨雨空!空a?e」」a  a空「d雨ed",
+          "words": []
+        },
+        {
+          "start": 30.12,
+          "end": 38.36,
+          "text": "雨  「 空d。??e? 」eab「  ! ",
+          "words": []
+        },
+        {
+          "start": 40.12,
+          "end": 48.36,
+          "text": "be空c?b!c雨」「c雨😀c?b」  空!",
+          "words": []
+        },
+        {
+          "start": 50.12,
+          "end": 58.36,
+          "text": "be 雨  😀b雨 」 d雨「b?  c c",
+          "words": []
+        },
+        {
+          "start": 60.12,
+          "end": 68.36,
+          "text": "!ba「a 「ac」 😀「ec😀aa「雨?😀",
+          "words": []
+        },
+        {
+          "start": 70.12,
+          "end": 78.36,
+          "text": " a。! !「」e「!ae雨雨「雨d」雨b「",
+          "words": []
+        }
+      ],
+      "lyrics": [
+        " 。雨?!」。!」雨e雨e c「d c e!",
+        "d」d ced空d a b空ebe」eb😀?",
+        "?」雨雨空!空a?e」」a  a空「d雨ed",
+        "雨  「 空d。??e? 」eab「  ! ",
+        "be空c?b!c雨」「c雨😀c?b」  空!",
+        "be 雨  😀b雨 」 d雨「b?  c c",
+        "!ba「a 「ac」 😀「ec😀aa「雨?😀",
+        " a。! !「」e「!ae雨雨「雨d」雨b「"
+      ],
+      "expected": [
+        {
+          "line": " 。雨?!」。!」雨e雨e c「d c e!",
+          "start": 0.12,
+          "end": 8.36,
+          "score": 1.0,
+          "matched": true
+        },
+        {
+          "line": "d」d ced空d a b空ebe」eb😀?",
+          "start": 10.12,
+          "end": 18.36,
+          "score": 1.0,
+          "matched": true
+        },
+        {
+          "line": "?」雨雨空!空a?e」」a  a空「d雨ed",
+          "start": 20.12,
+          "end": 28.36,
+          "score": 1.0,
+          "matched": true
+        },
+        {
+          "line": "雨  「 空d。??e? 」eab「  ! ",
+          "start": 30.12,
+          "end": 38.36,
+          "score": 1.0,
+          "matched": true
+        },
+        {
+          "line": "be空c?b!c雨」「c雨😀c?b」  空!",
+          "start": 40.12,
+          "end": 48.36,
+          "score": 1.0,
+          "matched": true
+        },
+        {
+          "line": "be 雨  😀b雨 」 d雨「b?  c c",
+          "start": 50.12,
+          "end": 58.36,
+          "score": 1.0,
+          "matched": true
+        },
+        {
+          "line": "!ba「a 「ac」 😀「ec😀aa「雨?😀",
+          "start": 60.12,
+          "end": 68.36,
+          "score": 1.0,
+          "matched": true
+        },
+        {
+          "line": " a。! !「」e「!ae雨雨「雨d」雨b「",
+          "start": 70.12,
+          "end": 78.36,
+          "score": 1.0,
+          "matched": true
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "start": 0.12,
+          "end": 8.36,
+          "text": "。 空c」 空。c「空 ! bea?。空?e",
+          "words": []
+        },
+        {
+          "start": 10.12,
+          "end": 18.36,
+          "text": "😀? c ec雨b 雨😀ea😀。 e「?😀。",
+          "words": []
+        },
+        {
+          "start": 30.12,
+          "end": 38.36,
+          "text": "e空「空c  c 」? e!雨 !cb cc",
+          "words": []
+        },
+        {
+          "start": 40.12,
+          "end": 48.36,
+          "text": "雨雨空」a。雨!a ec。daad「雨 dc",
+          "words": []
+        },
+        {
+          "start": 50.12,
+          "end": 58.36,
+          "text": " 「😀 e雨」a」c!空」 c雨e空。😀。b",
+          "words": []
+        },
+        {
+          "start": 60.12,
+          "end": 68.36,
+          "text": "」b  !  。d   空」「「d」!😀😀b",
+          "words": []
+        },
+        {
+          "start": 70.12,
+          "end": 78.36,
+          "text": "a「「 b aac  😀b!aa。a😀 」。",
+          "words": []
+        }
+      ],
+      "lyrics": [
+        "。 空c」 空。c「空 ! bea?。空?e",
+        "😀? c ec雨b 雨😀ea😀。 e「?😀。",
+        " edc😀 d「空!b。😀」「。adc空空a",
+        "e空「空c  c 」? e!雨 !cb cc",
+        "雨雨空」a。雨!a ec。daad「雨 dc",
+        " 「😀 e雨」a」c!空」 c雨e空。😀。b",
+        "」b  !  。d   空」「「d」!😀😀b",
+        "a「「 b aac  😀b!aa。a😀 」。"
+      ],
+      "expected": [
+        {
+          "line": "。 空c」 空。c「空 ! bea?。空?e",
+          "start": 0.12,
+          "end": 8.36,
+          "score": 1.0,
+          "matched": true
+        },
+        {
+          "line": "😀? c ec雨b 雨😀ea😀。 e「?😀。",
+          "start": 10.12,
+          "end": 18.36,
+          "score": 1.0,
+          "matched": true
+        },
+        {
+          "line": " edc😀 d「空!b。😀」「。adc空空a",
+          "start": 50.12,
+          "end": 58.36,
+          "score": 0.38461538461538464,
+          "matched": true
+        },
+        {
+          "line": "e空「空c  c 」? e!雨 !cb cc",
+          "start": null,
+          "end": null,
+          "score": 0.2222222222222222,
+          "matched": false
+        },
+        {
+          "line": "雨雨空」a。雨!a ec。daad「雨 dc",
+          "start": 70.12,
+          "end": 78.36,
+          "score": 0.3076923076923077,
+          "matched": true
+        },
+        {
+          "line": " 「😀 e雨」a」c!空」 c雨e空。😀。b",
+          "start": null,
+          "end": null,
+          "score": 0.0,
+          "matched": false
+        },
+        {
+          "line": "」b  !  。d   空」「「d」!😀😀b",
+          "start": null,
+          "end": null,
+          "score": 0.0,
+          "matched": false
+        },
+        {
+          "line": "a「「 b aac  😀b!aa。a😀 」。",
+          "start": null,
+          "end": null,
+          "score": 0.0,
+          "matched": false
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "start": 10.12,
+          "end": 18.36,
+          "text": "」空雨e  。」空空😀a!bc😀eb。!」雨",
+          "words": []
+        },
+        {
+          "start": 20.12,
+          "end": 28.36,
+          "text": " 「a  😀  db 「空空  ?雨bc雨!",
+          "words": []
+        },
+        {
+          "start": 40.12,
+          "end": 48.36,
+          "text": "da 。空。「雨aab。😀ed  !a? b",
+          "words": []
+        },
+        {
+          "start": 50.12,
+          "end": 58.36,
+          "text": "雨c?a」 c。空!e雨」c「?。 !。cd",
+          "words": []
+        }
+      ],
+      "lyrics": [
+        "e 」?e雨b「b!d?b」d雨eb「 雨 ",
+        "」空雨e  。」空空😀a!bc😀eb。!」雨",
+        " 「a  😀  db 「空空  ?雨bc雨!",
+        "空cab   。?」d😀雨 dac  b。😀",
+        "da 。空。「雨aab。😀ed  !a? b",
+        "雨c?a」 c。空!e雨」c「?。 !。cd",
+        "ae😀c。 ee 。ba 」雨。c😀😀 ?d",
+        "😀c😀「雨雨「?。dab😀d😀 c 」a雨a"
+      ],
+      "expected": [
+        {
+          "line": "e 」?e雨b「b!d?b」d雨eb「 雨 ",
+          "start": 10.12,
+          "end": 18.36,
+          "score": 0.4,
+          "matched": true
+        },
+        {
+          "line": "」空雨e  。」空空😀a!bc😀eb。!」雨",
+          "start": 40.12,
+          "end": 48.36,
+          "score": 0.56,
+          "matched": true
+        },
+        {
+          "line": " 「a  😀  db 「空空  ?雨bc雨!",
+          "start": null,
+          "end": null,
+          "score": 0.2,
+          "matched": false
+        },
+        {
+          "line": "空cab   。?」d😀雨 dac  b。😀",
+          "start": 50.12,
+          "end": 58.36,
+          "score": 0.2727272727272727,
+          "matched": true
+        },
+        {
+          "line": "da 。空。「雨aab。😀ed  !a? b",
+          "start": null,
+          "end": null,
+          "score": 0.0,
+          "matched": false
+        },
+        {
+          "line": "雨c?a」 c。空!e雨」c「?。 !。cd",
+          "start": null,
+          "end": null,
+          "score": 0.0,
+          "matched": false
+        },
+        {
+          "line": "ae😀c。 ee 。ba 」雨。c😀😀 ?d",
+          "start": null,
+          "end": null,
+          "score": 0.0,
+          "matched": false
+        },
+        {
+          "line": "😀c😀「雨雨「?。dab😀d😀 c 」a雨a",
+          "start": null,
+          "end": null,
+          "score": 0.0,
+          "matched": false
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "start": 10.12,
+          "end": 18.36,
+          "text": " c!  」c 雨 bcd。?d。空 。?!",
+          "words": []
+        },
+        {
+          "start": 20.12,
+          "end": 28.36,
+          "text": " 「b??。!?c e」b 😀!😀😀。。」空",
+          "words": []
+        },
+        {
+          "start": 30.12,
+          "end": 38.36,
+          "text": "。! ?。a空e?😀  adb 雨!」空。空",
+          "words": []
+        },
+        {
+          "start": 40.12,
+          "end": 48.36,
+          "text": "。cbbdabccb d。 d😀 d空b空!",
+          "words": []
+        },
+        {
+          "start": 50.12,
+          "end": 58.36,
+          "text": "。「空「 ?雨e ab 雨「 e空 ?d  ",
+          "words": []
+        },
+        {
+          "start": 60.12,
+          "end": 68.36,
+          "text": "!😀。空ae空雨d 。  空」??e a。!",
+          "words": []
+        },
+        {
+          "start": 70.12,
+          "end": 78.36,
+          "text": "!d。」  雨」。c😀ad 「! 😀」😀雨a",
+          "words": []
+        }
+      ],
+      "lyrics": [
+        "e?空😀a雨 😀e 。 「bc「」ecb  ",
+        " c!  」c 雨 bcd。?d。空 。?!",
+        " 「b??。!?c e」b 😀!😀😀。。」空",
+        "。! ?。a空e?😀  adb 雨!」空。空",
+        "。cbbdabccb d。 d😀 d空b空!",
+        "。「空「 ?雨e ab 雨「 e空 ?d  ",
+        "!😀。空ae空雨d 。  空」??e a。!",
+        "!d。」  雨」。c😀ad 「! 😀」😀雨a"
+      ],
+      "expected": [
+        {
+          "line": "e?空😀a雨 😀e 。 「bc「」ecb  ",
+          "start": 20.12,
+          "end": 28.36,
+          "score": 0.4,
+          "matched": true
+        },
+        {
+          "line": " c!  」c 雨 bcd。?d。空 。?!",
+          "start": 40.12,
+          "end": 48.36,
+          "score": 0.5,
+          "matched": true
+        },
+        {
+          "line": " 「b??。!?c e」b 😀!😀😀。。」空",
+          "start": 50.12,
+          "end": 58.36,
+          "score": 0.35294117647058826,
+          "matched": true
+        },
+        {
+          "line": "。! ?。a空e?😀  adb 雨!」空。空",
+          "start": 60.12,
+          "end": 68.36,
+          "score": 0.4,
+          "matched": true
+        },
+        {
+          "line": "。cbbdabccb d。 d😀 d空b空!",
+          "start": 70.12,
+          "end": 78.36,
+          "score": 0.3076923076923077,
+          "matched": true
+        },
+        {
+          "line": "。「空「 ?雨e ab 雨「 e空 ?d  ",
+          "start": null,
+          "end": null,
+          "score": 0.0,
+          "matched": false
+        },
+        {
+          "line": "!😀。空ae空雨d 。  空」??e a。!",
+          "start": null,
+          "end": null,
+          "score": 0.0,
+          "matched": false
+        },
+        {
+          "line": "!d。」  雨」。c😀ad 「! 😀」😀雨a",
+          "start": null,
+          "end": null,
+          "score": 0.0,
+          "matched": false
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "start": 20.12,
+          "end": 28.36,
+          "text": " d」ca d雨雨。e雨 c b 😀」ccd",
+          "words": []
+        },
+        {
+          "start": 30.12,
+          "end": 38.36,
+          "text": "b雨ab ddc「dea cc。dc ad!",
+          "words": []
+        },
+        {
+          "start": 40.12,
+          "end": 48.36,
+          "text": "e」d空?」😀「d雨d !雨da e?」😀 ",
+          "words": []
+        },
+        {
+          "start": 60.12,
+          "end": 68.36,
+          "text": "」b😀!e」空。ad b !e雨d!d」b😀",
+          "words": []
+        },
+        {
+          "start": 70.12,
+          "end": 78.36,
+          "text": "daa!空「ded? 空ca空😀 」空空。空",
+          "words": []
+        }
+      ],
+      "lyrics": [
+        "空空」。雨b 「a「ac 😀雨雨a」 aa空",
+        "c?ed雨😀「!a 空!e?。雨 eda」!",
+        " d」ca d雨雨。e雨 c b 😀」ccd",
+        "b雨ab ddc「dea cc。dc ad!",
+        "e」d空?」😀「d雨d !雨da e?」😀 ",
+        "😀! d「c 雨c?「空c  空「 「b」「",
+        "」b😀!e」空。ad b !e雨d!d」b😀",
+        "daa!空「ded? 空ca空😀 」空空。空"
+      ],
+      "expected": [
+        {
+          "line": "空空」。雨b 「a「ac 😀雨雨a」 aa空",
+          "start": 30.12,
+          "end": 38.36,
+          "score": 0.3333333333333333,
+          "matched": true
+        },
+        {
+          "line": "c?ed雨😀「!a 空!e?。雨 eda」!",
+          "start": 40.12,
+          "end": 48.36,
+          "score": 0.5,
+          "matched": true
+        },
+        {
+          "line": " d」ca d雨雨。e雨 c b 😀」ccd",
+          "start": 60.12,
+          "end": 68.36,
+          "score": 0.4444444444444444,
+          "matched": true
+        },
+        {
+          "line": "b雨ab ddc「dea cc。dc ad!",
+          "start": 70.12,
+          "end": 78.36,
+          "score": 0.3870967741935484,
+          "matched": true
+        },
+        {
+          "line": "e」d空?」😀「d雨d !雨da e?」😀 ",
+          "start": null,
+          "end": null,
+          "score": 0.0,
+          "matched": false
+        },
+        {
+          "line": "😀! d「c 雨c?「空c  空「 「b」「",
+          "start": null,
+          "end": null,
+          "score": 0.0,
+          "matched": false
+        },
+        {
+          "line": "」b😀!e」空。ad b !e雨d!d」b😀",
+          "start": null,
+          "end": null,
+          "score": 0.0,
+          "matched": false
+        },
+        {
+          "line": "daa!空「ded? 空ca空😀 」空空。空",
+          "start": null,
+          "end": null,
+          "score": 0.0,
+          "matched": false
+        }
+      ]
+    }
+  ]
+}

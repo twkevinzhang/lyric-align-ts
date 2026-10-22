@@ -2,12 +2,10 @@ import {
   env,
   pipeline,
   type AutomaticSpeechRecognitionPipeline,
-  type WhisperForConditionalGeneration,
 } from "@huggingface/transformers";
 import {
   MODEL,
   SETTINGS,
-  preparePrompt,
   jsHeap,
   type Command,
   type WorkerEvent,
@@ -44,19 +42,6 @@ self.onmessage = async ({ data }: MessageEvent<Command>) => {
           }),
         1000,
       );
-      const model = transcriber.model as WhisperForConditionalGeneration;
-      // Pinned Transformers.js private APIs: English-only models omit language/task.
-      const config = model._prepare_generation_config(null, {
-        return_timestamps: true,
-      });
-      const context = transcriber.tokenizer.encode(data.lyrics.join(" "), {
-        add_special_tokens: false,
-      });
-      const prompt = preparePrompt(
-        context,
-        transcriber.tokenizer.convert_tokens_to_ids("<|startofprev|>"),
-        model._retrieve_init_tokens(config),
-      );
       const output = await transcriber(data.audio, {
         chunk_length_s: SETTINGS.chunk_length_s,
         stride_length_s: SETTINGS.stride_length_s,
@@ -64,14 +49,11 @@ self.onmessage = async ({ data }: MessageEvent<Command>) => {
         max_new_tokens: SETTINGS.max_new_tokens,
         no_repeat_ngram_size: SETTINGS.no_repeat_ngram_size,
         do_sample: SETTINGS.do_sample,
-        decoder_input_ids: prompt,
       });
       send({
         type: "result",
         output,
         elapsedMs: performance.now() - started,
-        promptTokens: Math.min(context.length, 224),
-        contextTokens: context.length,
       });
     } else {
       await transcriber?.dispose();

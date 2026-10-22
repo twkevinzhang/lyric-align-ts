@@ -17,16 +17,13 @@ test("CLI recomputes successful raw output and preserves failed runs as excluded
       elapsedMs: 100,
       output: {
         text: "Open gate",
-        chunks: [
-          { text: "Open", timestamp: [1, 2] },
-          { text: "gate", timestamp: [2, 3] },
-        ],
+        chunks: [{ text: "Open gate", timestamp: [1, 3] }],
       },
-      analysis: { words: [] },
+      analysis: { segments: [] },
       lines: [],
     };
     const report = {
-      schema: 3,
+      schema: 4,
       profile: { model: MODEL, settings: SETTINGS },
       audio: { sha256: "hash" },
       runs: [{ ...run, error: "aborted", output: undefined }, run],
@@ -59,8 +56,12 @@ test("CLI recomputes successful raw output and preserves failed runs as excluded
     assert.equal(result.status, 0, result.stderr);
     const parsed = JSON.parse(result.stdout);
     assert.equal(parsed.excluded.length, 1);
-    assert.equal(parsed.results[0].wordRecords, 2);
+    assert.equal(parsed.results[0].segmentRecords, 1);
     assert.equal(parsed.results[0].lineTiming.withinOneSecond, 1);
+    report.schema = 3;
+    writeFileSync(file, JSON.stringify(report));
+    assert.notEqual(evaluate().status, 0);
+    report.schema = 4;
     report.audio.sha256 = "different";
     writeFileSync(file, JSON.stringify(report));
     assert.notEqual(evaluate().status, 0);
