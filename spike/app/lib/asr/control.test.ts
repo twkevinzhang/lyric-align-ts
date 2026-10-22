@@ -27,13 +27,12 @@ test("strict fallback thresholds and no-speech logprob exception", () => {
   );
 });
 test("compression uses zlib-wrapped DEFLATE, including empty text", async () => {
-  const { deflateSync } = await import("node:zlib");
-  for (const text of ["", "hello world", "repeat ".repeat(200), "雨空"])
-    assert.equal(
-      await compressionRatio(text),
-      Buffer.byteLength(text.trim()) /
-        deflateSync(Buffer.from(text.trim())).length,
-    );
+  assert.equal(await compressionRatio(""), 0);
+  assert.equal(await compressionRatio("hello world"), 11 / 19);
+});
+test("compression matches canonical Python zlib, not the Node/Chromium patched hash", async () => {
+  const text = "I once was lost, but now am found Was blind, but now I see";
+  assert.equal(await compressionRatio(text), 58 / 56);
 });
 test("exhausted fallback chooses best acceptable compression but final temperature controls reset", () => {
   const r = selectFallback([

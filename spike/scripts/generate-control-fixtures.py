@@ -3,7 +3,7 @@
 Execute extracted pure source functions only; never import/run an ASR backend.
 Requires NumPy for the original add_word_timestamps median calculation.
 """
-import ast,json,types,random,copy,itertools,hashlib,sys
+import ast,json,types,random,copy,itertools,hashlib,sys,zlib
 from pathlib import Path
 import numpy as np
 path=Path(sys.argv[1])
@@ -35,6 +35,15 @@ for i in range(80):
  last=random.choice([0,offset,offset+1]);actual=[copy.deepcopy(segments)]
  oracle.add_word_timestamps(actual,tokenizer,None,3000,'"\'“¿([{-','"\'.。,，!！?？:：”)]}、',last)
  words.append(dict(segments=segments,alignment=alignment,lastSpeech=last,expected=actual[0]))
-out=dict(source='faster-whisper 1.2.1 pure AST-extracted functions, no model/backend import',sourceSha=hashlib.sha256(path.read_bytes()).hexdigest(),splits=splits,words=words)
+compression=[]
+texts=['','hello world','repeat '*200,'雨空']
+vocab=['one','two','three','four','five','six','seven','eight','nine','ten','x','zz','測試',' ','.']
+for i in range(200):
+ base=' '.join(random.choices(vocab,k=random.randint(1,20)))
+ texts.append((base+' ')*random.randint(1,25)+' '.join(random.choices(vocab,k=random.randint(0,10))))
+for text in texts:
+ b=text.strip().encode('utf8');compressed=zlib.compress(b)
+ compression.append(dict(text=text,compressedBytes=len(compressed),ratio=len(b)/len(compressed)))
+out=dict(source='faster-whisper 1.2.1 pure AST-extracted functions, no model/backend import',sourceSha=hashlib.sha256(path.read_bytes()).hexdigest(),zlibVersion=zlib.ZLIB_RUNTIME_VERSION,splits=splits,words=words,compression=compression)
 output=Path(__file__).resolve().parents[1]/'app/lib/fixtures/upstream-control.json'
 output.write_text(json.dumps(out,ensure_ascii=False,indent=2),encoding='utf8')

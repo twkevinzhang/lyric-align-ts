@@ -17,6 +17,8 @@ test("CLI recomputes successful raw output and preserves failed runs as excluded
       lyrics: ["Open gate"],
       elapsedMs: 100,
       output: {
+        model: MODEL,
+        settings: SETTINGS,
         backend: "webgpu",
         engine: "upstream-port-v1",
         trace: [],
@@ -65,6 +67,20 @@ test("CLI recomputes successful raw output and preserves failed runs as excluded
     report.schema = 4;
     writeFileSync(file, JSON.stringify(report));
     assert.notEqual(evaluate().status, 0);
+    report.schema = 5;
+    report.audio.sha256 = "hash";
+    report.profile.settings = SETTINGS;
+    run.output.settings = {
+      ...SETTINGS,
+      compression: "CompressionStream",
+    } as never;
+    writeFileSync(file, JSON.stringify(report));
+    assert.notEqual(
+      evaluate().status,
+      0,
+      "raw output must record the actual tested ASR settings",
+    );
+    run.output.settings = SETTINGS;
     report.schema = 5;
     report.audio.sha256 = "different";
     writeFileSync(file, JSON.stringify(report));

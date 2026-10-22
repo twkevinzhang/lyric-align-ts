@@ -1,6 +1,12 @@
 import { WhisperRuntime, type Backend } from "./lib/asr/runtime.ts";
 import { transcribe, AsrFailure } from "./lib/asr/transcribe.ts";
-import { jsHeap, type Command, type WorkerEvent } from "./lib/protocol";
+import {
+  MODEL,
+  SETTINGS,
+  jsHeap,
+  type Command,
+  type WorkerEvent,
+} from "./lib/protocol";
 
 let transcriber: WhisperRuntime | null = null;
 let backend: Backend = "webgpu";
@@ -44,6 +50,8 @@ self.onmessage = async ({ data }: MessageEvent<Command>) => {
       );
       const output = {
         ...result,
+        model: MODEL,
+        settings: SETTINGS,
         backend,
         resources: {
           encoderRuns: transcriber.encoderRuns,

@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { splitTimestamps } from "./control.ts";
+import { splitTimestamps, compressionRatio } from "./control.ts";
 import { attachWords } from "./word-timing.ts";
 const fixture = JSON.parse(
   readFileSync(
@@ -9,6 +9,10 @@ const fixture = JSON.parse(
     "utf8",
   ),
 );
+test("compression ratios agree with 204 canonical Python zlib golden cases", async () => {
+  for (const c of fixture.compression)
+    assert.equal(await compressionRatio(c.text), c.ratio);
+});
 test("timestamp segments/seek agree with 150 source-extracted Python cases", () => {
   for (const c of fixture.splits)
     assert.deepEqual(

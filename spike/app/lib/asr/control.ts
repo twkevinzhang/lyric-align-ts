@@ -1,4 +1,5 @@
 import { roundEven } from "../segment-alignment.ts";
+import { deflate } from "pako";
 // faster-whisper 1.2.1 transcribe.py: generate_with_fallback/get_prompt/
 // _split_segments_by_timestamps/generate_segments. Fixed no-vad/default options.
 export const TEMPERATURES = [0, 0.2, 0.4, 0.6, 0.8, 1] as const;
@@ -105,8 +106,16 @@ export function nextSeek(
 }
 export async function compressionRatio(text: string): Promise<number> {
   const bytes = new TextEncoder().encode(text.trim());
-  const stream = new Blob([bytes])
-    .stream()
-    .pipeThrough(new CompressionStream("deflate"));
-  return bytes.length / (await new Response(stream).arrayBuffer()).byteLength;
+  // Node/Chromium use a patched hash with different compressed lengths.
+  // Explicit canonical zlib hash is required for upstream fallback thresholds.
+  return (
+    bytes.length /
+    deflate(bytes, {
+      level: 6,
+      windowBits: 15,
+      memLevel: 8,
+      strategy: 0,
+      legacyHash: true,
+    }).length
+  );
 }

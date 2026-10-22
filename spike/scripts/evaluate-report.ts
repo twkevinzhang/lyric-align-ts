@@ -38,6 +38,12 @@ const excluded = report.runs.filter(incomplete).map((run: Run) => ({
 const complete = report.runs.filter((run: Run) => !incomplete(run));
 if (!complete.length) throw new Error("No complete runs to score");
 const results = complete.map((run: Run) => {
+  const raw = run.output as { settings?: unknown; model?: unknown };
+  if (
+    JSON.stringify(raw.settings) !== JSON.stringify(SETTINGS) ||
+    JSON.stringify(raw.model) !== JSON.stringify(MODEL)
+  )
+    throw Error("Raw ASR model/settings provenance differs");
   if (
     !["wasm", "webgpu"].includes(run.backend) ||
     (run.output as { backend?: unknown })?.backend !== run.backend

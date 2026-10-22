@@ -10,10 +10,13 @@
 - 全曲特徵以獨立 NumPy 來源計算核對短音訊、1 秒、恰好 30 秒、30 秒加尾端的選定點；最大誤差約 4.77×10⁻⁷。正規化只做一次，encoder 尾段排除最後 STFT frame 後補零。
 - 上游純函式 fixtures：120 組 auto、48 組呼吸分組、150 組 timestamp 段落／seek、80 組詞邊界，另保留 pairing 1／字元相似度案例。沒有執行 faster-whisper 或未量化模型。
 - 自訂解碼測試包含非 greedy 路徑、EOS、五候選抽樣、原始分數、224-step 上限、timestamp masks、RNG=0、不前進 seek 及候選錯誤清理。
+- compression ratio 使用 pako 3.0.2 `legacyHash:true`，以 204 組 Python canonical zlib 1.3.1 參考案例核對，Node／瀏覽器均通過。Node／Chromium 的修改版 hash 會改變壓縮長度，不可用於此控制規則。[pako 選項定義](https://nodeca.github.io/pako/interfaces/DeflateOptions.html#legacyhash)
 
 ## 全曲驗收狀態
 
-修正尾端 padding 的來源差異後，正在重新執行同素材完整驗收；目前不將修正前的全曲數字視為最終結果。
+尾端 padding 與 canonical zlib 統計已修正，正在重新執行同素材完整驗收；目前不將修正前的全曲數字視為最終結果。原始 Worker output 自帶當次模型／設定，評分工具拒絕只有外層設定、無原始設定來源的報告。
+
+目前已完成正式 Worker 的官方素材 WebGPU：6 段、76 詞、WER 12.0%、auto=2、12/12 行匹配、6 輪 seek／0 次重試；推論 160.62 秒（不含模型載入與音訊解碼）。將保存的每輪回應交給抽出的 Python 原始控制函式重播，prompt／fallback／no-speech／timestamp 切段／詞邊界／seek／前文皆零差異；同一 segments 交給上游 auto 配對也零差異。其他三組仍在驗收。
 
 素材固定：官方 Amazing Grace 130.29875 秒，SHA-256 `834b463be93a8b19d05a72e94c429ab3618691aeb593869f603f58d22a8c7676`；原始素材 206.68 秒，SHA-256 `138a911609554655a676e27499e532c23b2152e12f45d81f91acb0fef0ea04c1`。歌詞只在 ASR 完成後計算 WER 與 auto 配對。沒有必須達成的品質數字。
 

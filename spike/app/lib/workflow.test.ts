@@ -74,11 +74,42 @@ test("a completed run uses segment boundaries independently of lyric wording and
   assert.equal(result.wordErrors!.substitutions, 1);
   assert.equal(result.elapsedMs, 123);
 });
-test('changing supplied lyrics only changes post-ASR pairing; original words/tokens remain immutable',()=>{
-  const output={engine:'upstream-port-v1',trace:[],text:'Open gate',segments:[{text:'Open gate',start:1,end:3,tokens:[1,2],words:[{word:' Open',start:1,end:2},{word:' gate',start:2,end:3}]}]};
-  const before=JSON.stringify(output);
-  const base={backend:'webgpu' as const,startedAt:'test',audio:{name:'synthetic',duration:4,sampleRate:16000,samples:64000,sha256:'synthetic',decodeMs:0},secondsTested:4};
-  const a=completeRun({...base,lyrics:['Open gate']},output,10);
-  const b=completeRun({...base,lyrics:['zzz']},output,10);
-  assert.deepEqual(a.analysis,b.analysis);assert.equal(a.lines![0].matched,true);assert.equal(b.lines![0].matched,false);assert.equal(JSON.stringify(output),before);
+test("changing supplied lyrics only changes post-ASR pairing; original words/tokens remain immutable", () => {
+  const output = {
+    engine: "upstream-port-v1",
+    trace: [],
+    text: "Open gate",
+    segments: [
+      {
+        text: "Open gate",
+        start: 1,
+        end: 3,
+        tokens: [1, 2],
+        words: [
+          { word: " Open", start: 1, end: 2 },
+          { word: " gate", start: 2, end: 3 },
+        ],
+      },
+    ],
+  };
+  const before = JSON.stringify(output);
+  const base = {
+    backend: "webgpu" as const,
+    startedAt: "test",
+    audio: {
+      name: "synthetic",
+      duration: 4,
+      sampleRate: 16000,
+      samples: 64000,
+      sha256: "synthetic",
+      decodeMs: 0,
+    },
+    secondsTested: 4,
+  };
+  const a = completeRun({ ...base, lyrics: ["Open gate"] }, output, 10);
+  const b = completeRun({ ...base, lyrics: ["zzz"] }, output, 10);
+  assert.deepEqual(a.analysis, b.analysis);
+  assert.equal(a.lines![0].matched, true);
+  assert.equal(b.lines![0].matched, false);
+  assert.equal(JSON.stringify(output), before);
 });

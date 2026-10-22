@@ -28,6 +28,7 @@ export const SETTINGS = {
   hotwords: null,
   hallucination_silence_threshold: null,
   samplingRng: "Math.random",
+  compression: "pako3.0.2/canonical-zlib",
   promptTextSource: "none",
   timestampCorrection: "none",
   pairing: "auto",

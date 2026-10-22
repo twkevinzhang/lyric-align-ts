@@ -37,6 +37,7 @@ npm run dev
 - `pairing=auto`、`window=4`、`karaoke=false`、`--no-vad`。無初始提示、prefix、hotwords 或提供歌詞的入口；前文只來自 ASR 已產生且保留的段落 tokens。
 - 自訂解碼器使用 beam=5、patience=1、length_penalty=1；溫度為 0、0.2、0.4、0.6、0.8、1。非零溫度各抽樣五個獨立候選。實作 blank／non-speech suppression、timestamp masks、EOS、token 上限與機率統計；不呼叫 `pipeline()` 或 `generate()` 代替。
 - `max_length=448` 按 CTranslate2 的 context/start-step 語意計算生成上限，沒有額外 128-token 限制。no-vad 仍保留 no-speech 判斷；重試門檻為 compression ratio >2.4 或 avg logprob <−1，no-speech 門檻為 >0.6，依上游例外處理。
+- compression ratio 使用固定 pako 3.0.2、`legacyHash: true` 與 canonical zlib 預設參數；不使用 Node／Chromium 修改版 hash 的壓縮長度。204 組 Python zlib 1.3.1 參考案例已核對。
 - ASR 自身的詞時間包含指定 attention heads、有效 frames 正規化、文字軸 LayerNorm、median filter 7、DTW、英文詞分組、標點合併及 faster-whisper 原有邊界規則。這些只處理辨識文字，不對提供的歌詞重新做聲學推論。
 - auto 以歌詞行數／ASR 段落數取 Python ties-to-even，限 1–3。群組由目前游標搜尋最多四段，字元相似度同分選較早者，嚴格通過門檻才前進；多行依詞間呼吸切分，缺 words 時沿用段落時間。
 - 未匹配行保持空值。沒有全域詞序配對、歌詞提示、已知歌詞重對齊、Q25、插補或額外時間修整。不以任何指定匹配率作為調參目標。

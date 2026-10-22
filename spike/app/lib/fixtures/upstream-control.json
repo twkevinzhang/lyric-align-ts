@@ -1,6 +1,7 @@
 {
   "source": "faster-whisper 1.2.1 pure AST-extracted functions, no model/backend import",
   "sourceSha": "5d5ffb00018561d3d529b2c72e1d9f5fff055bea725f3cccc7c6c67f5cc8ffe4",
+  "zlibVersion": "1.3.1",
   "splits": [
     {
       "tokens": [
@@ -8749,6 +8750,1028 @@
           ]
         }
       ]
+    }
+  ],
+  "compression": [
+    {
+      "text": "",
+      "compressedBytes": 8,
+      "ratio": 0.0
+    },
+    {
+      "text": "hello world",
+      "compressedBytes": 19,
+      "ratio": 0.5789473684210527
+    },
+    {
+      "text": "repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat repeat ",
+      "compressedBytes": 27,
+      "ratio": 51.81481481481482
+    },
+    {
+      "text": "雨空",
+      "compressedBytes": 14,
+      "ratio": 0.42857142857142855
+    },
+    {
+      "text": "x three 測試 . six x one two zz . six x three 測試 . six x one two zz . six x three 測試 . six x one two zz . six x three 測試 . six x one two zz . six x three 測試 . six x one two zz . six x three 測試 . six x one two zz . six x three 測試 . six x one two zz . six x three 測試 . six x one two zz . six x three 測試 . six x one two zz . six x three 測試 . six x one two zz . six x three 測試 . six x one two zz . six x three 測試 . six x one two zz . six x three 測試 . six x one two zz . six x three 測試 . six x one two zz . six x three 測試 . six x one two zz . six x three 測試 . six x one two zz . six x three 測試 . six x one two zz . six x five three nine seven three",
+      "compressedBytes": 67,
+      "ratio": 10.582089552238806
+    },
+    {
+      "text": "four four x x one one x five zz one nine four four x x one one x five zz one nine four four x x one one x five zz one nine six",
+      "compressedBytes": 43,
+      "ratio": 2.9302325581395348
+    },
+    {
+      "text": "seven zz eight 測試 seven four nine ten three eight three seven zz eight 測試 seven four nine ten three eight three seven zz eight 測試 seven four nine ten three eight three seven zz eight 測試 seven four nine ten three eight three seven zz eight 測試 seven four nine ten three eight three seven zz eight 測試 seven four nine ten three eight three seven zz eight 測試 seven four nine ten three eight three three one six five   six six zz 測試",
+      "compressedBytes": 82,
+      "ratio": 5.585365853658536
+    },
+    {
+      "text": ". x 測試 . x 測試 . x 測試 . x 測試 . x 測試 . x 測試 . x 測試 . x 測試 . x 測試 . x 測試 . x 測試 . x 測試 . x 測試 . x 測試 . x 測試 . x 測試 . x 測試 . x 測試 . x 測試 . x 測試 . x 測試 . x 測試 . x 測試 seven   . seven five five four x",
+      "compressedBytes": 44,
+      "ratio": 6.4772727272727275
+    },
+    {
+      "text": "zz six . six 測試 ten zz three one three one three six seven 測試 three x   two one zz six . six 測試 ten zz three one three one three six seven 測試 three x   two one zz six . six 測試 ten zz three one three one three six seven 測試 three x   two one zz six . six 測試 ten zz three one three one three six seven 測試 three x   two one zz six . six 測試 ten zz three one three one three six seven 測試 three x   two one zz six . six 測試 ten zz three one three one three six seven 測試 three x   two one   six five zz zz three five . six",
+      "compressedBytes": 83,
+      "ratio": 6.759036144578313
+    },
+    {
+      "text": "zz two six zz two six zz two six zz two six zz two six zz two six zz two six zz two six zz two six zz two six zz two six zz two six zz two six zz two six zz two six zz two six zz two six zz two six zz two six zz two six zz two six three",
+      "compressedBytes": 27,
+      "ratio": 8.74074074074074
+    },
+    {
+      "text": "one seven two . eight two zz one seven two . eight two zz one seven two . eight two zz one seven two . eight two zz one seven two . eight two zz one seven two . eight two zz one seven two . eight two zz one seven two . eight two zz one seven two . eight two zz one seven two . eight two zz one seven two . eight two zz one seven two . eight two zz one seven two . eight two zz one seven two . eight two zz one seven two . eight two zz one seven two . eight two zz one seven two . eight two zz one seven two . eight two zz one seven two . eight two zz one seven two . eight two zz . eight seven three five 測試 測試 three x",
+      "compressedBytes": 66,
+      "ratio": 9.484848484848484
+    },
+    {
+      "text": "nine . ten zz five zz x   one 測試 ten four   four 測試 six three nine . ten zz five zz x   one 測試 ten four   four 測試 six three nine . ten zz five zz x   one 測試 ten four   four 測試 six three nine . ten zz five zz x   one 測試 ten four   four 測試 six three x zz ten .",
+      "compressedBytes": 72,
+      "ratio": 4.027777777777778
+    },
+    {
+      "text": "測試 nine two   nine four . . four 測試 nine two   nine four . . four 測試 nine two   nine four . . four 測試 nine two   nine four . . four 測試 nine two   nine four . . four 測試 nine two   nine four . . four 測試 nine two   nine four . . four 測試 nine two   nine four . . four ten five",
+      "compressedBytes": 48,
+      "ratio": 6.333333333333333
+    },
+    {
+      "text": "three five   ten five two two 測試 測試 six ten seven 測試 x one   two   three five   ten five two two 測試 測試 six ten seven 測試 x one   two   three five   ten five two two 測試 測試 six ten seven 測試 x one   two   three five   ten five two two 測試 測試 six ten seven 測試 x one   two   three five   ten five two two 測試 測試 six ten seven 測試 x one   two   three five   ten five two two 測試 測試 six ten seven 測試 x one   two   three five   ten five two two 測試 測試 six ten seven 測試 x one   two   three five   ten five two two 測試 測試 six ten seven 測試 x one   two   three five   ten five two two 測試 測試 six ten seven 測試 x one   two   three five   ten five two two 測試 測試 six ten seven 測試 x one   two   x",
+      "compressedBytes": 68,
+      "ratio": 11.632352941176471
+    },
+    {
+      "text": "four seven nine three five three six one zz nine x zz four .   five five nine three four four seven nine three five three six one zz nine x zz four .   five five nine three four four seven nine three five three six one zz nine x zz four .   five five nine three four four seven nine three five three six one zz nine x zz four .   five five nine three four four seven nine three five three six one zz nine x zz four .   five five nine three four four seven nine three five three six one zz nine x zz four .   five five nine three four four seven nine three five three six one zz nine x zz four .   five five nine three four four seven nine three five three six one zz nine x zz four .   five five nine three four nine seven",
+      "compressedBytes": 74,
+      "ratio": 9.756756756756756
+    },
+    {
+      "text": "four 測試     ten two four 測試     ten two four 測試     ten two four 測試     ten two four 測試     ten two four 測試     ten two four 測試     ten two four 測試     ten two four 測試     ten two four 測試     ten two four 測試     ten two four 測試     ten two four 測試     ten two four 測試     ten two eight ten   one eight 測試 four five",
+      "compressedBytes": 57,
+      "ratio": 6.56140350877193
+    },
+    {
+      "text": "five eight seven eight nine   six ten 測試 five eight seven eight nine   six ten 測試 five eight seven eight nine   six ten 測試 five eight seven eight nine   six ten 測試 five eight seven eight nine   six ten 測試 five eight seven eight nine   six ten 測試 five eight seven eight nine   six ten 測試 five eight seven eight nine   six ten 測試 five eight seven eight nine   six ten 測試 five eight seven eight nine   six ten 測試 five eight seven eight nine   six ten 測試 five eight seven eight nine   six ten 測試 five eight seven eight nine   six ten 測試 five eight seven eight nine   six ten 測試 five eight seven eight nine   six ten 測試 seven four five . nine nine zz six",
+      "compressedBytes": 71,
+      "ratio": 9.985915492957746
+    },
+    {
+      "text": "測試 four 測試 four 測試 four 測試 four 測試 four 測試 four 測試",
+      "compressedBytes": 24,
+      "ratio": 3.25
+    },
+    {
+      "text": "測試   x three six   seven five x eight three one four x x six . . eight 測試   x three six   seven five x eight three one four x x six . . eight 測試   x three six   seven five x eight three one four x x six . . eight 測試   x three six   seven five x eight three one four x x six . . eight 測試   x three six   seven five x eight three one four x x six . . eight 測試   x three six   seven five x eight three one four x x six . . eight 測試   x three six   seven five x eight three one four x x six . . eight 測試   x three six   seven five x eight three one four x x six . . eight 測試   x three six   seven five x eight three one four x x six . . eight 測試   x three six   seven five x eight three one four x x six . . eight 測試   x three six   seven five x eight three one four x x six . . eight 測試   x three six   seven five x eight three one four x x six . . eight 測試   x three six   seven five x eight three one four x x six . . eight 測試   x three six   seven five x eight three one four x x six . . eight 測試   x three six   seven five x eight three one four x x six . . eight 測試   x three six   seven five x eight three one four x x six . . eight 測試   x three six   seven five x eight three one four x x six . . eight 測試   x three six   seven five x eight three one four x x six . . eight 測試   x three six   seven five x eight three one four x x six . . eight 測試   x three six   seven five x eight three one four x x six . . eight 測試   x three six   seven five x eight three one four x x six . . eight   six four nine zz",
+      "compressedBytes": 92,
+      "ratio": 17.315217391304348
+    },
+    {
+      "text": "nine x seven two eight . ten   . one six . three x zz two . six 測試 one nine x seven two eight . ten   . one six . three x zz two . six 測試 one nine x seven two eight . ten   . one six . three x zz two . six 測試 one nine x seven two eight . ten   . one six . three x zz two . six 測試 one nine x seven two eight . ten   . one six . three x zz two . six 測試 one nine x seven two eight . ten   . one six . three x zz two . six 測試 one nine x seven two eight . ten   . one six . three x zz two . six 測試 one nine x seven two eight . ten   . one six . three x zz two . six 測試 one nine x seven two eight . ten   . one six . three x zz two . six 測試 one nine x seven two eight . ten   . one six . three x zz two . six 測試 one nine x seven two eight . ten   . one six . three x zz two . six 測試 one nine x seven two eight . ten   . one six . three x zz two . six 測試 one nine x seven two eight . ten   . one six . three x zz two . six 測試 one nine x seven two eight . ten   . one six . three x zz two . six 測試 one nine x seven two eight . ten   . one six . three x zz two . six 測試 one nine x seven two eight . ten   . one six . three x zz two . six 測試 one nine x seven two eight . ten   . one six . three x zz two . six 測試 one nine x seven two eight . ten   . one six . three x zz two . six 測試 one nine x seven two eight . ten   . one six . three x zz two . six 測試 one   three four .",
+      "compressedBytes": 90,
+      "ratio": 15.988888888888889
+    },
+    {
+      "text": "測試 seven one two nine   six . six zz eight 測試 seven one two nine   six . six zz eight 測試 seven one two nine   six . six zz eight 測試 seven one two nine   six . six zz eight 測試 seven one two nine   six . six zz eight 測試 seven one two nine   six . six zz eight 測試 seven one two nine   six . six zz eight 測試 seven one two nine   six . six zz eight 測試 seven one two nine   six . six zz eight 測試 seven one two nine   six . six zz eight 測試 seven one two nine   six . six zz eight 測試 seven one two nine   six . six zz eight   eight four ten zz",
+      "compressedBytes": 69,
+      "ratio": 8.44927536231884
+    },
+    {
+      "text": "ten . ten eight three 測試 four zz five four ten ten . ten eight three 測試 four zz five four ten ten . ten eight three 測試 four zz five four ten ten . ten eight three 測試 four zz five four ten ten . ten eight three 測試 four zz five four ten ten . ten eight three 測試 four zz five four ten ",
+      "compressedBytes": 56,
+      "ratio": 5.446428571428571
+    },
+    {
+      "text": "eight nine nine nine x zz . x eight nine nine nine x zz . x eight nine nine nine x zz . x eight nine nine nine x zz . x eight nine nine nine x zz . x eight nine nine nine x zz . x eight nine nine nine x zz . x eight nine nine nine x zz . x eight nine nine nine x zz . x eight nine nine nine x zz . x eight nine nine nine x zz . x eight nine nine nine x zz . x eight nine nine nine x zz . x eight nine nine nine x zz . x eight nine nine nine x zz . x eight nine nine nine x zz . x eight nine nine nine x zz . x eight nine nine nine x zz . x eight nine nine nine x zz . x eight nine nine nine x zz . x 測試 測試 two two one",
+      "compressedBytes": 50,
+      "ratio": 12.5
+    },
+    {
+      "text": "three   six ten three three eight . . three   six ten three three eight . . three   six ten three three eight . . three   six ten three three eight . . three   six ten three three eight . . three   six ten three three eight . . three   six ten three three eight . . three   six ten three three eight . . three   six ten three three eight . . three   six ten three three eight . . three   six ten three three eight . . three   six ten three three eight . . three   six ten three three eight . . three   six ten three three eight . . three   six ten three three eight . . three   six ten three three eight . . three   six ten three three eight . . three   six ten three three eight . . three   six ten three three eight . . two six .",
+      "compressedBytes": 50,
+      "ratio": 14.62
+    },
+    {
+      "text": "ten two five four ten ten two five four ten ten two five four ten ten two five four ten ten two five four ten ten two five four ten ten two five four ten ten two five four ten ten two five four ten ten two five four ten ten two five four ten ten two five four ten eight   three one seven one",
+      "compressedBytes": 53,
+      "ratio": 5.490566037735849
+    },
+    {
+      "text": "eight nine five two nine two seven   x zz seven two   測試 nine   two one eight nine five two nine two seven   x zz seven two   測試 nine   two one eight nine five two nine two seven   x zz seven two   測試 nine   two one eight nine five two nine two seven   x zz seven two   測試 nine   two one eight nine five two nine two seven   x zz seven two   測試 nine   two one eight nine five two nine two seven   x zz seven two   測試 nine   two one eight nine five two nine two seven   x zz seven two   測試 nine   two one eight nine five two nine two seven   x zz seven two   測試 nine   two one four three five . five two six nine   .",
+      "compressedBytes": 90,
+      "ratio": 7.188888888888889
+    },
+    {
+      "text": "seven   seven   three five three four     ten eight six zz nine three x two seven   seven   three five three four     ten eight six zz nine three x two seven   seven   three five three four     ten eight six zz nine three x two seven   seven   three five three four     ten eight six zz nine three x two seven zz 測試 one four",
+      "compressedBytes": 80,
+      "ratio": 4.1
+    },
+    {
+      "text": "測試 two two six nine four 測試 two two six nine four 測試 two two six nine four 測試 two two six nine four 測試 two two six nine four 測試 two two six nine four 測試 two two six nine four 測試 two two six nine four 測試 two two six nine four 測試 two two six nine four 測試 two two six nine four 測試 two two six nine four 測試 two two six nine four 測試 two two six nine four 測試 two two six nine four five two six",
+      "compressedBytes": 46,
+      "ratio": 9.717391304347826
+    },
+    {
+      "text": "seven ten x x one eight x . seven ten x x one eight x . seven ten x x one eight x . seven ten x x one eight x . seven ten x x one eight x . seven ten x x one eight x . seven ten x x one eight x . seven ten x x one eight x . seven ten x x one eight x . seven ten x x one eight x . seven ten x x one eight x . seven ten x x one eight x . seven ten x x one eight x . seven ten x x one eight x . seven ten x x one eight x . seven ten x x one eight x . seven ten x x one eight x . seven ten x x one eight x . seven ten x x one eight x . seven ten x x one eight x . seven ten x x one eight x .   . eight seven eight 測試 two seven nine",
+      "compressedBytes": 63,
+      "ratio": 10.015873015873016
+    },
+    {
+      "text": ". one five zz zz x one seven five nine x . one five zz zz x one seven five nine x . one five zz zz x one seven five nine x . one five zz zz x one seven five nine x . one five zz zz x one seven five nine x . one five zz zz x one seven five nine x . one five zz zz x one seven five nine x . one five zz zz x one seven five nine x . one five zz zz x one seven five nine x . one five zz zz x one seven five nine x . one five zz zz x one seven five nine x . one five zz zz x one seven five nine x . one five zz zz x one seven five nine x . one five zz zz x one seven five nine x . one five zz zz x one seven five nine x . one five zz zz x one seven five nine x . one five zz zz x one seven five nine x . one five zz zz x one seven five nine x . one five zz zz x one seven five nine x . one five zz zz x one seven five nine x . one five zz zz x one seven five nine x . one five zz zz x one seven five nine x . one five zz zz x one seven five nine x . one five zz zz x one seven five nine x . one five zz zz x one seven five nine x   four zz eight six x ten",
+      "compressedBytes": 70,
+      "ratio": 15.0
+    },
+    {
+      "text": "two two nine     nine six zz   six two two nine     nine six zz   six two two nine     nine six zz   six two two nine     nine six zz   six two two nine     nine six zz   six two two nine     nine six zz   six two two nine     nine six zz   six two two nine     nine six zz   six two two nine     nine six zz   six eight x . one . zz six six",
+      "compressedBytes": 56,
+      "ratio": 6.089285714285714
+    },
+    {
+      "text": "zz 測試 three . ten . four seven ten   nine   nine ten zz 測試 three . ten . four seven ten   nine   nine ten zz 測試 three . ten . four seven ten   nine   nine ten zz 測試 three . ten . four seven ten   nine   nine ten zz 測試 three . ten . four seven ten   nine   nine ten zz 測試 three . ten . four seven ten   nine   nine ten zz 測試 three . ten . four seven ten   nine   nine ten zz 測試 three . ten . four seven ten   nine   nine ten zz 測試 three . ten . four seven ten   nine   nine ten zz 測試 three . ten . four seven ten   nine   nine ten zz 測試 three . ten . four seven ten   nine   nine ten zz 測試 three . ten . four seven ten   nine   nine ten zz 測試 three . ten . four seven ten   nine   nine ten zz 測試 three . ten . four seven ten   nine   nine ten zz 測試 three . ten . four seven ten   nine   nine ten zz 測試 three . ten . four seven ten   nine   nine ten zz 測試 three . ten . four seven ten   nine   nine ten zz 測試 three . ten . four seven ten   nine   nine ten zz 測試 three . ten . four seven ten   nine   nine ten zz 測試 three . ten . four seven ten   nine   nine ten four   測試",
+      "compressedBytes": 69,
+      "ratio": 16.71014492753623
+    },
+    {
+      "text": "nine zz six eight zz 測試 one nine zz six eight zz 測試 one nine zz six eight zz 測試 one nine zz six eight zz 測試 one nine zz six eight zz 測試 one nine zz six eight zz 測試 one nine zz six eight zz 測試 one nine zz six eight zz 測試 one nine zz six eight zz 測試 one nine zz six eight zz 測試 one nine zz six eight zz 測試 one nine zz six eight zz 測試 one nine zz six eight zz 測試 one ten nine . three three",
+      "compressedBytes": 56,
+      "ratio": 7.821428571428571
+    },
+    {
+      "text": "nine seven ten . two   nine seven ten . two   nine seven ten . two   nine seven ten . two   nine seven ten . two   nine seven ten . two   nine seven ten . two   nine seven ten . two   nine seven ten . two   nine seven ten . two   nine seven ten . two   nine seven ten . two   zz nine four",
+      "compressedBytes": 41,
+      "ratio": 7.024390243902439
+    },
+    {
+      "text": "eight zz ten nine nine five . 測試 eight three x . ten 測試 eight zz ten nine nine five . 測試 eight three x . ten 測試 eight zz ten nine nine five . 測試 eight three x . ten 測試 eight zz ten nine nine five . 測試 eight three x . ten 測試 eight zz ten nine nine five . 測試 eight three x . ten 測試 eight zz ten nine nine five . 測試 eight three x . ten 測試 eight zz ten nine nine five . 測試 eight three x . ten 測試 eight zz ten nine nine five . 測試 eight three x . ten 測試 eight zz ten nine nine five . 測試 eight three x . ten 測試 eight zz ten nine nine five . 測試 eight three x . ten 測試 eight zz ten nine nine five . 測試 eight three x . ten 測試 eight zz ten nine nine five . 測試 eight three x . ten 測試 eight zz ten nine nine five . 測試 eight three x . ten 測試 eight zz ten nine nine five . 測試 eight three x . ten 測試 eight zz ten nine nine five . 測試 eight three x . ten 測試 eight zz ten nine nine five . 測試 eight three x . ten 測試 eight zz ten nine nine five . 測試 eight three x . ten 測試 eight zz ten nine nine five . 測試 eight three x . ten 測試 eight zz ten nine nine five . 測試 eight three x . ten 測試 x five",
+      "compressedBytes": 71,
+      "ratio": 17.211267605633804
+    },
+    {
+      "text": ". nine seven three five five six six five . three 測試 測試 two two one . . nine seven three five five six six five . three 測試 測試 two two one . . nine seven three five five six six five . three 測試 測試 two two one . . nine seven three five five six six five . three 測試 測試 two two one . . nine seven three five five six six five . three 測試 測試 two two one . . nine seven three five five six six five . three 測試 測試 two two one . . nine seven three five five six six five . three 測試 測試 two two one . . nine seven three five five six six five . three 測試 測試 two two one . . nine seven three five five six six five . three 測試 測試 two two one . . nine seven three five five six six five . three 測試 測試 two two one . . nine seven three five five six six five . three 測試 測試 two two one . . nine seven three five five six six five . three 測試 測試 two two one . . nine seven three five five six six five . three 測試 測試 two two one . . nine seven three five five six six five . three 測試 測試 two two one . one zz",
+      "compressedBytes": 72,
+      "ratio": 15.25
+    },
+    {
+      "text": "  one one five nine . . eight zz eight   one one five nine . . eight zz eight   one one five nine . . eight zz eight   one one five nine . . eight zz eight   one one five nine . . eight zz eight   one one five nine . . eight zz eight   one one five nine . . eight zz eight   one one five nine . . eight zz eight   one one five nine . . eight zz eight   one one five nine . . eight zz eight nine ten eight   測試",
+      "compressedBytes": 56,
+      "ratio": 7.339285714285714
+    },
+    {
+      "text": "zz zz x three nine zz zz x three nine zz zz x three nine zz zz x three nine zz zz x three nine zz zz x three nine zz zz x three nine zz zz x three nine zz zz x three nine zz zz x three nine zz zz x three nine zz zz x three nine zz zz x three nine four one seven five three 測試 seven nine one",
+      "compressedBytes": 62,
+      "ratio": 4.741935483870968
+    },
+    {
+      "text": "one one   zz   nine one 測試 測試 four zz one one   zz   nine one 測試 測試 four zz one one   zz   nine one 測試 測試 four zz one one   zz   nine one 測試 測試 four zz one one   zz   nine one 測試 測試 four zz one one   zz   nine one 測試 測試 four zz one one   zz   nine one 測試 測試 four zz one one   zz   nine one 測試 測試 four zz one one   zz   nine one 測試 測試 four zz one one   zz   nine one 測試 測試 four zz one one   zz   nine one 測試 測試 four zz one one   zz   nine one 測試 測試 four zz one one   zz   nine one 測試 測試 four zz one one   zz   nine one 測試 測試 four zz one one   zz   nine one 測試 測試 four zz one one   zz   nine one 測試 測試 four zz one one   zz   nine one 測試 測試 four zz one one   zz   nine one 測試 測試 four zz x",
+      "compressedBytes": 48,
+      "ratio": 17.270833333333332
+    },
+    {
+      "text": "eight five . ten eight one eight five . ten eight one eight five . ten eight one eight five . ten eight one eight five . ten eight one eight five . ten eight one eight five . ten eight one eight five . ten eight one eight five . ten eight one eight five . ten eight one eight five . ten eight one eight five . ten eight one eight five . ten eight one eight five . ten eight one zz",
+      "compressedBytes": 39,
+      "ratio": 9.743589743589743
+    },
+    {
+      "text": "five nine six 測試 one two five nine six 測試 one two five nine six 測試 one two five nine six 測試 one two five nine six 測試 one two five nine six 測試 one two five nine six 測試 one two five nine six 測試 one two five nine six 測試 one two five nine six 測試 one two five nine six 測試 one two five nine six 測試 one two five nine six 測試 one two five nine six 測試 one two five nine six 測試 one two five nine six 測試 one two five nine six 測試 one two five nine six 測試 one two five nine six 測試 one two five nine six 測試 one two five nine six 測試 one two five nine six 測試 one two five nine six 測試 one two five  ",
+      "compressedBytes": 44,
+      "ratio": 15.25
+    },
+    {
+      "text": "  two 測試 nine five zz   two 測試 nine five zz two seven seven",
+      "compressedBytes": 46,
+      "ratio": 1.4130434782608696
+    },
+    {
+      "text": "three eight six x three eight six x three eight six x three eight six x   zz four two . three   . ten",
+      "compressedBytes": 51,
+      "ratio": 1.9803921568627452
+    },
+    {
+      "text": "  four   two 測試   four ten nine one 測試 ten . x four nine one 測試 four six   four   two 測試   four ten nine one 測試 ten . x four nine one 測試 four six   four   two 測試   four ten nine one 測試 ten . x four nine one 測試 four six   four   two 測試   four ten nine one 測試 ten . x four nine one 測試 four six   four   two 測試   four ten nine one 測試 ten . x four nine one 測試 four six   four   two 測試   four ten nine one 測試 ten . x four nine one 測試 four six   four   two 測試   four ten nine one 測試 ten . x four nine one 測試 four six   four   two 測試   four ten nine one 測試 ten . x four nine one 測試 four six   four   two 測試   four ten nine one 測試 ten . x four nine one 測試 four six   four   two 測試   four ten nine one 測試 ten . x four nine one 測試 four six   four   two 測試   four ten nine one 測試 ten . x four nine one 測試 four six   four   two 測試   four ten nine one 測試 ten . x four nine one 測試 four six   four   two 測試   four ten nine one 測試 ten . x four nine one 測試 four six   four   two 測試   four ten nine one 測試 ten . x four nine one 測試 four six   four   two 測試   four ten nine one 測試 ten . x four nine one 測試 four six   four   two 測試   four ten nine one 測試 ten . x four nine one 測試 four six   four   two 測試   four ten nine one 測試 ten . x four nine one 測試 four six   four   two 測試   four ten nine one 測試 ten . x four nine one 測試 four six   four   two 測試   four ten nine one 測試 ten . x four nine one 測試 four six   four   two 測試   four ten nine one 測試 ten . x four nine one 測試 four six   four   two 測試   four ten nine one 測試 ten . x four nine one 測試 four six   four   two 測試   four ten nine one 測試 ten . x four nine one 測試 four six   four   two 測試   four ten nine one 測試 ten . x four nine one 測試 four six five ten seven seven  ",
+      "compressedBytes": 88,
+      "ratio": 22.420454545454547
+    },
+    {
+      "text": "zz   five . 測試 測試 one   three seven eight one six two six four zz 測試 zz   five . 測試 測試 one   three seven eight one six two six four zz 測試 zz   five . 測試 測試 one   three seven eight one six two six four zz 測試 zz   five . 測試 測試 one   three seven eight one six two six four zz 測試 zz   five . 測試 測試 one   three seven eight one six two six four zz 測試 zz   five . 測試 測試 one   three seven eight one six two six four zz 測試 zz   five . 測試 測試 one   three seven eight one six two six four zz 測試 zz   five . 測試 測試 one   three seven eight one six two six four zz 測試 zz   five . 測試 測試 one   three seven eight one six two six four zz 測試 zz   five . 測試 測試 one   three seven eight one six two six four zz 測試 zz   five . 測試 測試 one   three seven eight one six two six four zz 測試 zz   five . 測試 測試 one   three seven eight one six two six four zz 測試 zz   five . 測試 測試 one   three seven eight one six two six four zz 測試 zz   five . 測試 測試 one   three seven eight one six two six four zz 測試 zz   five . 測試 測試 one   three seven eight one six two six four zz 測試 zz   five . 測試 測試 one   three seven eight one six two six four zz 測試 zz   five . 測試 測試 one   three seven eight one six two six four zz 測試 zz   five . 測試 測試 one   three seven eight one six two six four zz 測試 zz   five . 測試 測試 one   three seven eight one six two six four zz 測試 zz eight five . zz",
+      "compressedBytes": 91,
+      "ratio": 17.10989010989011
+    },
+    {
+      "text": "  four ten seven 測試 eight x zz x eight seven 測試 x x x eight one   four ten seven 測試 eight x zz x eight seven 測試 x x x eight one   four ten seven 測試 eight x zz x eight seven 測試 x x x eight one   four ten seven 測試 eight x zz x eight seven 測試 x x x eight one   four ten seven 測試 eight x zz x eight seven 測試 x x x eight one   four ten seven 測試 eight x zz x eight seven 測試 x x x eight one   four ten seven 測試 eight x zz x eight seven 測試 x x x eight one   four ten seven 測試 eight x zz x eight seven 測試 x x x eight one   four ten seven 測試 eight x zz x eight seven 測試 x x x eight one   four ten seven 測試 eight x zz x eight seven 測試 x x x eight one   four ten seven 測試 eight x zz x eight seven 測試 x x x eight one three three five ten one . zz",
+      "compressedBytes": 80,
+      "ratio": 10.2375
+    },
+    {
+      "text": "x . eight six one six two one ten zz seven x . eight six one six two one ten zz seven x . eight six one six two one ten zz seven x . eight six one six two one ten zz seven x . eight six one six two one ten zz seven x . eight six one six two one ten zz seven x . eight six one six two one ten zz seven x . eight six one six two one ten zz seven x . eight six one six two one ten zz seven eight five 測試 five seven seven",
+      "compressedBytes": 67,
+      "ratio": 6.2835820895522385
+    },
+    {
+      "text": ". x . x . x . x . x . x . x . x . x . x . x . x . x . x . x . x . x . x . x . x . x . x six three six nine three two 測試 ten four five",
+      "compressedBytes": 56,
+      "ratio": 2.4464285714285716
+    },
+    {
+      "text": "x one x one x one x one x one x one x one x one x one x one x one x one x one x one x one x one x one x one x one seven four 測試",
+      "compressedBytes": 35,
+      "ratio": 3.742857142857143
+    },
+    {
+      "text": "two three six . six one ten 測試 two three six . six one ten 測試 two three six . six one ten 測試 two three six . six one ten 測試 two three six . six one ten 測試 two three six . six one ten 測試 two three six . six one ten 測試 two three six . six one ten 測試 two three six . six one ten 測試 two three six . six one ten 測試 two three six . six one ten 測試 two three six . six one ten 測試 two three six . six one ten 測試 two three six . six one ten 測試 two three six . six one ten 測試 two three six . six one ten 測試 two three six . six one ten 測試 two three six . six one ten 測試 two three six . six one ten 測試 two three six . six one ten 測試 two three six . six one ten 測試 four zz . four . one",
+      "compressedBytes": 62,
+      "ratio": 12.17741935483871
+    },
+    {
+      "text": "eight four zz one three 測試 one 測試 ten eight eight four zz one three 測試 one 測試 ten eight eight four zz one three 測試 one 測試 ten eight eight four zz one three 測試 one 測試 ten eight eight four zz one three 測試 one 測試 ten eight eight four zz one three 測試 one 測試 ten eight eight four zz one three 測試 one 測試 ten eight eight four zz one three 測試 one 測試 ten eight eight four zz one three 測試 one 測試 ten eight eight four zz one three 測試 one 測試 ten eight eight four zz one three 測試 one 測試 ten eight eight four zz one three 測試 one 測試 ten eight seven x",
+      "compressedBytes": 62,
+      "ratio": 10.17741935483871
+    },
+    {
+      "text": "  zz zz seven seven nine   zz zz seven seven nine   zz zz seven seven nine   zz zz seven seven nine   zz zz seven seven nine   zz zz seven seven nine   zz zz seven seven nine   zz zz seven seven nine   zz zz seven seven nine   zz zz seven seven nine   zz zz seven seven nine   zz zz seven seven nine   zz zz seven seven nine   zz zz seven seven nine   zz zz seven seven nine   zz zz seven seven nine   zz zz seven seven nine   zz zz seven seven nine   zz zz seven seven nine   zz zz seven seven nine six nine four seven ten ten  ",
+      "compressedBytes": 46,
+      "ratio": 11.41304347826087
+    },
+    {
+      "text": "two one ten 測試 seven eight eight seven   one zz four eight three five seven four x   two one ten 測試 seven eight eight seven   one zz four eight three five seven four x   two one ten 測試 seven eight eight seven   one zz four eight three five seven four x   two one ten 測試 seven eight eight seven   one zz four eight three five seven four x   two one ten 測試 seven eight eight seven   one zz four eight three five seven four x   six four seven five two ten",
+      "compressedBytes": 88,
+      "ratio": 5.363636363636363
+    },
+    {
+      "text": "nine seven eight five three five five x four nine seven eight five three five five x four nine seven eight five three five five x four nine seven eight five three five five x four nine seven eight five three five five x four nine seven eight five three five five x four nine seven eight five three five five x four nine seven eight five three five five x four nine seven eight five three five five x four nine seven eight five three five five x four nine seven eight five three five five x four nine seven eight five three five five x four nine seven eight five three five five x four nine seven eight five three five five x four nine seven eight five three five five x four nine seven eight five three five five x four nine seven eight five three five five x four nine seven eight five three five five x four nine seven eight five three five five x four nine seven eight five three five five x four   測試 six . one",
+      "compressedBytes": 74,
+      "ratio": 12.405405405405405
+    },
+    {
+      "text": "four four 測試 seven   nine 測試 one four four four 測試 seven   nine 測試 one four four four 測試 seven   nine 測試 one four four four 測試 seven   nine 測試 one four four four 測試 seven   nine 測試 one four four four 測試 seven   nine 測試 one four four four 測試 seven   nine 測試 one four four four 測試 seven   nine 測試 one four four four 測試 seven   nine 測試 one four four four 測試 seven   nine 測試 one four four four 測試 seven   nine 測試 one four four four 測試 seven   nine 測試 one four ",
+      "compressedBytes": 48,
+      "ratio": 11.479166666666666
+    },
+    {
+      "text": "four   nine five three four   nine five three four   nine five three four   nine five three four   nine five three four   nine five three four   nine five three four   nine five three four   nine five three four   nine five three four   nine five three four   nine five three four   nine five three seven zz ten 測試 x",
+      "compressedBytes": 55,
+      "ratio": 5.818181818181818
+    },
+    {
+      "text": "two x two x two x two x two x two x four four five nine zz three",
+      "compressedBytes": 39,
+      "ratio": 1.641025641025641
+    },
+    {
+      "text": "ten five three five two two . zz ten five three five two two . zz ten five three five two two . zz seven ten",
+      "compressedBytes": 42,
+      "ratio": 2.5714285714285716
+    },
+    {
+      "text": "one six four four five one ten eight   two 測試 seven zz . zz three one ten six zz one six four four five one ten eight   two 測試 seven zz . zz three one ten six zz one six four four five one ten eight   two 測試 seven zz . zz three one ten six zz one six four four five one ten eight   two 測試 seven zz . zz three one ten six zz one six four four five one ten eight   two 測試 seven zz . zz three one ten six zz one six four four five one ten eight   two 測試 seven zz . zz three one ten six zz one six four four five one ten eight   two 測試 seven zz . zz three one ten six zz one six four four five one ten eight   two 測試 seven zz . zz three one ten six zz one six four four five one ten eight   two 測試 seven zz . zz three one ten six zz one six four four five one ten eight   two 測試 seven zz . zz three one ten six zz one six four four five one ten eight   two 測試 seven zz . zz three one ten six zz one six four four five one ten eight   two 測試 seven zz . zz three one ten six zz one six four four five one ten eight   two 測試 seven zz . zz three one ten six zz one six four four five one ten eight   two 測試 seven zz . zz three one ten six zz one six four four five one ten eight   two 測試 seven zz . zz three one ten six zz one six four four five one ten eight   two 測試 seven zz . zz three one ten six zz one six four four five one ten eight   two 測試 seven zz . zz three one ten six zz one six four four five one ten eight   two 測試 seven zz . zz three one ten six zz one six four four five one ten eight   two 測試 seven zz . zz three one ten six zz one six four four five one ten eight   two 測試 seven zz . zz three one ten six zz two",
+      "compressedBytes": 91,
+      "ratio": 18.714285714285715
+    },
+    {
+      "text": "eight x . five zz five four four ten nine one seven eight three ten eight x . five zz five four four ten nine one seven eight three ten eight x . five zz five four four ten nine one seven eight three ten eight x . five zz five four four ten nine one seven eight three ten eight x . five zz five four four ten nine one seven eight three ten eight x . five zz five four four ten nine one seven eight three ten eight x . five zz five four four ten nine one seven eight three ten eight x . five zz five four four ten nine one seven eight three ten eight x . five zz five four four ten nine one seven eight three ten eight x . five zz five four four ten nine one seven eight three ten eight x . five zz five four four ten nine one seven eight three ten eight x . five zz five four four ten nine one seven eight three ten eight x . five zz five four four ten nine one seven eight three ten eight x . five zz five four four ten nine one seven eight three ten eight x . five zz five four four ten nine one seven eight three ten eight x . five zz five four four ten nine one seven eight three ten eight x . five zz five four four ten nine one seven eight three ten eight x . five zz five four four ten nine one seven eight three ten eight x . five zz five four four ten nine one seven eight three ten eight x . five zz five four four ten nine one seven eight three ten ",
+      "compressedBytes": 70,
+      "ratio": 19.414285714285715
+    },
+    {
+      "text": ". six one 測試 eight one . six one 測試 eight one . six one 測試 eight one . six one 測試 eight one . six one 測試 eight one . six one 測試 eight one . six one 測試 eight one . six one 測試 eight one . six one 測試 eight one . six one 測試 eight one . six one 測試 eight one . six one 測試 eight one . six one 測試 eight one . six one 測試 eight one . six one 測試 eight one . six one 測試 eight one . six one 測試 eight one . six one 測試 eight one . six one 測試 eight one . six one 測試 eight one six . . four",
+      "compressedBytes": 46,
+      "ratio": 12.0
+    },
+    {
+      "text": "four four four four four four four four four four four four four four four four four . ten four five    ",
+      "compressedBytes": 26,
+      "ratio": 3.8461538461538463
+    },
+    {
+      "text": "x five seven ten one eight two ten zz x five seven ten one eight two ten zz x five seven ten one eight two ten zz x five seven ten one eight two ten zz x five seven ten one eight two ten zz x five seven ten one eight two ten zz x five seven ten one eight two ten zz x five seven ten one eight two ten zz x five seven ten one eight two ten zz x five seven ten one eight two ten zz x five seven ten one eight two ten zz eight ten seven x   one",
+      "compressedBytes": 57,
+      "ratio": 7.7368421052631575
+    },
+    {
+      "text": "ten ten ten ten ten ten one   x 測試 two seven",
+      "compressedBytes": 39,
+      "ratio": 1.2307692307692308
+    },
+    {
+      "text": "eight zz ten 測試 two 測試 one eight five ten eight six zz five",
+      "compressedBytes": 55,
+      "ratio": 1.2181818181818183
+    },
+    {
+      "text": "  x two five six x   x two five six x   x two five six x   x two five six x   x two five six x   x two five six x   x two five six x   x two five six x eight five six ten ten three two",
+      "compressedBytes": 47,
+      "ratio": 3.872340425531915
+    },
+    {
+      "text": "x one one 測試 four four ten ten four five ten x one one 測試 four four ten ten four five ten x one one 測試 four four ten ten four five ten ",
+      "compressedBytes": 42,
+      "ratio": 3.4761904761904763
+    },
+    {
+      "text": "six six six two",
+      "compressedBytes": 17,
+      "ratio": 0.8823529411764706
+    },
+    {
+      "text": "ten three seven eight ten two . four seven two ten ten four eight zz ten six three ten three seven eight ten two . four seven two ten ten four eight zz ten six three ten three seven eight ten two . four seven two ten ten four eight zz ten six three ten three seven eight ten two . four seven two ten ten four eight zz ten six three ten three seven eight ten two . four seven two ten ten four eight zz ten six three ten three seven eight ten two . four seven two ten ten four eight zz ten six three ten three seven eight ten two . four seven two ten ten four eight zz ten six three ten three seven eight ten two . four seven two ten ten four eight zz ten six three ten three seven eight ten two . four seven two ten ten four eight zz ten six three ten three seven eight ten two . four seven two ten ten four eight zz ten six three ten three seven eight ten two . four seven two ten ten four eight zz ten six three ten three seven eight ten two . four seven two ten ten four eight zz ten six three ten three seven eight ten two . four seven two ten ten four eight zz ten six three ten three seven eight ten two . four seven two ten ten four eight zz ten six three ten three seven eight ten two . four seven two ten ten four eight zz ten six three ten three seven eight ten two . four seven two ten ten four eight zz ten six three ten three seven eight ten two . four seven two ten ten four eight zz ten six three ten three seven eight ten two . four seven two ten ten four eight zz ten six three ten three seven eight ten two . four seven two ten ten four eight zz ten six three ten three seven eight ten two . four seven two ten ten four eight zz ten six three ten three seven eight ten two . four seven two ten ten four eight zz ten six three ten three seven eight ten two . four seven two ten ten four eight zz ten six three ten three seven eight ten two . four seven two ten ten four eight zz ten six three six   zz",
+      "compressedBytes": 83,
+      "ratio": 23.096385542168676
+    },
+    {
+      "text": "  six   nine   six   nine   six   nine   six   nine   six   nine three zz seven eight   x eight",
+      "compressedBytes": 47,
+      "ratio": 1.9787234042553192
+    },
+    {
+      "text": "three seven seven ten nine nine eight three seven seven ten nine nine eight three seven seven ten nine nine eight three seven seven ten nine nine eight three seven seven ten nine nine eight three seven seven ten nine nine eight three seven seven ten nine nine eight three seven seven ten nine nine eight three seven seven ten nine nine eight three seven seven ten nine nine eight three seven seven ten nine nine eight three seven seven ten nine nine eight three seven seven ten nine nine eight three seven seven ten nine nine eight three seven seven ten nine nine eight four four x . five",
+      "compressedBytes": 55,
+      "ratio": 10.690909090909091
+    },
+    {
+      "text": "one six zz   zz eight six five .   ten zz six . five 測試 zz nine two six one six zz   zz eight six five .   ten zz six . five 測試 zz nine two six one six zz   zz eight six five .   ten zz six . five 測試 zz nine two six one six zz   zz eight six five .   ten zz six . five 測試 zz nine two six one six zz   zz eight six five .   ten zz six . five 測試 zz nine two six one six zz   zz eight six five .   ten zz six . five 測試 zz nine two six one six zz   zz eight six five .   ten zz six . five 測試 zz nine two six one six zz   zz eight six five .   ten zz six . five 測試 zz nine two six one six zz   zz eight six five .   ten zz six . five 測試 zz nine two six one six zz   zz eight six five .   ten zz six . five 測試 zz nine two six one six zz   zz eight six five .   ten zz six . five 測試 zz nine two six one six zz   zz eight six five .   ten zz six . five 測試 zz nine two six one six zz   zz eight six five .   ten zz six . five 測試 zz nine two six one six zz   zz eight six five .   ten zz six . five 測試 zz nine two six one six zz   zz eight six five .   ten zz six . five 測試 zz nine two six one six zz   zz eight six five .   ten zz six . five 測試 zz nine two six one six zz   zz eight six five .   ten zz six . five 測試 zz nine two six one six zz   zz eight six five .   ten zz six . five 測試 zz nine two six one six zz   zz eight six five .   ten zz six . five 測試 zz nine two six one six zz   zz eight six five .   ten zz six . five 測試 zz nine two six one six zz   zz eight six five .   ten zz six . five 測試 zz nine two six one six zz   zz eight six five .   ten zz six . five 測試 zz nine two six one six zz   zz eight six five .   ten zz six . five 測試 zz nine two six one six zz   zz eight six five .   ten zz six . five 測試 zz nine two six one six zz   zz eight six five .   ten zz six . five 測試 zz nine two six . x 測試 six four six  ",
+      "compressedBytes": 94,
+      "ratio": 20.45744680851064
+    },
+    {
+      "text": ". zz eight one two   nine two eight eight   nine x one . zz eight one two   nine two eight eight   nine x one . zz eight one two   nine two eight eight   nine x one five seven   three zz  ",
+      "compressedBytes": 63,
+      "ratio": 2.9523809523809526
+    },
+    {
+      "text": "eight eight eight eight eight eight eight eight eight eight eight eight eight eight . 測試 zz zz seven nine six ten",
+      "compressedBytes": 48,
+      "ratio": 2.4375
+    },
+    {
+      "text": "ten 測試 four one four eight six 測試 eight ten 測試 four one four eight six 測試 eight ten 測試 four one four eight six 測試 eight ten 測試 four one four eight six 測試 eight ten 測試 four one four eight six 測試 eight ten 測試 four one four eight six 測試 eight ten 測試 four one four eight six 測試 eight ten 測試 four one four eight six 測試 eight ten 測試 four one four eight six 測試 eight ten 測試 four one four eight six 測試 eight ten 測試 four one four eight six 測試 eight ten 測試 four one four eight six 測試 eight ten 測試 four one four eight six 測試 eight ten 測試 four one four eight six 測試 eight two 測試 six ten seven 測試 eight six two four",
+      "compressedBytes": 69,
+      "ratio": 10.46376811594203
+    },
+    {
+      "text": "eight 測試 nine zz three ten seven one . five 測試 eight 測試 nine zz three ten seven one . five 測試 eight 測試 nine zz three ten seven one . five 測試 eight 測試 nine zz three ten seven one . five 測試 eight 測試 nine zz three ten seven one . five 測試 eight 測試 nine zz three ten seven one . five 測試 eight 測試 nine zz three ten seven one . five 測試 eight 測試 nine zz three ten seven one . five 測試 nine eight eight zz five x seven",
+      "compressedBytes": 73,
+      "ratio": 6.465753424657534
+    },
+    {
+      "text": "three ten x ten five   eight eight nine   x two three ten x ten five   eight eight nine   x two three ten x ten five   eight eight nine   x two three ten x ten five   eight eight nine   x two three ten x ten five   eight eight nine   x two three ten x ten five   eight eight nine   x two three ten x ten five   eight eight nine   x two three ten x ten five   eight eight nine   x two three ten x ten five   eight eight nine   x two three ten x ten five   eight eight nine   x two three ten x ten five   eight eight nine   x two three ten x ten five   eight eight nine   x two three ten x ten five   eight eight nine   x two three ten x ten five   eight eight nine   x two three ten x ten five   eight eight nine   x two three ten x ten five   eight eight nine   x two three ten x ten five   eight eight nine   x two three ten x ten five   eight eight nine   x two three ten x ten five   eight eight nine   x two three ten x ten five   eight eight nine   x two ",
+      "compressedBytes": 54,
+      "ratio": 17.75925925925926
+    },
+    {
+      "text": "three zz two five . 測試 three   zz nine two six x ten 測試 x six ten three zz two five . 測試 three   zz nine two six x ten 測試 x six ten three zz two five . 測試 three   zz nine two six x ten 測試 x six ten three zz two five . 測試 three   zz nine two six x ten 測試 x six ten three zz two five . 測試 three   zz nine two six x ten 測試 x six ten three zz two five . 測試 three   zz nine two six x ten 測試 x six ten three zz two five . 測試 three   zz nine two six x ten 測試 x six ten three zz two five . 測試 three   zz nine two six x ten 測試 x six ten three zz two five . 測試 three   zz nine two six x ten 測試 x six ten three zz two five . 測試 three   zz nine two six x ten 測試 x six ten three zz two five . 測試 three   zz nine two six x ten 測試 x six ten three zz two five . 測試 three   zz nine two six x ten 測試 x six ten three zz two five . 測試 three   zz nine two six x ten 測試 x six ten three zz two five . 測試 three   zz nine two six x ten 測試 x six ten three zz two five . 測試 three   zz nine two six x ten 測試 x six ten three zz two five . 測試 three   zz nine two six x ten 測試 x six ten three zz two five . 測試 three   zz nine two six x ten 測試 x six ten three zz two five . 測試 three   zz nine two six x ten 測試 x six ten . one nine five",
+      "compressedBytes": 85,
+      "ratio": 15.847058823529412
+    },
+    {
+      "text": "five two 測試 five nine six x one nine 測試 five five two 測試 five nine six x one nine 測試 five five two 測試 five nine six x one nine 測試 five five two 測試 five nine six x one nine 測試 five five two 測試 five nine six x one nine 測試 five five two 測試 five nine six x one nine 測試 five five two 測試 five nine six x one nine 測試 five five two 測試 five nine six x one nine 測試 five five two 測試 five nine six x one nine 測試 five one 測試 six 測試 one three ten ten",
+      "compressedBytes": 67,
+      "ratio": 7.701492537313433
+    },
+    {
+      "text": "five five . four x five five . four x five five . four x five five . four x five five . four x five five . four x five five . four x four three",
+      "compressedBytes": 34,
+      "ratio": 4.205882352941177
+    },
+    {
+      "text": "x 測試 nine three x 測試 nine three x 測試 nine three x 測試 nine three x 測試 nine three x 測試 nine three x 測試 nine three x 測試 nine three x 測試 nine three x 測試 nine three x 測試 nine three x 測試 nine three x 測試 nine three x 測試 nine three x 測試 nine three x 測試 nine three x 測試 nine three x 測試 nine three x 測試 nine three x 測試 nine three x 測試 nine three x 測試 nine three 測試 seven six . 測試 one zz four four",
+      "compressedBytes": 60,
+      "ratio": 8.033333333333333
+    },
+    {
+      "text": "測試 eight 測試 eight 測試 eight 測試 eight 測試 eight 測試 eight 測試 eight 測試 eight 測試 eight 測試 eight 測試 eight 測試 eight 測試 eight 測試 eight 測試 eight 測試 eight one three two   one",
+      "compressedBytes": 40,
+      "ratio": 5.675
+    },
+    {
+      "text": "  six zz two ",
+      "compressedBytes": 18,
+      "ratio": 0.5555555555555556
+    },
+    {
+      "text": "six six . . one eight zz five one five six six . . one eight zz five one five six six . . one eight zz five one five six six . . one eight zz five one five six six . . one eight zz five one five six six . . one eight zz five one five six six . . one eight zz five one five six six . . one eight zz five one five six six . . one eight zz five one five six six . . one eight zz five one five six six . . one eight zz five one five six six . . one eight zz five one five six six . . one eight zz five one five six six . . one eight zz five one five six six . . one eight zz five one five six six . . one eight zz five one five six six . . one eight zz five one five six six . . one eight zz five one five six six . . one eight zz five one five six six . . one eight zz five one five six three two eight zz eight",
+      "compressedBytes": 58,
+      "ratio": 13.931034482758621
+    },
+    {
+      "text": "ten . three six seven x seven eight ten . three six seven x seven eight ten . three six seven x seven eight ten . three six seven x seven eight ten . three six seven x seven eight ten . three six seven x seven eight ten . three six seven x seven eight ten . three six seven x seven eight ten . three six seven x seven eight ten . three six seven x seven eight ten . three six seven x seven eight ten . three six seven x seven eight ten . three six seven x seven eight ten . three six seven x seven eight ten . three six seven x seven eight ten . three six seven x seven eight ten . three six seven x seven eight ten . three six seven x seven eight ten . three six seven x seven eight ten . three six seven x seven eight ten . three six seven x seven eight eight 測試 five . three five two  ",
+      "compressedBytes": 64,
+      "ratio": 12.34375
+    },
+    {
+      "text": "eight ten eight one . one x x nine one six one x five two seven ten 測試 eight ten eight one . one x x nine one six one x five two seven ten 測試 five eight four ten eight x x three",
+      "compressedBytes": 85,
+      "ratio": 2.176470588235294
+    },
+    {
+      "text": "seven nine four two six x seven nine four two six x seven nine four two six x seven nine four two six x seven nine four two six x seven nine four two six x seven nine four two six x seven nine four two six x seven nine four two six x seven nine four two six x seven nine four two six x seven nine four two six x seven nine four two six x seven nine four two six x seven nine four two six x seven nine four two six x seven nine four two six x seven nine four two six x nine",
+      "compressedBytes": 41,
+      "ratio": 11.512195121951219
+    },
+    {
+      "text": "four nine 測試 six 測試 ten . x ten one   測試 five x two ten four nine 測試 six 測試 ten . x ten one   測試 five x two ten four nine 測試 six 測試 ten . x ten one   測試 five x two ten four nine 測試 six 測試 ten . x ten one   測試 five x two ten four nine 測試 six 測試 ten . x ten one   測試 five x two ten four nine 測試 six 測試 ten . x ten one   測試 five x two ten four nine 測試 six 測試 ten . x ten one   測試 five x two ten four nine 測試 six 測試 ten . x ten one   測試 five x two ten four nine 測試 six 測試 ten . x ten one   測試 five x two ten four nine 測試 six 測試 ten . x ten one   測試 five x two ten four nine 測試 six 測試 ten . x ten one   測試 five x two ten four nine 測試 six 測試 ten . x ten one   測試 five x two ten four nine 測試 six 測試 ten . x ten one   測試 five x two ten four nine 測試 six 測試 ten . x ten one   測試 five x two ten four nine 測試 six 測試 ten . x ten one   測試 five x two ten four nine 測試 six 測試 ten . x ten one   測試 five x two ten four nine 測試 six 測試 ten . x ten one   測試 five x two ten four nine 測試 six 測試 ten . x ten one   測試 five x two ten four nine 測試 six 測試 ten . x ten one   測試 five x two ten four nine 測試 six 測試 ten . x ten one   測試 five x two ten four nine 測試 six 測試 ten . x ten one   測試 five x two ten four nine 測試 six 測試 ten . x ten one   測試 five x two ten x four zz nine zz seven zz nine",
+      "compressedBytes": 85,
+      "ratio": 17.96470588235294
+    },
+    {
+      "text": "  . four seven   four five . zz eight nine   . four seven   four five . zz eight nine   . four seven   four five . zz eight nine   . four seven   four five . zz eight nine   . four seven   four five . zz eight nine   . four seven   four five . zz eight nine   . four seven   four five . zz eight nine   . four seven   four five . zz eight nine   . four seven   four five . zz eight nine   . four seven   four five . zz eight nine   . four seven   four five . zz eight nine   . four seven   four five . zz eight nine   . four seven   four five . zz eight nine   . four seven   four five . zz eight nine   . four seven   four five . zz eight nine   . four seven   four five . zz eight nine   . four seven   four five . zz eight nine   . four seven   four five . zz eight nine   . four seven   four five . zz eight nine zz ten three one nine zz   five",
+      "compressedBytes": 70,
+      "ratio": 12.085714285714285
+    },
+    {
+      "text": "  seven seven nine zz three   . x     seven seven nine zz three   . x     seven seven nine zz three   . x     seven seven nine zz three   . x   nine five two three seven",
+      "compressedBytes": 55,
+      "ratio": 3.036363636363636
+    },
+    {
+      "text": "  eight five four two 測試 one one x   three zz . seven one ten seven four zz   eight five four two 測試 one one x   three zz . seven one ten seven four zz   eight five four two 測試 one one x   three zz . seven one ten seven four zz zz seven",
+      "compressedBytes": 79,
+      "ratio": 3.1139240506329116
+    },
+    {
+      "text": "three zz three zz three zz three zz three zz three zz three zz three zz three zz three zz three zz three zz three zz three zz three zz three zz three zz three zz three zz three zz three zz three zz three zz two 測試 two five one ten   zz 測試 three",
+      "compressedBytes": 52,
+      "ratio": 4.846153846153846
+    },
+    {
+      "text": ". eight nine three   three one   two seven one seven ten zz x two two ten . eight nine three   three one   two seven one seven ten zz x two two ten . eight nine three   three one   two seven one seven ten zz x two two ten . eight nine three   three one   two seven one seven ten zz x two two ten . eight nine three   three one   two seven one seven ten zz x two two ten . eight nine three   three one   two seven one seven ten zz x two two ten . eight nine three   three one   two seven one seven ten zz x two two ten . eight nine three   three one   two seven one seven ten zz x two two ten . eight nine three   three one   two seven one seven ten zz x two two ten . eight nine three   three one   two seven one seven ten zz x two two ten . eight nine three   three one   two seven one seven ten zz x two two ten . eight nine three   three one   two seven one seven ten zz x two two ten . eight nine three   three one   two seven one seven ten zz x two two ten . eight nine three   three one   two seven one seven ten zz x two two ten four seven zz eight four . eight five",
+      "compressedBytes": 84,
+      "ratio": 12.773809523809524
+    },
+    {
+      "text": "eight   two zz ten four six six ten   nine eight . eight   two zz ten four six six ten   nine eight . eight   two zz ten four six six ten   nine eight . eight   two zz ten four six six ten   nine eight . eight   two zz ten four six six ten   nine eight . eight   two zz ten four six six ten   nine eight . eight   two zz ten four six six ten   nine eight . eight   two zz ten four six six ten   nine eight . eight   two zz ten four six six ten   nine eight . eight   two zz ten four six six ten   nine eight . eight   two zz ten four six six ten   nine eight . eight   two zz ten four six six ten   nine eight . eight   two zz ten four six six ten   nine eight . eight   two zz ten four six six ten   nine eight . eight   two zz ten four six six ten   nine eight . eight   two zz ten four six six ten   nine eight . eight   two zz ten four six six ten   nine eight . eight   two zz ten four six six ten   nine eight . eight   two zz ten four six six ten   nine eight . eight   two zz ten four six six ten   nine eight . eight   two zz ten four six six ten   nine eight . eight   two zz ten four six six ten   nine eight . eight   two zz ten four six six ten   nine eight . eight   two zz ten four six six ten   nine eight . 測試 six x three two six x two",
+      "compressedBytes": 82,
+      "ratio": 15.317073170731707
+    },
+    {
+      "text": "one ten five ten     five . ten three zz",
+      "compressedBytes": 34,
+      "ratio": 1.1764705882352942
+    },
+    {
+      "text": "one . seven seven seven three eight two . three five nine one two one . seven seven seven three eight two . three five nine one two one . seven seven seven three eight two . three five nine one two one . seven seven seven three eight two . three five nine one two one . seven seven seven three eight two . three five nine one two one . seven seven seven three eight two . three five nine one two one . seven seven seven three eight two . three five nine one two one . seven seven seven three eight two . three five nine one two one . seven seven seven three eight two . three five nine one two one . seven seven seven three eight two . three five nine one two two x three 測試 nine ten  ",
+      "compressedBytes": 77,
+      "ratio": 8.922077922077921
+    },
+    {
+      "text": "five nine five nine five nine five nine five nine five nine five nine five nine five nine five nine five nine one ten eight nine nine x",
+      "compressedBytes": 37,
+      "ratio": 3.6486486486486487
+    },
+    {
+      "text": ". nine   zz one four seven six   seven five 測試 seven 測試 eight seven ten five four . nine   zz one four seven six   seven five 測試 seven 測試 eight seven ten five four . nine   zz one four seven six   seven five 測試 seven 測試 eight seven ten five four . nine   zz one four seven six   seven five 測試 seven 測試 eight seven ten five four . nine   zz one four seven six   seven five 測試 seven 測試 eight seven ten five four . nine   zz one four seven six   seven five 測試 seven 測試 eight seven ten five four . nine   zz one four seven six   seven five 測試 seven 測試 eight seven ten five four . nine   zz one four seven six   seven five 測試 seven 測試 eight seven ten five four . nine   zz one four seven six   seven five 測試 seven 測試 eight seven ten five four . nine   zz one four seven six   seven five 測試 seven 測試 eight seven ten five four . nine   zz one four seven six   seven five 測試 seven 測試 eight seven ten five four . nine   zz one four seven six   seven five 測試 seven 測試 eight seven ten five four five . six nine two ten seven one . three",
+      "compressedBytes": 101,
+      "ratio": 11.099009900990099
+    },
+    {
+      "text": "two two three two two three two two three two two three two two three two two three two two three two two three two two three two two three two two three two two three two two three two two three two two three two two three two two three two two three two two three two two three 測試 nine zz   ten",
+      "compressedBytes": 44,
+      "ratio": 6.818181818181818
+    },
+    {
+      "text": "eight   ten ten . eight six . eight   eight ten nine five 測試 five eight   ten ten . eight six . eight   eight ten nine five 測試 five eight   ten ten . eight six . eight   eight ten nine five 測試 five eight   ten ten . eight six . eight   eight ten nine five 測試 five eight   ten ten . eight six . eight   eight ten nine five 測試 five eight   ten ten . eight six . eight   eight ten nine five 測試 five eight   ten ten . eight six . eight   eight ten nine five 測試 five eight   ten ten . eight six . eight   eight ten nine five 測試 five eight   ten ten . eight six . eight   eight ten nine five 測試 five two three x one two",
+      "compressedBytes": 77,
+      "ratio": 8.428571428571429
+    },
+    {
+      "text": "three ten three five nine . x x seven seven nine nine   two . three ten three five nine . x x seven seven nine nine   two . three ten three five nine . x x seven seven nine nine   two . three ten three five nine . x x seven seven nine nine   two . three ten three five nine . x x seven seven nine nine   two . three ten three five nine . x x seven seven nine nine   two . three ten three five nine . x x seven seven nine nine   two . three ten three five nine . x x seven seven nine nine   two . three ten three five nine . x x seven seven nine nine   two . three ten three five nine . x x seven seven nine nine   two . three ten three five nine . x x seven seven nine nine   two . three ten three five nine . x x seven seven nine nine   two . three ten three five nine . x x seven seven nine nine   two . three ten three five nine . x x seven seven nine nine   two . three ten three five nine . x x seven seven nine nine   two . three ten three five nine . x x seven seven nine nine   two . three ten three five nine . x x seven seven nine nine   two . three ten three five nine . x x seven seven nine nine   two . three ten three five nine . x x seven seven nine nine   two . three ten three five nine . x x seven seven nine nine   two . three ten three five nine . x x seven seven nine nine   two . three ten three five nine . x x seven seven nine nine   two . three ten three five nine . x x seven seven nine nine   two . three ten three five nine . x x seven seven nine nine   two . x four four eight",
+      "compressedBytes": 77,
+      "ratio": 19.545454545454547
+    },
+    {
+      "text": ". five   ten four ten nine ten two two seven three four one four x four . five   ten four ten nine ten two two seven three four one four x four . five   ten four ten nine ten two two seven three four one four x four . five   ten four ten nine ten two two seven three four one four x four three two",
+      "compressedBytes": 62,
+      "ratio": 4.790322580645161
+    },
+    {
+      "text": "nine five one five . zz seven one five seven nine five one five . zz seven one five seven nine five one five . zz seven one five seven nine five one five . zz seven one five seven nine five one five . zz seven one five seven four .   測試  ",
+      "compressedBytes": 52,
+      "ratio": 4.615384615384615
+    },
+    {
+      "text": "nine zz nine 測試 nine one x zz 測試 測試 zz one five ten nine zz nine 測試 nine one x zz 測試 測試 zz one five ten nine zz nine 測試 nine one x zz 測試 測試 zz one five ten nine zz nine 測試 nine one x zz 測試 測試 zz one five ten nine zz nine 測試 nine one x zz 測試 測試 zz one five ten nine zz nine 測試 nine one x zz 測試 測試 zz one five ten nine zz nine 測試 nine one x zz 測試 測試 zz one five ten nine zz nine 測試 nine one x zz 測試 測試 zz one five ten nine zz nine 測試 nine one x zz 測試 測試 zz one five ten nine zz nine 測試 nine one x zz 測試 測試 zz one five ten nine zz nine 測試 nine one x zz 測試 測試 zz one five ten nine zz nine 測試 nine one x zz 測試 測試 zz one five ten nine zz nine 測試 nine one x zz 測試 測試 zz one five ten nine zz nine 測試 nine one x zz 測試 測試 zz one five ten nine zz nine 測試 nine one x zz 測試 測試 zz one five ten ",
+      "compressedBytes": 58,
+      "ratio": 16.53448275862069
+    },
+    {
+      "text": "three six 測試 five six seven two seven one five eight one three six 測試 five six seven two seven one five eight one three six 測試 five six seven two seven one five eight one three six 測試 five six seven two seven one five eight one three six 測試 five six seven two seven one five eight one three six 測試 five six seven two seven one five eight one three six 測試 five six seven two seven one five eight one three six 測試 five six seven two seven one five eight one three six 測試 five six seven two seven one five eight one three six 測試 five six seven two seven one five eight one three six 測試 five six seven two seven one five eight one three six 測試 five six seven two seven one five eight one three six 測試 five six seven two seven one five eight one three six 測試 five six seven two seven one five eight one three six 測試 five six seven two seven one five eight one three six 測試 five six seven two seven one five eight one three six 測試 five six seven two seven one five eight one ",
+      "compressedBytes": 63,
+      "ratio": 16.444444444444443
+    },
+    {
+      "text": "five . ten x nine six   x 測試 one seven three six x five . ten x nine six   x 測試 one seven three six x five . ten x nine six   x 測試 one seven three six x five . ten x nine six   x 測試 one seven three six x five . ten x nine six   x 測試 one seven three six x five . ten x nine six   x 測試 one seven three six x five . ten x nine six   x 測試 one seven three six x five . ten x nine six   x 測試 one seven three six x five . ten x nine six   x 測試 one seven three six x five . ten x nine six   x 測試 one seven three six x five . ten x nine six   x 測試 one seven three six x five . ten x nine six   x 測試 one seven three six x five . ten x nine six   x 測試 one seven three six x five . ten x nine six   x 測試 one seven three six x five . ten x nine six   x 測試 one seven three six x ",
+      "compressedBytes": 63,
+      "ratio": 13.079365079365079
+    },
+    {
+      "text": "  four four zz one eight one five four 測試 five eight four zz",
+      "compressedBytes": 47,
+      "ratio": 1.3191489361702127
+    },
+    {
+      "text": "two two four one two five 測試 five . seven 測試 four two two four one two five 測試 five . seven 測試 four two two four one two five 測試 five . seven 測試 four two two four one two five 測試 five . seven 測試 four two two four one two five 測試 five . seven 測試 four two two four one two five 測試 five . seven 測試 four two two four one two five 測試 five . seven 測試 four two two four one two five 測試 five . seven 測試 four zz ten one",
+      "compressedBytes": 61,
+      "ratio": 7.770491803278689
+    },
+    {
+      "text": "three two   nine x x five four three two   nine x x five four three two   nine x x five four three two   nine x x five four three two   nine x x five four three two   nine x x five four three two   nine x x five four three two   nine x x five four three two   nine x x five four three two   nine x x five four three two   nine x x five four three two   nine x x five four three two   nine x x five four three two   nine x x five four three two   nine x x five four three two   nine x x five four zz x   ten",
+      "compressedBytes": 52,
+      "ratio": 9.73076923076923
+    },
+    {
+      "text": "six seven five one . 測試 . ten one 測試 ten zz   zz . x three three six seven five one . 測試 . ten one 測試 ten zz   zz . x three three six seven five one . 測試 . ten one 測試 ten zz   zz . x three three six seven five one . 測試 . ten one 測試 ten zz   zz . x three three six seven five one . 測試 . ten one 測試 ten zz   zz . x three three six seven five one . 測試 . ten one 測試 ten zz   zz . x three three six four",
+      "compressedBytes": 72,
+      "ratio": 6.194444444444445
+    },
+    {
+      "text": "測試 nine eight one one four six ten x eight three 測試 nine eight one one four six ten x eight three 測試 nine eight one one four six ten x eight three 測試 nine eight one one four six ten x eight three 測試 nine eight one one four six ten x eight three 測試 nine eight one one four six ten x eight three 測試 nine eight one one four six ten x eight three 測試 nine eight one one four six ten x eight three 測試 nine eight one one four six ten x eight three 測試 nine eight one one four six ten x eight three 測試 nine eight one one four six ten x eight three 測試 nine eight one one four six ten x eight three 測試 nine eight one one four six ten x eight three 測試 nine eight one one four six ten x eight three 測試 nine eight one one four six ten x eight three 測試 nine eight one one four six ten x eight three 測試 nine eight one one four six ten x eight three 測試 nine eight one one four six ten x eight three 測試 nine eight one one four six ten x eight three 測試 nine eight one one four six ten x eight three 測試 nine eight one one four six ten x eight three 測試 nine eight one one four six ten x eight three 測試 nine eight one one four six ten x eight three 測試 nine eight one one four six ten x eight three nine one three",
+      "compressedBytes": 71,
+      "ratio": 18.112676056338028
+    },
+    {
+      "text": "ten 測試 five five four one nine two . zz eight four two 測試 eight five seven ten 測試 five five four one nine two . zz eight four two 測試 eight five seven ten 測試 five five four one nine two . zz eight four two 測試 eight five seven ten 測試 five five four one nine two . zz eight four two 測試 eight five seven ten 測試 five five four one nine two . zz eight four two 測試 eight five seven ten 測試 five five four one nine two . zz eight four two 測試 eight five seven ten 測試 five five four one nine two . zz eight four two 測試 eight five seven ten 測試 five five four one nine two . zz eight four two 測試 eight five seven ten 測試 five five four one nine two . zz eight four two 測試 eight five seven ten 測試 five five four one nine two . zz eight four two 測試 eight five seven ten 測試 five five four one nine two . zz eight four two 測試 eight five seven ten 測試 five five four one nine two . zz eight four two 測試 eight five seven ten 測試 five five four one nine two . zz eight four two 測試 eight five seven ten 測試 five five four one nine two . zz eight four two 測試 eight five seven ten 測試 five five four one nine two . zz eight four two 測試 eight five seven ten 測試 five five four one nine two . zz eight four two 測試 eight five seven ten 測試 five five four one nine two . zz eight four two 測試 eight five seven ten 測試 five five four one nine two . zz eight four two 測試 eight five seven ten 測試 five five four one nine two . zz eight four two 測試 eight five seven ten 測試 five five four one nine two . zz eight four two 測試 eight five seven zz six six one seven x",
+      "compressedBytes": 94,
+      "ratio": 17.893617021276597
+    },
+    {
+      "text": "one nine six 測試 zz ten x four six ten nine ten nine seven two four one nine six 測試 zz ten x four six ten nine ten nine seven two four one nine six 測試 zz ten x four six ten nine ten nine seven two four one nine six 測試 zz ten x four six ten nine ten nine seven two four one nine six 測試 zz ten x four six ten nine ten nine seven two four one nine six 測試 zz ten x four six ten nine ten nine seven two four zz ten three four 測試 six ten one",
+      "compressedBytes": 78,
+      "ratio": 5.923076923076923
+    },
+    {
+      "text": "six six nine six six nine six six nine eight six three one six four five ten three",
+      "compressedBytes": 53,
+      "ratio": 1.5471698113207548
+    },
+    {
+      "text": "測試 two one one x five . . two four five nine   測試 two one one x five . . two four five nine   測試 two one one x five . . two four five nine   測試 two one one x five . . two four five nine   測試 two one one x five . . two four five nine   測試 two one one x five . . two four five nine   測試 one four four one ten",
+      "compressedBytes": 63,
+      "ratio": 5.301587301587301
+    },
+    {
+      "text": "seven . zz . one six three x   測試   two six nine 測試 zz seven . zz . one six three x   測試   two six nine 測試 zz seven . zz . one six three x   測試   two six nine 測試 zz seven . zz . one six three x   測試   two six nine 測試 zz seven . zz . one six three x   測試   two six nine 測試 zz seven . zz . one six three x   測試   two six nine 測試 zz seven . zz . one six three x   測試   two six nine 測試 zz seven . zz . one six three x   測試   two six nine 測試 zz seven . zz . one six three x   測試   two six nine 測試 zz seven . zz . one six three x   測試   two six nine 測試 zz seven . zz . one six three x   測試   two six nine 測試 zz seven . zz . one six three x   測試   two six nine 測試 zz seven . zz . one six three x   測試   two six nine 測試 zz seven . zz . one six three x   測試   two six nine 測試 zz seven . zz . one six three x   測試   two six nine 測試 zz seven . zz . one six three x   測試   two six nine 測試 zz 測試 zz ten ten . three . one",
+      "compressedBytes": 81,
+      "ratio": 12.82716049382716
+    },
+    {
+      "text": "ten five   three ten six three seven nine ten five   three ten six three seven nine ten five   three ten six three seven nine ten five   three ten six three seven nine ten five   three ten six three seven nine ten five   three ten six three seven nine ten five   three ten six three seven nine ten five   three ten six three seven nine ten five   three ten six three seven nine ten five   three ten six three seven nine ten five   three ten six three seven nine ten five   three ten six three seven nine ten five   three ten six three seven nine ten five   three ten six three seven nine ten five   three ten six three seven nine ten five   three ten six three seven nine ten five   three ten six three seven nine ten five   three ten six three seven nine 測試 eight nine  ",
+      "compressedBytes": 64,
+      "ratio": 12.078125
+    },
+    {
+      "text": "eight x seven five 測試 x two seven x ten x zz ten . eight x seven five 測試 x two seven x ten x zz ten . eight x seven five 測試 x two seven x ten x zz ten . eight x seven five 測試 x two seven x ten x zz ten . eight x seven five 測試 x two seven x ten x zz ten . eight x seven five 測試 x two seven x ten x zz ten . eight x seven five 測試 x two seven x ten x zz ten . eight x seven five 測試 x two seven x ten x zz ten . eight x seven five 測試 x two seven x ten x zz ten . one .",
+      "compressedBytes": 60,
+      "ratio": 8.333333333333334
+    },
+    {
+      "text": "two five six . ten zz 測試 nine eight three nine two seven five three x 測試 zz two two five six . ten zz 測試 nine eight three nine two seven five three x 測試 zz two two five six . ten zz 測試 nine eight three nine two seven five three x 測試 zz two two five six . ten zz 測試 nine eight three nine two seven five three x 測試 zz two two five six . ten zz 測試 nine eight three nine two seven five three x 測試 zz two two five six . ten zz 測試 nine eight three nine two seven five three x 測試 zz two two five six . ten zz 測試 nine eight three nine two seven five three x 測試 zz two two five six . ten zz 測試 nine eight three nine two seven five three x 測試 zz two six   eight one",
+      "compressedBytes": 90,
+      "ratio": 7.988888888888889
+    },
+    {
+      "text": "x   .   x   .   x   .   x   .   x   .   x   .   x   .   x   .   x   .   x   .   x   .   x   .   x   .     four two 測試 three 測試 four six three seven",
+      "compressedBytes": 55,
+      "ratio": 2.8181818181818183
+    },
+    {
+      "text": "x one six three ten x x one six three ten x   zz three three five eight",
+      "compressedBytes": 50,
+      "ratio": 1.42
+    },
+    {
+      "text": "nine one one 測試 six three one   nine one one 測試 six three one   nine one one 測試 six three one   nine one one 測試 six three one   nine one one 測試 six three one   nine one one 測試 six three one   nine one one 測試 six three one   nine one one 測試 six three one   nine one one 測試 six three one   four",
+      "compressedBytes": 44,
+      "ratio": 7.454545454545454
+    },
+    {
+      "text": "seven one three six four ten x four eight eight five two seven six seven one three six four ten x four eight eight five two seven six seven one three six four ten x four eight eight five two seven six seven one three six four ten x four eight eight five two seven six seven one three six four ten x four eight eight five two seven six seven one three six four ten x four eight eight five two seven six seven one three six four ten x four eight eight five two seven six seven one three six four ten x four eight eight five two seven six nine one one four four ten   four . x",
+      "compressedBytes": 79,
+      "ratio": 7.253164556962025
+    },
+    {
+      "text": "ten six ten six x seven six   three zz ten six ten six x seven six   three zz ten six ten six x seven six   three zz ten six ten six x seven six   three zz ten six ten six x seven six   three zz ten six ten six x seven six   three zz ten six ten six x seven six   three zz ten six ten six x seven six   three zz ten six ten six x seven six   three zz ten six ten six x seven six   three zz ten six ten six x seven six   three zz ten six ten six x seven six   three zz ten six ten six x seven six   three zz ten six ten six x seven six   three zz ten six ten six x seven six   three zz ten six ten six x seven six   three zz ten six ten six x seven six   three zz ten six ten six x seven six   three zz ten six ten six x seven six   three zz two five six ten ten 測試",
+      "compressedBytes": 61,
+      "ratio": 12.59016393442623
+    },
+    {
+      "text": "seven seven   zz seven one   nine zz       ten seven seven   zz seven one   nine zz       ten seven seven   zz seven one   nine zz       ten seven seven   zz seven one   nine zz       ten seven seven   zz seven one   nine zz       ten seven seven   zz seven one   nine zz       ten seven seven   zz seven one   nine zz       ten seven seven   zz seven one   nine zz       ten seven seven   zz seven one   nine zz       ten seven seven   zz seven one   nine zz       ten seven seven   zz seven one   nine zz       ten seven seven   zz seven one   nine zz       ten seven seven   zz seven one   nine zz       ten seven seven   zz seven one   nine zz       ten seven seven   zz seven one   nine zz       ten seven seven   zz seven one   nine zz       ten seven seven   zz seven one   nine zz       ten seven seven   zz seven one   nine zz       ten seven seven   zz seven one   nine zz       ten seven seven   zz seven one   nine zz       ten seven seven   zz seven one   nine zz       ten seven seven   zz seven one   nine zz       ten seven seven   zz seven one   nine zz       ten seven seven   zz seven one   nine zz       ten one three three  ",
+      "compressedBytes": 55,
+      "ratio": 20.78181818181818
+    },
+    {
+      "text": "eight one seven x nine 測試 one seven two seven two . three two eight one seven x nine 測試 one seven two seven two . three two   three seven ten ten three eight four 測試",
+      "compressedBytes": 72,
+      "ratio": 2.4583333333333335
+    },
+    {
+      "text": "測試 four four 測試 four four 測試 four four 測試 four four 測試 four four 測試 four four 測試 four four 測試 four four ",
+      "compressedBytes": 25,
+      "ratio": 5.4
+    },
+    {
+      "text": "three six zz   測試 four x eight two three six zz   測試 four x eight two three six zz   測試 four x eight two three six zz   測試 four x eight two three six zz   測試 four x eight two three six zz   測試 four x eight two three six zz   測試 four x eight two three six zz   測試 four x eight two three six zz   測試 four x eight two three six zz   測試 four x eight two three six zz   測試 four x eight two three six zz   測試 four x eight two three six zz   測試 four x eight two three six zz   測試 four x eight two three six zz   測試 four x eight two three six zz   測試 four x eight two three six zz   測試 four x eight two three six zz   測試 four x eight two three six zz   測試 four x eight two three six zz   測試 four x eight two three six zz   測試 four x eight two three six zz   測試 four x eight two three six zz   測試 four x eight two three six zz   測試 four x eight two eight one seven one nine",
+      "compressedBytes": 73,
+      "ratio": 13.150684931506849
+    },
+    {
+      "text": "測試 three four two eight five three   eight four . eight five nine 測試 three four two eight five three   eight four . eight five nine 測試 three four two eight five three   eight four . eight five nine 測試 three four two eight five three   eight four . eight five nine 測試 three four two eight five three   eight four . eight five nine 測試 three four two eight five three   eight four . eight five nine 測試 three four two eight five three   eight four . eight five nine 測試 three four two eight five three   eight four . eight five nine 測試 three four two eight five three   eight four . eight five nine 測試 three four two eight five three   eight four . eight five nine 測試 three four two eight five three   eight four . eight five nine two . nine four one eight one five  ",
+      "compressedBytes": 79,
+      "ratio": 10.177215189873417
+    },
+    {
+      "text": "three six three x four two   five x nine ten five five x three six three x four two   five x nine ten five five x three six three x four two   five x nine ten five five x three six three x four two   five x nine ten five five x three six three x four two   five x nine ten five five x three six three x four two   five x nine ten five five x three six three x four two   five x nine ten five five x three six three x four two   five x nine ten five five x three six three x four two   five x nine ten five five x three six three x four two   five x nine ten five five x three six three x four two   five x nine ten five five x three six three x four two   five x nine ten five five x three six three x four two   five x nine ten five five x three six three x four two   five x nine ten five five x three six three x four two   five x nine ten five five x three six three x four two   five x nine ten five five x three six three x four two   five x nine ten five five x three six three x four two   five x nine ten five five x three six three x four two   five x nine ten five five x three six three x four two   five x nine ten five five x three six three x four two   five x nine ten five five x three six three x four two   five x nine ten five five x three six three x four two   five x nine ten five five x three six three x four two   five x nine ten five five x three six three x four two   five x nine ten five five x four 測試 x",
+      "compressedBytes": 75,
+      "ratio": 19.173333333333332
+    },
+    {
+      "text": "  nine six eight one x x six eight   nine six eight one x x six eight   nine six eight one x x six eight   nine six eight one x x six eight   nine six eight one x x six eight   nine six eight one x x six eight   nine six eight one x x six eight   nine six eight one x x six eight   nine six eight one x x six eight   nine six eight one x x six eight   nine six eight one x x six eight   nine six eight one x x six eight   nine six eight one x x six eight   nine six eight one x x six eight   nine six eight one x x six eight   nine six eight one x x six eight   nine six eight one x x six eight   nine six eight one x x six eight   nine six eight one x x six eight   nine six eight one x x six eight   nine six eight one x x six eight   nine six eight one x x six eight   nine six eight one x x six eight   nine six eight one x x six eight   nine six eight one x x six eight ",
+      "compressedBytes": 42,
+      "ratio": 20.761904761904763
+    },
+    {
+      "text": "five x three six four six one one six two ten x five x three six four six one one six two ten x five x three six four six one one six two ten x five x three six four six one one six two ten x five x three six four six one one six two ten x five x three six four six one one six two ten x five x three six four six one one six two ten x five x three six four six one one six two ten x five x three six four six one one six two ten x five x three six four six one one six two ten x five x three six four six one one six two ten x eight",
+      "compressedBytes": 57,
+      "ratio": 9.350877192982455
+    },
+    {
+      "text": "  two . one x x eight five three four   two . one x x eight five three four   two . one x x eight five three four   two . one x x eight five three four   two . one x x eight five three four   two . one x x eight five three four   two . one x x eight five three four   two . one x x eight five three four   two . one x x eight five three four   two . one x x eight five three four   two . one x x eight five three four   two . one x x eight five three four . zz seven   three four six zz 測試 zz",
+      "compressedBytes": 77,
+      "ratio": 6.415584415584416
+    },
+    {
+      "text": "six one ten ten six one ten ten six one ten ten six one ten ten six one ten ten six one ten ten six one ten ten six one ten ten six one ten ten six one ten ten six one ten ten 測試 three three two seven x eight zz two ten",
+      "compressedBytes": 60,
+      "ratio": 3.716666666666667
+    },
+    {
+      "text": "  seven eight nine six   seven eight nine six   seven eight nine six   seven eight nine six   seven eight nine six   seven eight nine six . 測試 x three one   . zz five",
+      "compressedBytes": 65,
+      "ratio": 2.5846153846153848
+    },
+    {
+      "text": "  four nine .   four nine .   four nine .   four nine .   four nine .   four nine .   four nine .   four nine .   four nine .   four nine .   four nine .   four nine .   four nine .   four nine .   four nine .   four nine .   four nine .   four nine .   four nine .   four nine .   four nine .   four nine .   four nine . six",
+      "compressedBytes": 30,
+      "ratio": 10.766666666666667
+    },
+    {
+      "text": "eight seven three eight seven three eight seven three eight seven three eight seven three eight seven three eight seven three ten one . x 測試 nine ten x x",
+      "compressedBytes": 55,
+      "ratio": 2.8545454545454545
+    },
+    {
+      "text": "x seven seven . one ten six one four . two x seven seven . one ten six one four . two x seven seven . one ten six one four . two x seven seven . one ten six one four . two x seven seven . one ten six one four . two x seven seven . one ten six one four . two x seven seven . one ten six one four . two x seven seven . one ten six one four . two x seven seven . one ten six one four . two x seven seven . one ten six one four . two x seven seven . one ten six one four . two x seven seven . one ten six one four . two x seven seven . one ten six one four . two x seven seven . one ten six one four . two x seven seven . one ten six one four . two x seven seven . one ten six one four . two x seven seven . one ten six one four . two x seven seven . one ten six one four . two x seven seven . one ten six one four . two x seven seven . one ten six one four . two x seven seven . one ten six one four . two x seven seven . one ten six one four . two x seven seven . one ten six one four . two nine zz ten three seven zz",
+      "compressedBytes": 65,
+      "ratio": 15.615384615384615
+    },
+    {
+      "text": "  four one six four six 測試 nine five seven . seven eight zz     four one six four six 測試 nine five seven . seven eight zz     four one six four six 測試 nine five seven . seven eight zz     four one six four six 測試 nine five seven . seven eight zz   測試 . four two nine five seven four six zz",
+      "compressedBytes": 78,
+      "ratio": 3.9358974358974357
+    },
+    {
+      "text": "ten 測試 nine five 測試 four eight   two zz zz five nine x seven one five ten ten 測試 nine five 測試 four eight   two zz zz five nine x seven one five ten ten 測試 nine five 測試 four eight   two zz zz five nine x seven one five ten ten 測試 nine five 測試 four eight   two zz zz five nine x seven one five ten ten 測試 nine five 測試 four eight   two zz zz five nine x seven one five ten ten 測試 nine five 測試 four eight   two zz zz five nine x seven one five ten ten 測試 nine five 測試 four eight   two zz zz five nine x seven one five ten ten 測試 nine five 測試 four eight   two zz zz five nine x seven one five ten ten 測試 nine five 測試 four eight   two zz zz five nine x seven one five ten ten 測試 nine five 測試 four eight   two zz zz five nine x seven one five ten ten 測試 nine five 測試 four eight   two zz zz five nine x seven one five ten ten 測試 nine five 測試 four eight   two zz zz five nine x seven one five ten ten 測試 nine five 測試 four eight   two zz zz five nine x seven one five ten ten 測試 nine five 測試 four eight   two zz zz five nine x seven one five ten ten 測試 nine five 測試 four eight   two zz zz five nine x seven one five ten ten 測試 nine five 測試 four eight   two zz zz five nine x seven one five ten ten 測試 nine five 測試 four eight   two zz zz five nine x seven one five ten ten 測試 nine five 測試 four eight   two zz zz five nine x seven one five ten ten 測試 nine five 測試 four eight   two zz zz five nine x seven one five ten ten 測試 nine five 測試 four eight   two zz zz five nine x seven one five ten ten 測試 nine five 測試 four eight   two zz zz five nine x seven one five ten ten 測試 nine five 測試 four eight   two zz zz five nine x seven one five ten four",
+      "compressedBytes": 87,
+      "ratio": 20.7816091954023
+    },
+    {
+      "text": ". six nine 測試 x three six . six nine 測試 x three six . six nine 測試 x three six . six nine 測試 x three six . six nine 測試 x three six . six nine 測試 x three six . six nine 測試 x three six . six nine 測試 x three six . six nine 測試 x three six . six nine 測試 x three six . six nine 測試 x three six . six nine 測試 x three six 測試 six",
+      "compressedBytes": 44,
+      "ratio": 8.409090909090908
+    },
+    {
+      "text": ". nine three seven one two four   two eight five seven x three eight x . nine three seven one two four   two eight five seven x three eight x . nine three seven one two four   two eight five seven x three eight x . nine three seven one two four   two eight five seven x three eight x . nine three seven one two four   two eight five seven x three eight x . nine three seven one two four   two eight five seven x three eight x . nine three seven one two four   two eight five seven x three eight x . nine three seven one two four   two eight five seven x three eight x . nine three seven one two four   two eight five seven x three eight x . nine three seven one two four   two eight five seven x three eight x . nine three seven one two four   two eight five seven x three eight x . nine three seven one two four   two eight five seven x three eight x . nine three seven one two four   two eight five seven x three eight x . nine three seven one two four   two eight five seven x three eight x . nine three seven one two four   two eight five seven x three eight x . nine three seven one two four   two eight five seven x three eight x . nine three seven one two four   two eight five seven x three eight x six   . . nine",
+      "compressedBytes": 77,
+      "ratio": 15.857142857142858
+    },
+    {
+      "text": "x three five nine nine     x x three five nine nine     x x three five nine nine     x x three five nine nine     x x three five nine nine     x x three five nine nine     x x three five nine nine     x x three five nine nine     x x three five nine nine     x x three five nine nine     x x three five nine nine     x x three five nine nine     x x three five nine nine     x x three five nine nine     x x three five nine nine     x x three five nine nine     x x three five nine nine     x x three five nine nine     x x three five nine nine     x x three five nine nine     x zz two one one one nine two six",
+      "compressedBytes": 54,
+      "ratio": 11.314814814814815
+    },
+    {
+      "text": "four five zz nine six three four five zz nine six three four five zz nine six three four five zz nine six three four five zz nine six three four five zz nine six three four five zz nine six three four five zz nine six three four five zz nine six three four five zz nine six three four five zz nine six three four five zz nine six three four five zz nine six three four five zz nine six three four five zz nine six three four five zz nine six three four five zz nine six three four five zz nine six three four five zz nine six three four five zz nine six three four five zz nine six three four five zz nine six three four five zz nine six three four five zz nine six three four five zz nine six three .   zz seven . seven nine three 測試 one",
+      "compressedBytes": 71,
+      "ratio": 10.450704225352112
+    },
+    {
+      "text": "ten . one one 測試 three 測試   ten . one one 測試 three 測試   ten . one one 測試 three 測試   ten . one one 測試 three 測試   ten . one one 測試 three 測試   ten . one one 測試 three 測試   測試 zz one nine four",
+      "compressedBytes": 51,
+      "ratio": 4.686274509803922
+    },
+    {
+      "text": "  eight . nine nine nine one 測試 four two one eight zz 測試 nine one zz zz   eight . nine nine nine one 測試 four two one eight zz 測試 nine one zz zz   eight . nine nine nine one 測試 four two one eight zz 測試 nine one zz zz   eight . nine nine nine one 測試 four two one eight zz 測試 nine one zz zz   eight . nine nine nine one 測試 four two one eight zz 測試 nine one zz zz   eight . nine nine nine one 測試 four two one eight zz 測試 nine one zz zz   eight . nine nine nine one 測試 four two one eight zz 測試 nine one zz zz   eight . nine nine nine one 測試 four two one eight zz 測試 nine one zz zz   eight . nine nine nine one 測試 four two one eight zz 測試 nine one zz zz   eight . nine nine nine one 測試 four two one eight zz 測試 nine one zz zz   eight . nine nine nine one 測試 four two one eight zz 測試 nine one zz zz   eight . nine nine nine one 測試 four two one eight zz 測試 nine one zz zz   eight . nine nine nine one 測試 four two one eight zz 測試 nine one zz zz   eight . nine nine nine one 測試 four two one eight zz 測試 nine one zz zz   eight . nine nine nine one 測試 four two one eight zz 測試 nine one zz zz   eight . nine nine nine one 測試 four two one eight zz 測試 nine one zz zz   eight . nine nine nine one 測試 four two one eight zz 測試 nine one zz zz   eight . nine nine nine one 測試 four two one eight zz 測試 nine one zz zz   eight . nine nine nine one 測試 four two one eight zz 測試 nine one zz zz   eight . nine nine nine one 測試 four two one eight zz 測試 nine one zz zz 測試 five nine",
+      "compressedBytes": 77,
+      "ratio": 20.961038961038962
+    },
+    {
+      "text": "x . one three six three x two 測試 seven x . one three six three x two 測試 seven x . one three six three x two 測試 seven x . one three six three x two 測試 seven x . one three six three x two 測試 seven x . one three six three x two 測試 seven x . one three six three x two 測試 seven x . one three six three x two 測試 seven x . one three six three x two 測試 seven x . one three six three x two 測試 seven x . one three six three x two 測試 seven x . one three six three x two 測試 seven x . one three six three x two 測試 seven x . one three six three x two 測試 seven x . one three six three x two 測試 seven x . one three six three x two 測試 seven x . one three six three x two 測試 seven x . one three six three x two 測試 seven x . one three six three x two 測試 seven x . one three six three x two 測試 seven x . one three six three x two 測試 seven x . one three six three x two 測試 seven four zz   eight x . seven x zz ten",
+      "compressedBytes": 79,
+      "ratio": 12.405063291139241
+    },
+    {
+      "text": ". three zz eight eight six . one   seven two 測試 six seven five four one 測試 . three zz eight eight six . one   seven two 測試 six seven five four one 測試 . three zz eight eight six . one   seven two 測試 six seven five four one 測試 . three zz eight eight six . one   seven two 測試 six seven five four one 測試 . three zz eight eight six . one   seven two 測試 six seven five four one 測試 . three zz eight eight six . one   seven two 測試 six seven five four one 測試 . three zz eight eight six . one   seven two 測試 six seven five four one 測試 . three zz eight eight six . one   seven two 測試 six seven five four one 測試 . three zz eight eight six . one   seven two 測試 six seven five four one 測試 . three zz eight eight six . one   seven two 測試 six seven five four one 測試 . three zz eight eight six . one   seven two 測試 six seven five four one 測試 . three zz eight eight six . one   seven two 測試 six seven five four one 測試 . three zz eight eight six . one   seven two 測試 six seven five four one 測試 . three zz eight eight six . one   seven two 測試 six seven five four one 測試 . three zz eight eight six . one   seven two 測試 six seven five four one 測試 . three zz eight eight six . one   seven two 測試 six seven five four one 測試 . three zz eight eight six . one   seven two 測試 six seven five four one 測試 . three zz eight eight six . one   seven two 測試 six seven five four one 測試 . four",
+      "compressedBytes": 88,
+      "ratio": 17.045454545454547
+    },
+    {
+      "text": "ten   ten   ten   ten   ten   ten   ten   ten   ten   ten   ten   ten   ten   ten   ten   ten     six zz three   two two x nine",
+      "compressedBytes": 42,
+      "ratio": 3.0238095238095237
+    },
+    {
+      "text": "two one zz four one one six five . five nine two one 測試   eight . two one zz four one one six five . five nine two one 測試   eight . two one zz four one one six five . five nine two one 測試   eight . two one zz four one one six five . five nine two one 測試   eight . two one zz four one one six five . five nine two one 測試   eight . two one zz four one one six five . five nine two one 測試   eight . two one zz four one one six five . five nine two one 測試   eight . two one zz four one one six five . five nine two one 測試   eight . two one zz four one one six five . five nine two one 測試   eight . two one zz four one one six five . five nine two one 測試   eight . two one zz four one one six five . five nine two one 測試   eight . two one zz four one one six five . five nine two one 測試   eight . two one zz four one one six five . five nine two one 測試   eight . two one zz four one one six five . five nine two one 測試   eight . two one zz four one one six five . five nine two one 測試   eight . two one zz four one one six five . five nine two one 測試   eight . two one zz four one one six five . five nine two one 測試   eight . two one zz four one one six five . five nine two one 測試   eight . two one zz four one one six five . five nine two one 測試   eight . two one zz four one one six five . five nine two one 測試   eight . two one zz four one one six five . five nine two one 測試   eight . two one zz four one one six five . five nine two one 測試   eight . two one zz four one one six five . five nine two one 測試   eight . five . eight five zz five eight",
+      "compressedBytes": 87,
+      "ratio": 18.862068965517242
+    },
+    {
+      "text": "two five four x 測試 ten two x x six two five four x 測試 ten two x x six two five four x 測試 ten two x x six two five four x 測試 ten two x x six two five four x 測試 ten two x x six two five four x 測試 ten two x x six two five four x 測試 ten two x x six two five four x 測試 ten two x x six two five four x 測試 ten two x x six two five four x 測試 ten two x x six two five four x 測試 ten two x x six two five four x 測試 ten two x x six two five four x 測試 ten two x x six two five four x 測試 ten two x x six two five four x 測試 ten two x x six two five four x 測試 ten two x x six three    ",
+      "compressedBytes": 56,
+      "ratio": 11.232142857142858
+    },
+    {
+      "text": "  nine   nine   nine   nine   nine   nine   nine   nine . five x 測試 four four three four",
+      "compressedBytes": 47,
+      "ratio": 1.9148936170212767
+    },
+    {
+      "text": "five eight x two five eight x two five eight x two five eight x two five eight x two five eight x two five eight x two five eight x two five eight x two five eight x two five eight x two five eight x two five eight x two five eight x two five eight x two five eight x two five eight x two five eight x two five eight x two five eight x two five eight x two five eight x two five eight x two eight   two ten seven six four eight seven",
+      "compressedBytes": 54,
+      "ratio": 8.018518518518519
+    },
+    {
+      "text": "five three eight x two five 測試 x five three eight x two five 測試 x five three eight x two five 測試 x five three eight x two five 測試 x five three eight x two five 測試 x five three eight x two five 測試 x five three eight x two five 測試 x five three eight x two five 測試 x five three eight x two five 測試 x five three eight x two five 測試 x five three eight x two five 測試 x five three eight x two five 測試 x five three eight x two five 測試 x five three eight x two five 測試 x five three eight x two five 測試 x six two two one ten five seven",
+      "compressedBytes": 67,
+      "ratio": 8.73134328358209
+    },
+    {
+      "text": "six zz zz two eight zz five seven six two eight . eight six zz zz two eight zz five seven six two eight . eight six zz zz two eight zz five seven six two eight . eight six zz zz two eight zz five seven six two eight . eight two five nine one x one two x",
+      "compressedBytes": 65,
+      "ratio": 3.8923076923076922
+    },
+    {
+      "text": "x four nine one x   測試 x four nine one x   測試 x four nine one x   測試 x four nine one x   測試 x four nine one x   測試 x four nine one x   測試 x four nine one x   測試 x four nine one x   測試 x four nine one x   測試 x four nine one x   測試 x four nine one x   測試 x four nine one x   測試 x four nine one x   測試 x four nine one x   測試 x four nine one x   測試 x four nine one x   測試 x four nine one x   測試 x four nine one x   測試 x four nine one x   測試 x four nine one x   測試 x four nine one x   測試 x four nine one x   測試 x four nine one x   測試 ",
+      "compressedBytes": 41,
+      "ratio": 15.121951219512194
+    },
+    {
+      "text": "eight six four eight five six eight five two . one ten . one four five 測試 four ten zz eight six four eight five six eight five two . one ten . one four five 測試 four ten zz eight six four eight five six eight five two . one ten . one four five 測試 four ten zz eight six four eight five six eight five two . one ten . one four five 測試 four ten zz eight six four eight five six eight five two . one ten . one four five 測試 four ten zz eight six four eight five six eight five two . one ten . one four five 測試 four ten zz eight six four eight five six eight five two . one ten . one four five 測試 four ten zz eight six four eight five six eight five two . one ten . one four five 測試 four ten zz eight six four eight five six eight five two . one ten . one four five 測試 four ten zz eight six four eight five six eight five two . one ten . one four five 測試 four ten zz eight six four eight five six eight five two . one ten . one four five 測試 four ten zz eight six four eight five six eight five two . one ten . one four five 測試 four ten zz eight six four eight five six eight five two . one ten . one four five 測試 four ten zz eight six four eight five six eight five two . one ten . one four five 測試 four ten zz eight six four eight five six eight five two . one ten . one four five 測試 four ten zz eight six four eight five six eight five two . one ten . one four five 測試 four ten zz eight six four eight five six eight five two . one ten . one four five 測試 four ten zz eight six four eight five six eight five two . one ten . one four five 測試 four ten zz eight six four eight five six eight five two . one ten . one four five 測試 four ten zz seven eight",
+      "compressedBytes": 88,
+      "ratio": 19.556818181818183
+    },
+    {
+      "text": "ten eight zz one three ten three five ten eight zz one three ten three five ten eight zz one three ten three five ten eight zz one three ten three five ten eight zz one three ten three five ten eight zz one three ten three five ten eight zz one three ten three five ten eight zz one three ten three five ten eight zz one three ten three five ten eight zz one three ten three five ten eight zz one three ten three five ten eight zz one three ten three five ten eight zz one three ten three five ten eight zz one three ten three five ten eight zz one three ten three five ten eight zz one three ten three five ten eight zz one three ten three five ten eight zz one three ten three five ten eight zz one three ten three five ten eight zz one three ten three five ten eight zz one three ten three five ten eight zz one three ten three five ten eight zz one three ten three five ten eight zz one three ten three five ten eight zz one three ten three five two one eight 測試",
+      "compressedBytes": 60,
+      "ratio": 16.166666666666668
+    },
+    {
+      "text": "x five 測試 x five 測試 x five 測試 x five 測試 x five 測試 x five 測試 x five 測試 x five 測試 x five 測試 x five 測試 x five 測試 x five 測試 x five 測試 x five 測試 x five 測試 x five 測試 x five 測試 x five 測試 x five 測試 x five 測試 x five 測試 x five 測試 x five 測試 x five 測試 seven",
+      "compressedBytes": 32,
+      "ratio": 10.65625
+    },
+    {
+      "text": "four one x five four   five three x one four one x five four   five three x one four one x five four   five three x one four one x five four   five three x one six five seven .",
+      "compressedBytes": 52,
+      "ratio": 3.3846153846153846
+    },
+    {
+      "text": "x nine three three zz three x nine three three zz three x nine three three zz three x nine three three zz three four   six . x ten four",
+      "compressedBytes": 46,
+      "ratio": 2.9347826086956523
+    },
+    {
+      "text": "three x ten four five seven five two 測試 three nine ten . ten three x ten four five seven five two 測試 three nine ten . ten three x ten four five seven five two 測試 three nine ten . ten three x ten four five seven five two 測試 three nine ten . ten three x ten four five seven five two 測試 three nine ten . ten three x ten four five seven five two 測試 three nine ten . ten three x ten four five seven five two 測試 three nine ten . ten three x ten four five seven five two 測試 three nine ten . ten 測試 six five two eight four",
+      "compressedBytes": 80,
+      "ratio": 6.875
+    },
+    {
+      "text": "six   eight   x 測試 測試 . seven 測試 six   eight   x 測試 測試 . seven 測試 six   eight   x 測試 測試 . seven 測試 six   eight   x 測試 測試 . seven 測試 six   eight   x 測試 測試 . seven 測試 six   eight   x 測試 測試 . seven 測試 six   eight   x 測試 測試 . seven 測試 six   eight   x 測試 測試 . seven 測試 six   eight   x 測試 測試 . seven 測試 six   eight   x 測試 測試 . seven 測試 six   eight   x 測試 測試 . seven 測試 six   eight   x 測試 測試 . seven 測試 six   eight   x 測試 測試 . seven 測試 six   eight   x 測試 測試 . seven 測試 six   eight   x 測試 測試 . seven 測試 six   eight   x 測試 測試 . seven 測試 six   eight   x 測試 測試 . seven 測試 six   eight   x 測試 測試 . seven 測試 six   eight   x 測試 測試 . seven 測試 six   eight   x 測試 測試 . seven 測試 six   eight   x 測試 測試 . seven 測試 six   eight   x 測試 測試 . seven 測試 six   eight   x 測試 測試 . seven 測試 zz",
+      "compressedBytes": 52,
+      "ratio": 19.942307692307693
+    },
+    {
+      "text": "ten two seven two one seven ten two seven two one seven ten two seven two one seven ten two seven two one seven ten two seven two one seven ten two seven two one seven ten two seven two one seven ten two seven two one seven ten two seven two one seven zz seven zz seven",
+      "compressedBytes": 32,
+      "ratio": 8.40625
+    },
+    {
+      "text": "five six seven four two . one ten x x four 測試   測試   nine two five six seven four two . one ten x x four 測試   測試   nine two five six seven four two . one ten x x four 測試   測試   nine two five six seven four two . one ten x x four 測試   測試   nine two five six seven four two . one ten x x four 測試   測試   nine two five six seven four two . one ten x x four 測試   測試   nine two five six seven four two . one ten x x four 測試   測試   nine two five six seven four two . one ten x x four 測試   測試   nine two five six seven four two . one ten x x four 測試   測試   nine two five six seven four two . one ten x x four 測試   測試   nine two five six seven four two . one ten x x four 測試   測試   nine two five six seven four two . one ten x x four 測試   測試   nine two five six seven four two . one ten x x four 測試   測試   nine two five six seven four two . one ten x x four 測試   測試   nine two five six seven four two . one ten x x four 測試   測試   nine two five six seven four two . one ten x x four 測試   測試   nine two five six seven four two . one ten x x four 測試   測試   nine two five seven zz five ten",
+      "compressedBytes": 82,
+      "ratio": 14.78048780487805
+    },
+    {
+      "text": "one ten ten eight nine x 測試 five one five 測試 three . . one ten ten eight nine x 測試 five one five 測試 three . . one ten ten eight nine x 測試 five one five 測試 three . . one ten ten eight nine x 測試 five one five 測試 three . . x five nine three . seven nine",
+      "compressedBytes": 73,
+      "ratio": 3.863013698630137
+    },
+    {
+      "text": "six two three nine one seven . 測試 測試 six six zz two three 測試 seven eight",
+      "compressedBytes": 63,
+      "ratio": 1.3333333333333333
+    },
+    {
+      "text": "six eight   . three ten three three seven four nine four six eight   . three ten three three seven four nine four six eight   . three ten three three seven four nine four six eight   . three ten three three seven four nine four six eight   . three ten three three seven four nine four six eight   . three ten three three seven four nine four six eight   . three ten three three seven four nine four six eight   . three ten three three seven four nine four six eight   . three ten three three seven four nine four six eight   . three ten three three seven four nine four six eight   . three ten three three seven four nine four six eight   . three ten three three seven four nine four six eight   . three ten three three seven four nine four six eight   . three ten three three seven four nine four six eight   . three ten three three seven four nine four six eight   . three ten three three seven four nine four six eight   . three ten three three seven four nine four six eight   . three ten three three seven four nine four six eight   . three ten three three seven four nine four six eight   . three ten three three seven four nine four six eight   . three ten three three seven four nine four six eight   . three ten three three seven four nine four six eight   . three ten three three seven four nine four six eight   . three ten three three seven four nine four six eight   . three ten three three seven four nine four seven 測試 two zz zz eight zz    ",
+      "compressedBytes": 85,
+      "ratio": 17.129411764705882
+    },
+    {
+      "text": "eight two . eight two . eight two . ",
+      "compressedBytes": 23,
+      "ratio": 1.5217391304347827
+    },
+    {
+      "text": "測試 . one 測試 two six six ten four one eight four . four nine 測試 測試 four one 測試 . one 測試 two six six ten four one eight four . four nine 測試 測試 four one 測試 . one 測試 two six six ten four one eight four . four nine 測試 測試 four one 測試 . one 測試 two six six ten four one eight four . four nine 測試 測試 four one 測試 . one 測試 two six six ten four one eight four . four nine 測試 測試 four one 測試 . one 測試 two six six ten four one eight four . four nine 測試 測試 four one 測試 . one 測試 two six six ten four one eight four . four nine 測試 測試 four one 測試 . one 測試 two six six ten four one eight four . four nine 測試 測試 four one 測試 . one 測試 two six six ten four one eight four . four nine 測試 測試 four one 測試 . one 測試 two six six ten four one eight four . four nine 測試 測試 four one 測試 . one 測試 two six six ten four one eight four . four nine 測試 測試 four one 測試 . one 測試 two six six ten four one eight four . four nine 測試 測試 four one 測試 . one 測試 two six six ten four one eight four . four nine 測試 測試 four one 測試 . one 測試 two six six ten four one eight four . four nine 測試 測試 four one 測試 . one 測試 two six six ten four one eight four . four nine 測試 測試 four one 測試 . one 測試 two six six ten four one eight four . four nine 測試 測試 four one 測試 . one 測試 two six six ten four one eight four . four nine 測試 測試 four one 測試 . one 測試 two six six ten four one eight four . four nine 測試 測試 four one 測試 . one 測試 two six six ten four one eight four . four nine 測試 測試 four one 測試 . one 測試 two six six ten four one eight four . four nine 測試 測試 four one 測試 . one 測試 two six six ten four one eight four . four nine 測試 測試 four one 測試 . one 測試 two six six ten four one eight four . four nine 測試 測試 four one 測試 . one 測試 two six six ten four one eight four . four nine 測試 測試 four one six",
+      "compressedBytes": 81,
+      "ratio": 25.876543209876544
+    },
+    {
+      "text": "eight two six six   ten x . eight two six six   ten x . eight two six six   ten x . eight two six six   ten x . eight two six six   ten x . eight two six six   ten x . eight two six six   ten x . eight two six six   ten x . eight two six six   ten x . eight two six six   ten x . eight two six six   ten x . eight two six six   ten x . eight two six six   ten x . eight two six six   ten x . eight eight two 測試",
+      "compressedBytes": 46,
+      "ratio": 9.0
+    },
+    {
+      "text": ". x 測試 . three one five five   nine . seven five ten . x 測試 . three one five five   nine . seven five ten . x 測試 . three one five five   nine . seven five ten . x 測試 . three one five five   nine . seven five ten two eight   . eight seven five x eight three",
+      "compressedBytes": 78,
+      "ratio": 3.4871794871794872
+    },
+    {
+      "text": "five 測試 three seven one five four three eight   zz four five five 測試 three seven one five four three eight   zz four five five 測試 three seven one five four three eight   zz four five five 測試 three seven one five four three eight   zz four five five 測試 three seven one five four three eight   zz four five five 測試 three seven one five four three eight   zz four five five 測試 three seven one five four three eight   zz four five five 測試 three seven one five four three eight   zz four five five 測試 three seven one five four three eight   zz four five five 測試 three seven one five four three eight   zz four five five 測試 three seven one five four three eight   zz four five five 測試 three seven one five four three eight   zz four five five 測試 three seven one five four three eight   zz four five five 測試 three seven one five four three eight   zz four five five 測試 three seven one five four three eight   zz four five five 測試 three seven one five four three eight   zz four five five 測試 three seven one five four three eight   zz four five five 測試 three seven one five four three eight   zz four five ten four .",
+      "compressedBytes": 76,
+      "ratio": 15.526315789473685
+    },
+    {
+      "text": "zz . one six four zz   one two zz six five x six eight ten zz . one six four zz   one two zz six five x six eight ten zz . one six four zz   one two zz six five x six eight ten zz . one six four zz   one two zz six five x six eight ten zz . one six four zz   one two zz six five x six eight ten zz . one six four zz   one two zz six five x six eight ten zz . one six four zz   one two zz six five x six eight ten ten seven two   two",
+      "compressedBytes": 70,
+      "ratio": 6.171428571428572
+    },
+    {
+      "text": "four nine six three two   seven four six zz eight two three six zz four nine six three two   seven four six zz eight two three six zz four nine six three two   seven four six zz eight two three six zz four nine six three two   seven four six zz eight two three six zz four nine six three two   seven four six zz eight two three six zz four nine six three two   seven four six zz eight two three six zz four nine six three two   seven four six zz eight two three six zz four nine six three two   seven four six zz eight two three six zz four nine six three two   seven four six zz eight two three six zz four nine six three two   seven four six zz eight two three six zz four nine six three two   seven four six zz eight two three six zz four nine six three two   seven four six zz eight two three six zz four nine six three two   seven four six zz eight two three six zz four nine six three two   seven four six zz eight two three six zz four nine six three two   seven four six zz eight two three six zz four nine six three two   seven four six zz eight two three six zz four nine six three two   seven four six zz eight two three six zz four nine six three two   seven four six zz eight two three six zz four nine six three two   seven four six zz eight two three six zz four nine six three two   seven four six zz eight two three six zz four nine six three two   seven four six zz eight two three six zz eight five",
+      "compressedBytes": 74,
+      "ratio": 19.14864864864865
+    },
+    {
+      "text": "nine five nine five nine five nine five nine five nine five nine five nine five nine five nine five nine five nine five nine five six seven",
+      "compressedBytes": 30,
+      "ratio": 4.633333333333334
+    },
+    {
+      "text": "two six eight eight nine seven   測試 ten 測試 nine 測試       ten four two six eight eight nine seven   測試 ten 測試 nine 測試       ten four two six eight eight nine seven   測試 ten 測試 nine 測試       ten four two six eight eight nine seven   測試 ten 測試 nine 測試       ten four two six eight eight nine seven   測試 ten 測試 nine 測試       ten four two six eight eight nine seven   測試 ten 測試 nine 測試       ten four two six eight eight nine seven   測試 ten 測試 nine 測試       ten four two six eight eight nine seven   測試 ten 測試 nine 測試       ten four two six eight eight nine seven   測試 ten 測試 nine 測試       ten four two six eight eight nine seven   測試 ten 測試 nine 測試       ten four two six eight eight nine seven   測試 ten 測試 nine 測試       ten four two six eight eight nine seven   測試 ten 測試 nine 測試       ten four two six eight eight nine seven   測試 ten 測試 nine 測試       ten four two six eight eight nine seven   測試 ten 測試 nine 測試       ten four two six eight eight nine seven   測試 ten 測試 nine 測試       ten four two six eight eight nine seven   測試 ten 測試 nine 測試       ten four two six eight eight nine seven   測試 ten 測試 nine 測試       ten four two six eight eight nine seven   測試 ten 測試 nine 測試       ten four two six eight eight nine seven   測試 ten 測試 nine 測試       ten four two six eight eight nine seven   測試 ten 測試 nine 測試       ten four two six eight eight nine seven   測試 ten 測試 nine 測試       ten four two six eight eight nine seven   測試 ten 測試 nine 測試       ten four two six eight eight nine seven   測試 ten 測試 nine 測試       ten four two six eight eight nine seven   測試 ten 測試 nine 測試       ten four two six eight eight nine seven   測試 ten 測試 nine 測試       ten four five eight four seven two 測試 zz .",
+      "compressedBytes": 97,
+      "ratio": 20.484536082474225
+    },
+    {
+      "text": "two zz four two eight five two zz four two eight five two zz four two eight five two zz four two eight five two zz four two eight five two zz four two eight five two zz four two eight five two zz four two eight five two zz four two eight five two zz four two eight five two zz four two eight five two zz four two eight five two zz four two eight five two zz four two eight five two zz four two eight five two zz four two eight five two zz four two eight five two zz four two eight five two zz four two eight five two zz four two eight five two zz four two eight five two zz four two eight five two zz four two eight five two zz four two eight five two zz four two eight five five five seven six eight . eight  ",
+      "compressedBytes": 56,
+      "ratio": 12.642857142857142
+    },
+    {
+      "text": "測試 eight nine ten eight zz . . four ten eight five eight four three eight three 測試 eight nine ten eight zz . . four ten eight five eight four three eight three 測試 eight nine ten eight zz . . four ten eight five eight four three eight three 測試 eight nine ten eight zz . . four ten eight five eight four three eight three 測試 eight nine ten eight zz . . four ten eight five eight four three eight three 測試 eight nine ten eight zz . . four ten eight five eight four three eight three 測試 eight nine ten eight zz . . four ten eight five eight four three eight three 測試 eight nine ten eight zz . . four ten eight five eight four three eight three 測試 eight nine ten eight zz . . four ten eight five eight four three eight three 測試 eight nine ten eight zz . . four ten eight five eight four three eight three 測試 eight nine ten eight zz . . four ten eight five eight four three eight three three x . seven five eight two x eight",
+      "compressedBytes": 86,
+      "ratio": 11.186046511627907
+    },
+    {
+      "text": "ten   zz x seven three eight two ten   zz x seven three eight two ten   zz x seven three eight two ten   zz x seven three eight two ten   zz x seven three eight two ten   zz x seven three eight two ten   zz x seven three eight two ten   zz x seven three eight two ten   zz x seven three eight two nine four ten six nine zz",
+      "compressedBytes": 61,
+      "ratio": 5.278688524590164
+    },
+    {
+      "text": ". two six . . two six . . two six . . two six . . two six . ",
+      "compressedBytes": 22,
+      "ratio": 2.6818181818181817
+    },
+    {
+      "text": "zz five eight   . five three six . zz eight eight . nine two zz five eight   . five three six . zz eight eight . nine two zz five eight   . five three six . zz eight eight . nine two zz five eight   . five three six . zz eight eight . nine two one four eight seven",
+      "compressedBytes": 70,
+      "ratio": 3.7714285714285714
+    },
+    {
+      "text": "nine one two eight   eight ten ten four two seven one eight 測試 nine one two eight   eight ten ten four two seven one eight 測試 nine one two eight   eight ten ten four two seven one eight 測試 nine one two eight   eight ten ten four two seven one eight 測試 nine one two eight   eight ten ten four two seven one eight 測試 nine one two eight   eight ten ten four two seven one eight 測試 nine one two eight   eight ten ten four two seven one eight 測試 nine one two eight   eight ten ten four two seven one eight 測試 nine one two eight   eight ten ten four two seven one eight 測試 nine one two eight   eight ten ten four two seven one eight 測試 nine one two eight   eight ten ten four two seven one eight 測試 nine one two eight   eight ten ten four two seven one eight 測試 nine one two eight   eight ten ten four two seven one eight 測試 nine one two eight   eight ten ten four two seven one eight 測試 nine one two eight   eight ten ten four two seven one eight 測試 nine one two eight   eight ten ten four two seven one eight 測試 nine one two eight   eight ten ten four two seven one eight 測試 nine one two eight   eight ten ten four two seven one eight 測試 nine one two eight   eight ten ten four two seven one eight 測試 nine one two eight   eight ten ten four two seven one eight 測試 nine one two eight   eight ten ten four two seven one eight 測試 four nine four seven ten",
+      "compressedBytes": 79,
+      "ratio": 18.11392405063291
+    },
+    {
+      "text": "two ten four two ten four   four zz seven eight",
+      "compressedBytes": 39,
+      "ratio": 1.205128205128205
+    },
+    {
+      "text": "eight 測試 four zz two two 測試 eight 測試 four zz two two 測試 eight 測試 four zz two two 測試 eight 測試 four zz two two 測試 eight 測試 four zz two two 測試 eight 測試 four zz two two 測試 eight 測試 four zz two two 測試 eight 測試 four zz two two 測試 eight 測試 four zz two two 測試 eight 測試 four zz two two 測試 eight 測試 four zz two two 測試 eight 測試 four zz two two 測試 eight 測試 four zz two two 測試 eight 測試 four zz two two 測試 eight 測試 four zz two two 測試 eight 測試 four zz two two 測試 eight 測試 four zz two two 測試 eight 測試 four zz two two 測試 eight 測試 four zz two two 測試 eight three",
+      "compressedBytes": 49,
+      "ratio": 14.183673469387756
+    },
+    {
+      "text": "six four six zz   . zz x 測試 six ten five six four six zz   . zz x 測試 six ten five six four six zz   . zz x 測試 six ten five six four six zz   . zz x 測試 six ten five six four six zz   . zz x 測試 six ten five six four six zz   . zz x 測試 six ten five six four six zz   . zz x 測試 six ten five six four six zz   . zz x 測試 six ten five six four six zz   . zz x 測試 six ten five seven six x 測試 zz ten x six",
+      "compressedBytes": 66,
+      "ratio": 6.606060606060606
+    },
+    {
+      "text": "zz nine eight nine ten nine six four zz nine eight nine ten nine six four zz nine eight nine ten nine six four zz nine eight nine ten nine six four zz nine eight nine ten nine six four zz nine eight nine ten nine six four zz nine eight nine ten nine six four zz nine eight nine ten nine six four zz nine eight nine ten nine six four zz nine eight nine ten nine six four zz nine eight nine ten nine six four zz nine eight nine ten nine six four zz nine eight nine ten nine six four zz nine eight nine ten nine six four zz nine eight nine ten nine six four zz nine eight nine ten nine six four zz nine eight nine ten nine six four zz nine eight nine ten nine six four six",
+      "compressedBytes": 46,
+      "ratio": 14.543478260869565
+    },
+    {
+      "text": "測試 four x seven   測試 four x seven   測試 four x seven   two two seven 測試",
+      "compressedBytes": 42,
+      "ratio": 2.0476190476190474
+    },
+    {
+      "text": "    one       one       one       one       one       one       one       one       one       one       one       one       one       one       one       one       one       one       one       one       one       one       one       one       one   ",
+      "compressedBytes": 17,
+      "ratio": 14.294117647058824
+    },
+    {
+      "text": "x . five five four nine four three two two two two",
+      "compressedBytes": 37,
+      "ratio": 1.3513513513513513
+    },
+    {
+      "text": "two x nine . seven seven five x two eight . seven five . x x three one . two x nine . seven seven five x two eight . seven five . x x three one . two x nine . seven seven five x two eight . seven five . x x three one . two x nine . seven seven five x two eight . seven five . x x three one . two x nine . seven seven five x two eight . seven five . x x three one . two x nine . seven seven five x two eight . seven five . x x three one . two x nine . seven seven five x two eight . seven five . x x three one . two x nine . seven seven five x two eight . seven five . x x three one . two x nine . seven seven five x two eight . seven five . x x three one . two x nine . seven seven five x two eight . seven five . x x three one . two x nine . seven seven five x two eight . seven five . x x three one . two x nine . seven seven five x two eight . seven five . x x three one . two x nine . seven seven five x two eight . seven five . x x three one . two x nine . seven seven five x two eight . seven five . x x three one . two x nine . seven seven five x two eight . seven five . x x three one . two three five",
+      "compressedBytes": 72,
+      "ratio": 15.402777777777779
+    },
+    {
+      "text": "five one six . ten six three five one six . ten six three five one six . ten six three five one six . ten six three five one six . ten six three five one six . ten six three five one six . ten six three five one six . ten six three five one six . ten six three seven .",
+      "compressedBytes": 43,
+      "ratio": 6.232558139534884
+    },
+    {
+      "text": "測試 three nine seven nine . nine one x one . six   zz nine 測試 three nine seven nine . nine one x one . six   zz nine 測試 three nine seven nine . nine one x one . six   zz nine 測試 three nine seven nine . nine one x one . six   zz nine 測試 three nine seven nine . nine one x one . six   zz nine 測試 three nine seven nine . nine one x one . six   zz nine 測試 three nine seven nine . nine one x one . six   zz nine 測試 three nine seven nine . nine one x one . six   zz nine 測試 three nine seven nine . nine one x one . six   zz nine 測試 three nine seven nine . nine one x one . six   zz nine 測試 three nine seven nine . nine one x one . six   zz nine 測試 three nine seven nine . nine one x one . six   zz nine 測試 three nine seven nine . nine one x one . six   zz nine 測試 three nine seven nine . nine one x one . six   zz nine 測試 three nine seven nine . nine one x one . six   zz nine 測試 three nine seven nine . nine one x one . six   zz nine 測試 three nine seven nine . nine one x one . six   zz nine 測試 three nine seven nine . nine one x one . six   zz nine 測試 three nine seven nine . nine one x one . six   zz nine 測試 three nine seven nine . nine one x one . six   zz nine three",
+      "compressedBytes": 67,
+      "ratio": 18.582089552238806
+    },
+    {
+      "text": "seven five seven five seven five seven five seven five seven five seven five seven five seven five seven five seven five seven five seven five seven five seven five seven five seven five seven five seven five seven five six three six zz",
+      "compressedBytes": 33,
+      "ratio": 7.151515151515151
+    },
+    {
+      "text": "six four ten two six four ten two six four ten two six four ten two six four ten two six four ten two six four ten two   nine three .",
+      "compressedBytes": 42,
+      "ratio": 3.1666666666666665
+    },
+    {
+      "text": "five five five five five five five five five five five five five five five five five",
+      "compressedBytes": 16,
+      "ratio": 5.25
+    },
+    {
+      "text": "nine three 測試 five five six   x three eight nine three 測試 five five six   x three eight nine three 測試 five five six   x three eight nine three 測試 five five six   x three eight nine three 測試 five five six   x three eight nine three 測試 five five six   x three eight nine three 測試 five five six   x three eight nine three 測試 five five six   x three eight nine three 測試 five five six   x three eight nine three 測試 five five six   x three eight nine three 測試 five five six   x three eight nine three 測試 five five six   x three eight nine three 測試 five five six   x three eight nine three 測試 five five six   x three eight nine three 測試 five five six   x three eight nine three 測試 five five six   x three eight nine three 測試 five five six   x three eight nine three 測試 five five six   x three eight nine three 測試 five five six   x three eight nine three 測試 five five six   x three eight nine three 測試 five five six   x three eight nine three 測試 five five six   x three eight seven three six one six three five zz 測試",
+      "compressedBytes": 77,
+      "ratio": 14.285714285714286
+    },
+    {
+      "text": "eight zz one eight four nine four ten one eight zz one eight four nine four ten one eight zz one eight four nine four ten one eight zz one eight four nine four ten one eight zz one eight four nine four ten one eight zz one eight four nine four ten one eight zz one eight four nine four ten one eight zz one eight four nine four ten one eight zz one eight four nine four ten one eight zz one eight four nine four ten one eight zz one eight four nine four ten one eight zz one eight four nine four ten one eight zz one eight four nine four ten one eight zz one eight four nine four ten one eight zz one eight four nine four ten one eight zz one eight four nine four ten one four nine .",
+      "compressedBytes": 49,
+      "ratio": 13.938775510204081
+    },
+    {
+      "text": "zz zz zz zz zz zz zz zz zz zz zz zz zz zz zz zz seven two zz seven 測試 eight six seven nine",
+      "compressedBytes": 47,
+      "ratio": 2.0
+    },
+    {
+      "text": "eight four four two eight four four two eight four four two eight four four two eight four four two eight four four two eight four four two eight four four two eight four four two eight four four two eight four four two eight four four two eight four four two eight four four two eight four four two eight four four two eight four four two eight four four two eight four four two eight four four two eight four four two eight four four two one four ten ten 測試 two eight   測試",
+      "compressedBytes": 49,
+      "ratio": 9.83673469387755
+    },
+    {
+      "text": ". x ten nine six . x ten nine six . x ten nine six . x ten nine six . x ten nine six . x ten nine six . x ten nine six . x ten nine six . x ten nine six . x ten nine six . x ten nine six . x ten nine six . x ten nine six . x ten nine six . x ten nine six . x ten nine six one three six   eight five",
+      "compressedBytes": 49,
+      "ratio": 6.081632653061225
+    },
+    {
+      "text": "four two two ten ten 測試 four   ten two five four two two ten ten 測試 four   ten two five four two two ten ten 測試 four   ten two five four two two ten ten 測試 four   ten two five four two two ten ten 測試 four   ten two five four two two ten ten 測試 four   ten two five four two two ten ten 測試 four   ten two five four two two ten ten 測試 four   ten two five four two two ten ten 測試 four   ten two five four two two ten ten 測試 four   ten two five four two two ten ten 測試 four   ten two five four two two ten ten 測試 four   ten two five four two   seven zz six ten eight",
+      "compressedBytes": 68,
+      "ratio": 8.955882352941176
+    },
+    {
+      "text": "two seven eight four three six zz . nine . three ten seven eight two seven eight four three six zz . nine . three ten seven eight ",
+      "compressedBytes": 60,
+      "ratio": 2.15
+    },
+    {
+      "text": ". ten . ten . ten . ten . ten . ten . ten . ten . ten . ten . ten . ten . ten . ten . ten . ten . ten . ten . ten . ten . ten . ten . ten eight 測試   x",
+      "compressedBytes": 34,
+      "ratio": 4.529411764705882
     }
   ]
 }
