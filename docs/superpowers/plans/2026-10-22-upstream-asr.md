@@ -14,8 +14,8 @@
 2. **純規則：已實作並測試。** auto 的 Python ties-to-even、群組字元配對、呼吸切分、window4；fallback、no-speech 例外、ASR 前文截斷／reset、timestamp 切段與 seek。fixtures 來源與重建腳本保留於 `spike/scripts/`，不執行 ASR backend。
 3. **自訂解碼：已實作並測試。** beam5、patience1、length penalty1、sampling best_of5、token masks、原始機率統計、EOS、CT2 長度語意、候選 trace、cache 隔離與錯誤清理。沒有內建 pipeline／generate 替代。
 4. **詞時間與段落：已實作並測試。** 全曲特徵正規化、有效 frame slicing／padding、指定 heads、有效 frames attention 重正規化、LayerNorm、median7、DTW、詞分組、標點及上游原有邊界規則，再更新 seek／前文。只處理生成的 ASR 文字。
-5. **整合：已接入，最終驗收進行中。** Worker、WASM／WebGPU 選擇、auto 配對、schema5、PCM／音檔 SHA、seek／候選／重試／前文來源／段落形成。舊 schema4 不接受為新流程結果。
-6. **交付閘門：待完成。** 修正後官方130秒與原始206秒音檔在兩後端的完整測試、同 segments 上游零差異比較、正式頁面／匯出／中止與清理、重複 beam／歌詞隔離、最終 tests／lint／typecheck／build、文件更新及提交。
+5. **整合：已驗收。** Worker、WASM／WebGPU 選擇、auto 配對、schema5、PCM／音檔 SHA、seek／候選／重試／前文來源／段落形成。原始輸出自帶模型與設定，舊 schema4 或來源設定缺失／不符的結果均拒絕。
+6. **交付閘門：已通過。** 官方130秒與原始206秒素材在兩後端完成實測，32輪純控制重播與四份同 segments 配對均零差異；正式頁面中止／載入／釋放、schema5 重算、官方 beam 完整 output 重現、歌詞隔離、47 項 tests／lint／typecheck／build 均驗證。品質、耗時與資源範圍如實記錄；交付於既有分支，不合併或推送。
 
 ## 檔案責任
 
@@ -31,6 +31,8 @@
 ## 來源限制與裁定
 
 ONNX 是 post-softmax attention，裁切後以有效 frame 機率和重正規化；數學上對應裁切 QK 後 softmax，不宣稱逐浮點相同。遇到無法恢復的零值、非有限值或零變異時報錯。TopK 同分以 parent/token 穩定排序；sampling 使用 Math.random，與 CT2 的同分／亂數序列不保證一致。Web Audio 與 PyAV 解碼也不承諾相同 PCM。
+
+壓縮統計固定 pako3.0.2 `legacyHash:true` 的 canonical zlib；Node／Chromium 修改版 hash 的長度不相同，不能用來判定上游 fallback。204 組 Python zlib 參考案例在 Node／瀏覽器均通過。
 
 cache 使用獨立 CPU 複本，WebGPU 會有傳輸成本。只承諾實測素材／硬體／瀏覽器，不把短程能力探測或匹配分數當成通用效能保證。
 
