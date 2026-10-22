@@ -36,13 +36,13 @@ probe 使用隔離 Chrome profile、真正 MV3 manifest／offscreen／library Wo
 
 ## 驗收狀態
 
-2026-10-23，本地候選包通過 59 項 library 測試、lint、型別檢查、library／應用建置及 npm 檔案檢查。consumer 的 63 項測試與 2 項打包檢查也通過。
+2026-10-23，0.1.1 已合併 main 並公開發布 npm，latest 為 0.1.1。registry tarball SHA-1 `f4a5dc6a5fa1a97b1310956611b44c14b00fe177` 與實際發布檔一致。消費端正式從 registry 安裝並更新 lockfile，不再暫時覆蓋本地包。59 項 library 測試、lint、型別檢查、library／應用建置及 npm 檔案檢查通過；consumer 的 63 項測試與 2 項打包檢查也通過。
 
 隔離 Chrome for Testing 156.0.8078.4／MV3 offscreen／WebGPU，使用本機 130.2988125 秒、16kHz mono PCM：
 
 - 全曲通過 12/12 行同數同序同原文，所有 cue 滿足 0 ≤ start < end ≤ duration。
 - `seek 0.00s T=0 step=0` 解碼進度後取消，回傳 `ABORTED`，Worker 終止；runner 等操作結束後 dispose。
-- 取消後以新 session 重試全曲，仍為 12/12，觀測總耗時 151689ms（含 10 秒間隔的結果輪詢，非純推論耗時）。
-- 測試安裝入口 SHA-256：`66e2495c228e7b2eb184d5daf9a72b6a41d44efce9fa4e26fba3def752dc7c96`；Worker SHA-256：`b47b02dd00b27b0ff864b26e37c0e9e07ac0deccd85ab54b813ad85530c28071`。本地報告位於 `.local/results/mv3-final-report.json`、`mv3-cancel-transcribing.json`，不提交音檔、歌詞或完整辨識內容。
+- 正式 registry 0.1.1 取消後以新 session 重試全曲，仍為 12/12，觀測總耗時 151356ms（含 10 秒間隔的結果輪詢，非純推論耗時）。
+- 正式安裝入口 SHA-256：`b56a22131251a1a10b86d29cf14f8a7491043bbba580a71581a416d7d04f3ee6`；Worker SHA-256：`b47b02dd00b27b0ff864b26e37c0e9e07ac0deccd85ab54b813ad85530c28071`。本地報告位於 `.local/results/mv3-final-report.json`、`mv3-cancel-transcribing.json`，不提交音檔、歌詞或完整辨識內容。
 
 Safari runtime 選擇只有回歸單測，沒有 Safari 裝置實測；WASM 全曲、跨 tab queue、背景節流及 GPU 釋放量測未驗證。文字與時間合法不等於演唱對齊精準度；consumer 的 YouTube 音訊下載仍不在本次測試範圍。

@@ -4,7 +4,7 @@
 
 ## Browser library API（contract v1）
 
-公開原始碼入口為 `spike/app/lib/binding/index.ts`，匯出 `binding`、`createBinding` 與完整契約型別。[`@twkevinzhang/lyric-align-ts`](https://www.npmjs.com/package/@twkevinzhang/lyric-align-ts) 目前原始碼版本為 0.1.1，包含 MV3 靜態 runtime 修正；registry 發布狀態以 `npm view @twkevinzhang/lyric-align-ts version` 為準。
+公開原始碼入口為 `spike/app/lib/binding/index.ts`，匯出 `binding`、`createBinding` 與完整契約型別。[`@twkevinzhang/lyric-align-ts@0.1.1`](https://www.npmjs.com/package/@twkevinzhang/lyric-align-ts/v/0.1.1) 已公開發布，latest 為 0.1.1，包含 MV3 靜態 runtime 修正，並已由消費端從 registry 安裝、完成真實 extension 全曲及取消／重試驗證。
 
 ```sh
 npm install @twkevinzhang/lyric-align-ts@0.1.1
@@ -18,7 +18,7 @@ npm install @twkevinzhang/lyric-align-ts@0.1.1
 
 本機包可用 `npm install ./spike/dist/twkevinzhang-lyric-align-ts-0.1.1.tgz` 安裝。包內包含入口、型別、Worker、靜態 runtime `.mjs`／`.wasm`、README 與授權文件；不包含測試素材、模型快取、開發工具、source maps 或應用 UI。0.1.1 包含 MV3 runtime 修正，發布時使用已驗證的 tarball，不得覆寫已公開版本。
 
-`npm run verify:library-package` 可重跑檔案白名單、靜態 runtime 資產與 metadata 核對。本地修正包約 10.5 MB、解壓約 42.1 MB，包含 asyncify 與舊 Safari WASM 所需的 standard runtime；模型權重另行下載。公開 registry 0.1.0 的 JS Blob runtime 載入不相容 MV3；目前原始碼改為同來源靜態 runtime，詳見 [MV3 整合與本地測試](docs/mv3-runtime.md)。
+`npm run verify:library-package` 可重跑檔案白名單、靜態 runtime 資產與 metadata 核對。0.1.1 套件約 10.5 MB、解壓約 42.1 MB，包含 asyncify 與舊 Safari WASM 所需的 standard runtime；模型權重另行下載。0.1.0 的 JS Blob runtime 載入不相容 MV3，請使用 0.1.1；詳見 [MV3 整合與測試](docs/mv3-runtime.md)。
 
 使用方式及限制見 [npm 套件說明](spike/library.README.md)。以下範例為靜態複製方式；bundler 使用 npm 包時可直接從 `@twkevinzhang/lyric-align-ts` 匯入。
 
