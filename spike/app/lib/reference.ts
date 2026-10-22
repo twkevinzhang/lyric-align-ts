@@ -1,5 +1,33 @@
 export type Cue = { id: number; start: number; end: number; text: string };
 export type LineReference = { lineIndex: number; start: number | null };
+export type HumanReference = {
+  audioSha256: string;
+  lyrics: string[];
+  references: LineReference[];
+  source?: string;
+  note?: string;
+};
+
+export function canScoreRun(
+  selectedHash: string | undefined,
+  run: {
+    audio: { sha256: string; duration: number };
+    secondsTested: number;
+    lyrics: string[];
+  },
+  reference: { audioSha256: string; lyrics: string[] },
+) {
+  return (
+    run.secondsTested >= run.audio.duration - 0.05 &&
+    referenceApplies(
+      selectedHash,
+      run.audio.sha256,
+      reference.audioSha256,
+      run.lyrics,
+      reference.lyrics,
+    )
+  );
+}
 
 export function referenceApplies(
   selectedAudioHash: string | undefined,

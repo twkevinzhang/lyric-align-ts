@@ -6,9 +6,21 @@ const tokenize = (text: string) =>
     .match(/[a-z]+(?:'[a-z]+)*/g) ?? [];
 
 /** Experimental English text-only mapping. No reference times or guessed starts. */
-export function alignMonotonic(words: Word[], lyrics: string[]) {
-  const hypothesis = words.flatMap((w) =>
-    tokenize(w.text).map((text) => ({ ...w, text })),
+export function alignMonotonic(
+  words: Word[],
+  lyrics: string[],
+  duration = Infinity,
+) {
+  const validTime = (w: Word | undefined) =>
+    w?.start != null &&
+    w.end != null &&
+    Number.isFinite(w.start) &&
+    Number.isFinite(w.end) &&
+    w.start >= 0 &&
+    w.end > w.start &&
+    w.end <= duration;
+  const hypothesis = words.flatMap((w, sourceIndex) =>
+    tokenize(w.text).map((text) => ({ ...w, text, sourceIndex })),
   );
   const reference = lyrics.flatMap((line, lineIndex) =>
     tokenize(line).map((text) => ({ text, lineIndex })),
@@ -61,11 +73,13 @@ export function alignMonotonic(words: Word[], lyrics: string[]) {
       second === first + 1 &&
       coverage >= 0.5 &&
       onset !== null &&
+      validTime(hypothesis[first]) &&
       hypothesis[first].end !== null &&
       hypothesis[first].end! > onset &&
       onset >= previousStart;
     if (matched) previousStart = onset;
-    const end = hits.length ? hypothesis[hits.at(-1)!].end : null;
+    const last = hits.length ? hypothesis[hits.at(-1)!] : undefined;
+    const end = validTime(last) ? last!.end : null;
     return {
       line,
       matched,
@@ -73,6 +87,17 @@ export function alignMonotonic(words: Word[], lyrics: string[]) {
       end: matched && end !== null && end > onset! ? end : null,
       score: coverage,
       coverage,
+      words: indices.map((k) => {
+        const index = mapping.get(k);
+        const source = index === undefined ? undefined : hypothesis[index];
+        const valid = validTime(source);
+        return {
+          text: reference[k].text,
+          sourceIndex: source?.sourceIndex ?? null,
+          start: valid ? source!.start : null,
+          end: valid ? source!.end : null,
+        };
+      }),
     };
   });
 }

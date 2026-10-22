@@ -1,69 +1,43 @@
-export const MODELS = {
-  ctc: {
-    id: "onnx-community/wav2vec2-base-960h-ONNX",
-    revision: "729c1a6730fb549c20a1c73a3d3f96f11020225e",
-  },
-  baseEn: {
-    id: "onnx-community/whisper-base.en_timestamped",
-    revision: "fa239a41836c3305f6beec180e5940f3823ff5b8",
-  },
-  smallEn: {
-    id: "onnx-community/whisper-small.en_timestamped",
-    revision: "8085393831131554ad978a4e438295a734d3d2c0",
-  },
-  small: {
-    id: "onnx-community/whisper-small_timestamped",
-    revision: "65caa70f294b46e1c33ff820aae6b16d048ab818",
-  },
-  tiny: {
-    id: "onnx-community/whisper-tiny_timestamped",
-    revision: "517244293732ee2d58139af5814231b7e6830a0d",
-  },
-  base: {
-    id: "onnx-community/whisper-base_timestamped",
-    revision: "608c49e61301901684bc36cac8f74b95ff6b5a8e",
-  },
+export const MODEL = {
+  id: "onnx-community/whisper-small.en_timestamped",
+  revision: "8085393831131554ad978a4e438295a734d3d2c0",
 } as const;
-export type ModelKey = keyof typeof MODELS;
 export const SETTINGS = {
   runtime: "4.3.1",
   device: "webgpu",
   dtype: "q4",
-  language: "en",
-  task: "transcribe",
   chunk_length_s: 30,
   stride_length_s: 5,
   return_timestamps: "word",
+  max_new_tokens: 128,
+  no_repeat_ngram_size: 0,
+  do_sample: false,
+  promptTextSource: "provided-lyrics",
+  timestampCorrection: "none",
 } as const;
+export function preparePrompt(
+  context: number[],
+  previous: number,
+  initial: number[],
+): number[] {
+  if (!context.length) throw new Error("歌詞提示不可為空。");
+  return [previous, ...context.slice(-224), ...initial];
+}
 export type Command =
-  | { type: "load"; model: ModelKey }
-  | { type: "run"; audio: Float32Array }
-  | { type: "ctc-experiment"; audio: Float32Array; lyrics: string }
-  | {
-      type: "experiment-suite";
-      audio: Float32Array;
-      candidateOnly?: boolean;
-      correctTimestamps?: boolean;
-      lyricPrompt?: boolean;
-      lyrics?: string;
-    }
-  | { type: "text-control"; audio: Float32Array; nativeTimestamps: boolean }
+  | { type: "load" }
+  | { type: "run"; audio: Float32Array; lyrics: string[] }
   | { type: "release" };
 export type WorkerEvent =
   | { type: "progress"; data: unknown }
-  | { type: "ready"; elapsedMs: number; model: ModelKey }
+  | { type: "ready"; elapsedMs: number }
   | { type: "tick"; elapsedMs: number; jsHeapBytes: number | null }
-  | { type: "chunk"; data: unknown }
-  | { type: "result"; output: unknown; elapsedMs: number }
   | {
-      type: "experiment-result";
-      id: string;
-      settings: unknown;
+      type: "result";
       output: unknown;
       elapsedMs: number;
+      promptTokens: number;
+      contextTokens: number;
     }
-  | { type: "experiment-complete" }
-  | { type: "text-control-result"; output: unknown; elapsedMs: number }
   | { type: "released" }
   | { type: "error"; message: string };
 export type TimedWord = {
