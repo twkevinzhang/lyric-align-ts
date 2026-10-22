@@ -64,7 +64,20 @@ node scripts/evaluate-report.ts report.json reference-map.json
 
 模型／量化／ONNX runtime 固定為瀏覽器版本，不能保證與上游 medium 或 CTranslate2 浮點結果相同。Web Audio 與 PyAV 的解碼／重採樣也不承諾 bit-identical。
 
-ONNX 輸出的是 softmax 後 attention；裁切後除以有效 frames 機率和，數學上對應裁切原始 QK 後 softmax。實作遇到零值、非有限值或零變異會報錯，不能宣稱與 CTranslate2 每個浮點相同。相同分數的 TopK 以 parent/token 排序；CTranslate2 裝置端同分順序沒有相同保證。sampling 使用瀏覽器 `Math.random()`，不保證與 CTranslate2 同一亂數序列。
+### 字詞時間：取得分數的方式不同
+
+為判斷辨識出的字詞出現在音檔哪個位置，上游與目前版本取得資料的順序不同：
+
+- **上游**取得原始分數，先排除為配合模型長度而補上的空白，再把剩下的分數換算成比例。
+- **目前瀏覽器版**拿到的是已換算好的比例，只能先排除補上的空白，再將剩下的比例重新算成合計 100%。例如原本三個位置是 20%、60%、20%，最後一個是補上的空白；排除後，前兩個位置重新算成 25%、75%。這裡不會刪除歌曲原本的停頓。
+
+精確計算時，兩種順序在數學上相同；但若工具交出資料前已捨去很小的數字，重新計算無法還原，可能造成字詞時間差異。目前沒有與上游同模型原始分數的直接對照，不能宣稱時間計算結果完全相同。遇到無法計算的資料會報錯，不以額外時間修整補救。這個步驟只使用 ASR 自己辨識出的文字，不會把使用者提供的歌詞送回模型。
+
+已檢查固定 revision 的 q4 模型檔：原始分數仍在模型內部，但沒有列為可讀取的輸出。目前 Transformers.js／ONNX Runtime 的讀取方式只能取得模型開放的輸出，沒有直接取得這些內部分數的開關。增加模型輸出是可進一步驗證的方向，但尚未修改，也未驗證修改後能否在 WASM／WebGPU 正常執行。**目前保留上述重新計算比例的做法，不修改模型檔。**
+
+### 其他執行差異
+
+相同分數的 TopK 以 parent/token 排序；CTranslate2 裝置端同分順序沒有相同保證。sampling 使用瀏覽器 `Math.random()`，不保證與 CTranslate2 同一亂數序列。
 
 五份 cache 以獨立 CPU 複本隔離；WebGPU 模式包含下載／上傳成本。張量統計不包含權重、runtime workspace、瀏覽器或驅動，也不是總 RAM／VRAM。低階 session／forward adapter 固定於套件版本，升級需重新驗證。
 
