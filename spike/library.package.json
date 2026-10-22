@@ -1,0 +1,44 @@
+{
+  "name": "@twkevinzhang/lyric-align-ts",
+  "version": "0.1.0",
+  "description": "Browser Whisper ASR and lyric alignment with isolated worker sessions",
+  "type": "module",
+  "main": "./index.js",
+  "module": "./index.js",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": { "types": "./index.d.ts", "import": "./index.js" },
+    "./assets/*": "./assets/*",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "types/**/*.d.ts",
+    "assets/*.js",
+    "licenses/",
+    "THIRD_PARTY_NOTICES.md"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "lyrics",
+    "alignment",
+    "whisper",
+    "asr",
+    "webgpu",
+    "wasm",
+    "browser"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/twkevinzhang/lyric-align-ts.git",
+    "directory": "spike"
+  },
+  "homepage": "https://github.com/twkevinzhang/lyric-align-ts#readme",
+  "bugs": { "url": "https://github.com/twkevinzhang/lyric-align-ts/issues" },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/",
+    "tag": "latest"
+  }
+}

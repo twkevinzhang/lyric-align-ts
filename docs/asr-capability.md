@@ -10,7 +10,11 @@ Chrome WebGPU 使用正式發布物依序執行 prepare → transcribe → align
 
 全部 **57 項測試**、lint、typecheck、既有應用 build 與 library build 通過。生命週期測試涵蓋操作重疊、取消、重複釋放、Worker crash、無效選項／PCM、語言限制、零長度 ASR 詞與錯誤映射。模型下載進度來自實際 loaded/total bytes 與檔名 scope；ASR 保持不定進度；align 完成回報真實 items，所有 phase-local sequence 逐項核對。未變更既有聲學或配對預設。
 
-本機完整證據：`.local/results/binding-report.json`、`binding-validation.json`；檢查程式 `.local/verify-binding.mjs`。發布物為 `spike/dist/lyric-align-ts-0.1.0.zip`，未發布 npm、未修改消費端。重現入口為 `.local/asr-capability/binding.html`，以 `.local/asr-capability/binding.config.mjs` 的 localhost 5178 靜態 host 執行；host 的 Worker 回應必須與 document 使用相符 COEP。
+本機完整證據：`.local/results/binding-report.json`、`binding-validation.json`；檢查程式 `.local/verify-binding.mjs`。目前交付包為 `spike/dist/twkevinzhang-lyric-align-ts-0.1.0.tgz`，對應 npm 已公開發布的 `@twkevinzhang/lyric-align-ts@0.1.0`，未修改消費端。全曲重現入口為 `.local/asr-capability/binding.html`，以 `.local/asr-capability/binding.config.mjs` 的 localhost 5178 靜態 host 執行；host 的 Worker 回應必須與 document 使用相符 COEP。
+
+npm 包 `@twkevinzhang/lyric-align-ts@0.1.0` 已完成公開 metadata、MIT 與上游 notices、22 檔案白名單。實際 tarball 安裝後，TypeScript 與 Vite production build 通過；Chrome 證實安裝後的 Worker 可啟動、拒絕不支援語言並重複釋放。這次 npm smoke 不重做全曲品質評估；推論與對齊程式未變，打包調整為排除 source maps 與加入授權／說明。已完成 2FA 與正式公開發布，latest=0.1.0；registry tarball 與候選包逐 byte 相同（SHA-256 `62d6d45aa57ac6df99d00cea4f72febba39a48fa2fd144b5c33dbed7894968ab`），獨立 cache 的 npm 安裝與入口匯入成功。證據 `.local/results/npm-package-validation.json`、`npm-publish-verification.json`。
+
+npm 安裝驗證的 localhost 5181 伺服器依使用者要求保留運行，已確認 HTTP 200。命令為 `node .local/npm-scoped-consumer/serve.mjs`、cwd 為專案根目錄；session／PID 與生命週期記錄見 `.local/results/npm-package-lifecycle.json`。其他既有伺服器不在本次管理範圍。
 
 實際模型 prepare 完成後，使用同份全曲 PCM 啟動 transcribe，在一秒後 abort，回報 ABORTED，隨後兩次 dispose 均完成；證據 `.local/results/binding-cancel-report.json`。取消終止 session 專用 Worker，不沿用該 session。
 

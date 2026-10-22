@@ -1,10 +1,26 @@
 # lyric-align-ts
 
+瀏覽器端 Whisper **small.en／q4** 歌詞對齊工具。可選 **WASM（單執行緒）或 WebGPU**；ASR 不接收歌詞。程式位於 `spike/`。
+
 ## Browser library API（contract v1）
 
-公開原始碼入口為 `spike/app/lib/binding/index.ts`，匯出 `binding`、`createBinding` 與完整契約型別。這是 library 的實際入口，沒有發布到 npm。
+公開原始碼入口為 `spike/app/lib/binding/index.ts`，匯出 `binding`、`createBinding` 與完整契約型別。[`@twkevinzhang/lyric-align-ts@0.1.0`](https://www.npmjs.com/package/@twkevinzhang/lyric-align-ts) 已公開發布，latest 為 0.1.0，並完成從 registry 實際安裝驗證。
+
+```sh
+npm install @twkevinzhang/lyric-align-ts@0.1.0
+```
 
 在 `spike/` 執行 `npm run build:library`，產生可交付的 `spike/dist/library/`（ES module、專用 Worker、型別與套件 manifest）。請完整保留該目錄及相對路徑，將其作為靜態資源載入；不要只複製 index.js 或將已打包入口再次打包而遺失 Worker 資源。原始碼入口可由支援 `new Worker(new URL(..., import.meta.url))` 的 bundler 處理。
+
+## npm 發布與重建
+
+在 `spike/` 執行 `npm run pack:library`，會先完整建置，再產生 `dist/twkevinzhang-lyric-align-ts-0.1.0.tgz`。發布 metadata 來源為 `spike/library.package.json`，套件專用說明為 `spike/library.README.md`。原創程式碼 MIT；打包時保留上游演算法與 runtime 的授權及 notices。模型權重不包入 npm，仍於 prepare 時下載固定 revision。
+
+本機包可用 `npm install ./spike/dist/twkevinzhang-lyric-align-ts-0.1.0.tgz` 安裝。包內只有入口、型別、Worker、README 與授權文件；不包含測試素材、模型快取、開發工具、source maps 或應用 UI。發布前執行 `npm publish ./spike/dist/twkevinzhang-lyric-align-ts-0.1.0.tgz --dry-run` 檢查；正式發布使用相同 tarball 與 `--access public`，需要具備 npm scope 權限及有效登入。0.1.0 已完成 2FA 與正式公開發布，不應重複發布同一版本。
+
+tarball 已在乾淨專案實際 npm 安裝，通過 TypeScript 契約相容性／16000 Hz 限制、Vite production build，以及 Chrome 中實際 Worker 啟動、UNSUPPORTED_LANGUAGE 錯誤與重複 dispose。公開 registry 的 tarball 已下載核對，與測試候選包逐 byte 相同，另以獨立 npm cache 實際安裝 0.1.0 並匯入入口成功。`npm run verify:library-package` 可重跑檔案白名單與 metadata 核對。包約 20.1 MB，解壓約 72.6 MB，包含 runtime WASM；模型權重另行下載。
+
+使用方式及限制見 [npm 套件說明](spike/library.README.md)。以下範例為靜態複製方式；bundler 使用 npm 包時可直接從 `@twkevinzhang/lyric-align-ts` 匯入。
 
 ```ts
 import { binding } from './library/index.js'; // 複製整個 dist/library 至此相對目錄
@@ -31,8 +47,6 @@ try {
 每個 session 擁有一個 module Worker；同 session 不允許操作重疊。取消會終止該 Worker 並以 `{code:'ABORTED', message}` 拒絕操作，之後等待 rejected promise 再 dispose，重試另建 session。dispose 可重複呼叫；未結束的操作期間呼叫 dispose 會報 INVALID_INPUT。錯誤皆為 `{code,message}`。模型下載使用實際 bytes／檔名 scope；ASR 沒有可量測的總進度時只回報不定進度，align 完成回報實際行數。sequence 在每次操作內從 1 遞增。
 
 執行環境必須允許同來源 module Worker、模型下載及 WebAssembly／所選後端。若 host 使用 COEP 隔離，Worker 資源也必須送相符的 COEP header；extension 的 CSP、host permissions 與 offscreen 生命週期由消費端整合驗證。此 library 不取得音訊、不操作播放器、不產生字幕或套用部分結果。
-
-瀏覽器端 Whisper **small.en／q4** 歌詞對齊工具。可選 **WASM（單執行緒）或 WebGPU**；ASR 不接收歌詞。程式位於 `spike/`。
 
 ## 執行
 

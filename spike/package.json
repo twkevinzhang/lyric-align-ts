@@ -9,6 +9,8 @@
     "typecheck": "tsc --noEmit",
     "build": "tsc --noEmit && react-router build",
     "build:library": "tsc --noEmit && vite build --config vite.library.config.ts && tsc -p tsconfig.library.json && node scripts/package-library.ts",
+    "pack:library": "npm run build:library && npm pack ./dist/library --pack-destination ./dist && npm run verify:library-package",
+    "verify:library-package": "node scripts/verify-library-package.ts",
     "lint": "eslint app scripts/*.ts vite.config.ts react-router.config.ts",
     "format": "prettier --write app scripts/*.ts *.json *.ts *.js"
   },

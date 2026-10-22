@@ -23,7 +23,7 @@
 
 - 57 項測試、TypeScript、ESLint、原應用 build 與 library build 已通過。
 - 獨立審查發現零長度 ASR 詞被誤拒，已加入失敗重現並修正；段落仍要求正長度。
-- 產出 `spike/dist/library` 與 `spike/dist/lyric-align-ts-0.1.0.zip`；發布物型別已實際與 yt-subtitle 原始契約賦值檢查通過，且 44100 Hz 會被型別拒絕。
+- 產出 `spike/dist/library` 與 npm 候選包 `spike/dist/twkevinzhang-lyric-align-ts-0.1.0.tgz`；發布物型別已實際與 yt-subtitle 原始契約賦值檢查通過，且 44100 Hz 會被型別拒絕。
 - 最終正式打包入口已在 Chrome WebGPU 跑完整 130.29875 秒音訊，6 ASR 段、12/12 行合法匹配、原文／順序保持、重複 dispose 完成，推論 151.15 秒。進度事件 phase-local sequence 與真實 bytes/items 已核對；證據為 `.local/results/binding-{report,validation}.json`。
 - 未修改 yt-subtitle；extension offscreen/CSP 與獨立音訊提供者仍屬消費端整合驗收，不能宣稱已完成。
 - 已載入真實模型後的全曲推論取消回報 ABORTED、重複 dispose 成功；證據 `.local/results/binding-cancel-report.json`。
