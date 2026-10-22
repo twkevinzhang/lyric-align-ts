@@ -1,6 +1,6 @@
 {
   "name": "@twkevinzhang/lyric-align-ts",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Browser Whisper ASR and lyric alignment with isolated worker sessions",
   "type": "module",
   "main": "./index.js",

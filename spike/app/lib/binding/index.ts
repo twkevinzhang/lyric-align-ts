@@ -16,7 +16,7 @@ export function createBinding(
       throw failure("UNSUPPORTED_OPTION", `Unsupported binding option: ${key}`);
   const capabilities: Capabilities = Object.freeze({
     contractVersion: 1,
-    libraryVersion: "0.1.0",
+    libraryVersion: "0.1.1",
     supportedLanguages: Object.freeze(["en"]),
     model: Object.freeze({ ...MODEL, device, dtype: "q4" }),
     alignmentOptions: Object.freeze([

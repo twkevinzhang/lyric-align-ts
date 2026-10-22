@@ -2,6 +2,8 @@
 
 瀏覽器端 Whisper ASR 與歌詞對齊，提供 contract v1 的 session API。ES module only；推論在 session 專用 module Worker 執行。
 
+0.1.1 包含 Chrome MV3 的靜態 runtime 資產修正；請完整保留 assets/ 中的 JavaScript 與 WASM。
+
 ## 使用
 
 ```sh

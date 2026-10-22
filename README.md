@@ -4,19 +4,19 @@
 
 ## Browser library API（contract v1）
 
-公開原始碼入口為 `spike/app/lib/binding/index.ts`，匯出 `binding`、`createBinding` 與完整契約型別。[`@twkevinzhang/lyric-align-ts@0.1.0`](https://www.npmjs.com/package/@twkevinzhang/lyric-align-ts) 已公開發布，latest 為 0.1.0，並完成從 registry 實際安裝驗證。
+公開原始碼入口為 `spike/app/lib/binding/index.ts`，匯出 `binding`、`createBinding` 與完整契約型別。[`@twkevinzhang/lyric-align-ts`](https://www.npmjs.com/package/@twkevinzhang/lyric-align-ts) 目前原始碼版本為 0.1.1，包含 MV3 靜態 runtime 修正；registry 發布狀態以 `npm view @twkevinzhang/lyric-align-ts version` 為準。
 
 ```sh
-npm install @twkevinzhang/lyric-align-ts@0.1.0
+npm install @twkevinzhang/lyric-align-ts@0.1.1
 ```
 
 在 `spike/` 執行 `npm run build:library`，產生可交付的 `spike/dist/library/`（ES module、專用 Worker、型別與套件 manifest）。請完整保留該目錄及相對路徑，將其作為靜態資源載入；不要只複製 index.js 或將已打包入口再次打包而遺失 Worker 資源。原始碼入口可由支援 `new Worker(new URL(..., import.meta.url))` 的 bundler 處理。
 
 ## npm 發布與重建
 
-在 `spike/` 執行 `npm run pack:library`，會先完整建置，再產生 `dist/twkevinzhang-lyric-align-ts-0.1.0.tgz`。發布 metadata 來源為 `spike/library.package.json`，套件專用說明為 `spike/library.README.md`。原創程式碼 MIT；打包時保留上游演算法與 runtime 的授權及 notices。模型權重不包入 npm，仍於 prepare 時下載固定 revision。
+在 `spike/` 執行 `npm run pack:library`，會先完整建置，再產生 `dist/twkevinzhang-lyric-align-ts-0.1.1.tgz`。發布 metadata 來源為 `spike/library.package.json`，套件專用說明為 `spike/library.README.md`。原創程式碼 MIT；打包時保留上游演算法與 runtime 的授權及 notices。模型權重不包入 npm，仍於 prepare 時下載固定 revision。
 
-本機包可用 `npm install ./spike/dist/twkevinzhang-lyric-align-ts-0.1.0.tgz` 安裝。包內包含入口、型別、Worker、靜態 runtime `.mjs`／`.wasm`、README 與授權文件；不包含測試素材、模型快取、開發工具、source maps 或應用 UI。0.1.0 已公開發布，不應重複發布同一版本；目前原始碼的 MV3 修正只以本地 tarball 驗證，尚未發布 npm，後續正式發布必須另升版本。
+本機包可用 `npm install ./spike/dist/twkevinzhang-lyric-align-ts-0.1.1.tgz` 安裝。包內包含入口、型別、Worker、靜態 runtime `.mjs`／`.wasm`、README 與授權文件；不包含測試素材、模型快取、開發工具、source maps 或應用 UI。0.1.1 包含 MV3 runtime 修正，發布時使用已驗證的 tarball，不得覆寫已公開版本。
 
 `npm run verify:library-package` 可重跑檔案白名單、靜態 runtime 資產與 metadata 核對。本地修正包約 10.5 MB、解壓約 42.1 MB，包含 asyncify 與舊 Safari WASM 所需的 standard runtime；模型權重另行下載。公開 registry 0.1.0 的 JS Blob runtime 載入不相容 MV3；目前原始碼改為同來源靜態 runtime，詳見 [MV3 整合與本地測試](docs/mv3-runtime.md)。
 
@@ -42,7 +42,7 @@ try {
 }
 ```
 
-`capabilities` 宣告版本 0.1.0、僅 `en`、固定 small.en/q4 與 revision，預設 WebGPU；需要既有 WASM 配置時使用 `createBinding({ device: 'wasm' })`，不自動 fallback。`lyricsContext=false`，不得傳歌詞提示。支援 pairing、threshold（0–1，嚴格大於門檻）、window（正整數）與 karaoke=false。缺省仍為 auto／window4／依文字選門檻。所有時間為秒，逐行原文與順序保持；純空白行應由消費端留在原文、排除於 align 輸入。
+`capabilities` 宣告版本 0.1.1、僅 `en`、固定 small.en/q4 與 revision，預設 WebGPU；需要既有 WASM 配置時使用 `createBinding({ device: 'wasm' })`，不自動 fallback。`lyricsContext=false`，不得傳歌詞提示。支援 pairing、threshold（0–1，嚴格大於門檻）、window（正整數）與 karaoke=false。缺省仍為 auto／window4／依文字選門檻。所有時間為秒，逐行原文與順序保持；純空白行應由消費端留在原文、排除於 align 輸入。
 
 每個 session 擁有一個 module Worker；同 session 不允許操作重疊。取消會終止該 Worker 並以 `{code:'ABORTED', message}` 拒絕操作，之後等待 rejected promise 再 dispose，重試另建 session。dispose 可重複呼叫；未結束的操作期間呼叫 dispose 會報 INVALID_INPUT。錯誤皆為 `{code,message}`。模型下載使用實際 bytes／檔名 scope；ASR 沒有可量測的總進度時只回報不定進度，align 完成回報實際行數。sequence 在每次操作內從 1 遞增。
 
