@@ -1,5 +1,37 @@
 # lyric-align-ts
 
+## Browser library API（contract v1）
+
+公開原始碼入口為 `spike/app/lib/binding/index.ts`，匯出 `binding`、`createBinding` 與完整契約型別。這是 library 的實際入口，沒有發布到 npm。
+
+在 `spike/` 執行 `npm run build:library`，產生可交付的 `spike/dist/library/`（ES module、專用 Worker、型別與套件 manifest）。請完整保留該目錄及相對路徑，將其作為靜態資源載入；不要只複製 index.js 或將已打包入口再次打包而遺失 Worker 資源。原始碼入口可由支援 `new Worker(new URL(..., import.meta.url))` 的 bundler 處理。
+
+```ts
+import { binding } from './library/index.js'; // 複製整個 dist/library 至此相對目錄
+
+const controller = new AbortController();
+const context = { signal: controller.signal, onProgress: console.log };
+const session = await binding.createSession();
+try {
+  await session.prepare({ language: 'en' }, context);
+  const segments = await session.transcribe(
+    { pcm, sampleRate: 16000 }, // 呼叫端提供完整、單聲道、有限數值 PCM
+    { language: 'en' },
+    context,
+  );
+  const lines = await session.align(segments, lyrics, { karaoke: false }, context);
+  // 消費端須驗證整首同數、同序、同原文、全部匹配與時間界限後，才原子套用。
+} finally {
+  await session.dispose();
+}
+```
+
+`capabilities` 宣告版本 0.1.0、僅 `en`、固定 small.en/q4 與 revision，預設 WebGPU；需要既有 WASM 配置時使用 `createBinding({ device: 'wasm' })`，不自動 fallback。`lyricsContext=false`，不得傳歌詞提示。支援 pairing、threshold（0–1，嚴格大於門檻）、window（正整數）與 karaoke=false。缺省仍為 auto／window4／依文字選門檻。所有時間為秒，逐行原文與順序保持；純空白行應由消費端留在原文、排除於 align 輸入。
+
+每個 session 擁有一個 module Worker；同 session 不允許操作重疊。取消會終止該 Worker 並以 `{code:'ABORTED', message}` 拒絕操作，之後等待 rejected promise 再 dispose，重試另建 session。dispose 可重複呼叫；未結束的操作期間呼叫 dispose 會報 INVALID_INPUT。錯誤皆為 `{code,message}`。模型下載使用實際 bytes／檔名 scope；ASR 沒有可量測的總進度時只回報不定進度，align 完成回報實際行數。sequence 在每次操作內從 1 遞增。
+
+執行環境必須允許同來源 module Worker、模型下載及 WebAssembly／所選後端。若 host 使用 COEP 隔離，Worker 資源也必須送相符的 COEP header；extension 的 CSP、host permissions 與 offscreen 生命週期由消費端整合驗證。此 library 不取得音訊、不操作播放器、不產生字幕或套用部分結果。
+
 瀏覽器端 Whisper **small.en／q4** 歌詞對齊工具。可選 **WASM（單執行緒）或 WebGPU**；ASR 不接收歌詞。程式位於 `spike/`。
 
 ## 執行

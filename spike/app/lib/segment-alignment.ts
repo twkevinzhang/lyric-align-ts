@@ -124,6 +124,7 @@ export function alignSegments(
   segments: Segment[],
   lyrics: string[],
   requested: number | "auto" = "auto",
+  options: { threshold?: number; window?: number } = {},
 ) {
   const pairing =
     requested === "auto"
@@ -135,7 +136,9 @@ export function alignSegments(
       c,
     ),
   ).length;
-  const threshold = chars.length && cjk / chars.length >= 0.2 ? 0.25 : 0.5;
+  const threshold =
+    options.threshold ??
+    (chars.length && cjk / chars.length >= 0.2 ? 0.25 : 0.5);
   let cursor = 0;
   const results = [];
   for (let offset = 0; offset < lyrics.length; offset += pairing) {
@@ -145,7 +148,11 @@ export function alignSegments(
       candidates: { segmentIndex: number; score: number }[] = [];
     let score = 0,
       best: number | null = null;
-    for (let i = cursor; i < Math.min(cursor + 4, segments.length); i++) {
+    for (
+      let i = cursor;
+      i < Math.min(cursor + (options.window ?? 4), segments.length);
+      i++
+    ) {
       const candidate = similarity(line, segments[i].text);
       candidates.push({ segmentIndex: i, score: candidate });
       if (candidate > score) {

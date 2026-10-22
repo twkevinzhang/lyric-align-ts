@@ -2,6 +2,20 @@
 
 已完成本次固定範圍：瀏覽器 WASM（單執行緒）／WebGPU、small.en／q4、auto／window 4、no-vad。正式 Worker 使用自訂 beam／sampling、控制與 ASR 詞時間，沒有 pipeline／greedy 替代、歌詞提示、已知歌詞重對齊或額外時間修整。
 
+## Library contract v1 驗證
+
+`spike/app/lib/binding/index.ts` 已提供實際 binding；`spike/dist/library/` 為可獨立靜態載入的正式發布物。固定英文模型及推論核心，無歌詞提示。公開契約與 yt-subtitle 原始契約完成 TypeScript 結構相容核對，發布物的 16000 Hz 型別限制亦通過編譯驗證。
+
+Chrome WebGPU 使用正式發布物依序執行 prepare → transcribe → align → dispose：官方完整音訊 **130.29875 秒／2,084,780 samples**，ASR **6 段**、歌詞 **12/12 行**合法匹配，逐字原文及順序保持，推論 **151.15 秒**。重複 dispose 成功。這是單份素材上的 library 整合驗證，匹配率不是時間準確率；未在本次測試中驗證 yt-subtitle extension、音訊取得或 offscreen/CSP 整合，也未重跑 WASM binding 全曲。
+
+全部 **57 項測試**、lint、typecheck、既有應用 build 與 library build 通過。生命週期測試涵蓋操作重疊、取消、重複釋放、Worker crash、無效選項／PCM、語言限制、零長度 ASR 詞與錯誤映射。模型下載進度來自實際 loaded/total bytes 與檔名 scope；ASR 保持不定進度；align 完成回報真實 items，所有 phase-local sequence 逐項核對。未變更既有聲學或配對預設。
+
+本機完整證據：`.local/results/binding-report.json`、`binding-validation.json`；檢查程式 `.local/verify-binding.mjs`。發布物為 `spike/dist/lyric-align-ts-0.1.0.zip`，未發布 npm、未修改消費端。重現入口為 `.local/asr-capability/binding.html`，以 `.local/asr-capability/binding.config.mjs` 的 localhost 5178 靜態 host 執行；host 的 Worker 回應必須與 document 使用相符 COEP。
+
+實際模型 prepare 完成後，使用同份全曲 PCM 啟動 transcribe，在一秒後 abort，回報 ABORTED，隨後兩次 dispose 均完成；證據 `.local/results/binding-cancel-report.json`。取消終止 session 專用 Worker，不沿用該 session。
+
+本次 5178 測試伺服器已停止，確認 listening 數為 0，驗收頁已關閉；命令、cwd、session 與停止核對保存於 `.local/results/binding-lifecycle.json`。
+
 ## 全曲實測
 
 桌面 Chrome 155、NVIDIA Pascal adapter；同素材兩後端的檔案 SHA 與解碼後 PCM SHA 相同。以下為單次觀察，部分後端驗證並行執行，耗時不應視為隔離效能基準。
@@ -23,7 +37,7 @@
 
 - 四份正式 Worker 報告共 **32 輪 seek**，以抽出的上游 Python 純函式、保存的 q4 解碼回應重播：prompt／fallback／no-speech／timestamp 切段／詞邊界／seek／前文均 **0 差異**。推論呼叫用保存回應替代，沒有匯入或執行 faster-whisper／CTranslate2 backend。
 - 四份相同 segments 與歌詞交給未修改的 lyric-align auto／window4 配對器：行文字、分數、匹配與時間均 **0 差異**。
-- **47 項測試**、lint、typecheck、production build 通過。fixtures 包含 38 組相似度、12 組 pairing1、120 組 auto、48 組呼吸、150 組切段／seek、80 組詞邊界、204 組 canonical zlib 案例。
+- **57 項測試**、lint、typecheck、production build 通過。fixtures 包含 38 組相似度、12 組 pairing1、120 組 auto、48 組呼吸、150 組切段／seek、80 組詞邊界、204 組 canonical zlib 案例。
 - 原始 logits（51,864 維）、SOT no-speech 機率、encoder 重用、獨立 cache、交錯候選／釋放隔離，以及 12 層 cross attention／19 個指定 heads，在兩後端通過。
 - 兩後端 **448-token context、五份獨立 cache** 負載通過。第一與第五分支對完整 prefix forward 的 argmax 相同，符合 `abs(error) <= .002 + .002*abs(reference)`；最大差異 WebGPU 0.00002432、WASM 0.00001812。encoder 各 1 次，清理後追蹤張量 0。
 - 全曲特徵在短音訊、1 秒、恰好 30 秒及尾端案例，與獨立 NumPy 計算的選定點最大差異約 4.77×10⁻⁷；正規化只做一次，短尾段按上游有效 frames 補零。
