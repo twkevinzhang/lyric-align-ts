@@ -5,10 +5,17 @@ import * as protocol from "./protocol.ts";
 test("segment inspection preserves raw missing and zero durations instead of repairing them", () => {
   const result = protocol.inspectOutput(
     {
+      engine: "upstream-port-v1",
+      trace: [],
       text: "hello world",
-      chunks: [
-        { text: "hello", timestamp: [1, 1] },
-        { text: "world", timestamp: [null, 2] },
+      segments: [
+        {
+          text: "hello",
+          start: 1,
+          end: 1,
+          words: [{ word: "hello", start: 1, end: 1 }],
+        },
+        { text: "world", start: null, end: 2, words: [] },
       ],
     },
     3,
@@ -21,6 +28,7 @@ test("segment inspection preserves raw missing and zero durations instead of rep
     ],
   );
   assert.equal(result.anomalies.length, 2);
+  assert.equal(result.segments[0].words?.[0].word, "hello");
 });
 
 test("missing or malformed output is rejected instead of silently reconstructing segments", () => {

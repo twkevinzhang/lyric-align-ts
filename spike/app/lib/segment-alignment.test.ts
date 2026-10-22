@@ -13,6 +13,7 @@ test("pairing 1 takes raw segment boundaries even when word boundaries differ", 
       },
     ],
     ["Open the gate"],
+    1,
   );
   assert.deepEqual(
     rows.map(({ start, end, matched }) => ({ start, end, matched })),
@@ -26,14 +27,11 @@ test("window 4 excludes the fifth segment and a failed lyric does not advance th
     start: i,
     end: i + 0.8,
   }));
-  const rows = alignSegments(segments, [
-    "Open gate",
-    "qqq",
-    "xxx",
-    "zzz",
-    "vvv",
-    "Open gate",
-  ]);
+  const rows = alignSegments(
+    segments,
+    ["Open gate", "qqq", "xxx", "zzz", "vvv", "Open gate"],
+    1,
+  );
   assert.deepEqual(
     rows.map((r) => r.start),
     [null, 0, 1, 2, 3, 4],
@@ -47,6 +45,7 @@ test("ties consume the earliest repeated segment; single word lyrics can match",
       { text: "Amen", start: 4, end: 5 },
     ],
     ["Amen", "Amen", "Amen"],
+    1,
   );
   assert.deepEqual(
     rows.map((r) => r.start),

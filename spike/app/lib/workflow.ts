@@ -21,6 +21,8 @@ export type Run = {
   lines?: ReturnType<typeof alignSegments>;
   wordErrors?: ReturnType<typeof wordErrors>;
   error?: string;
+  backend: "wasm" | "webgpu";
+  trace?: unknown;
 };
 
 export function completeRun(run: Run, output: unknown, elapsedMs: number): Run {
@@ -30,7 +32,7 @@ export function completeRun(run: Run, output: unknown, elapsedMs: number): Run {
     output,
     elapsedMs,
     analysis,
-    lines: alignSegments(analysis.segments, run.lyrics),
+    lines: alignSegments(analysis.segments, run.lyrics, "auto"),
     wordErrors: wordErrors(run.lyrics.join(" "), analysis.text),
   };
 }

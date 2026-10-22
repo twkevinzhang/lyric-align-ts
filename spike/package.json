@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "test": "node --test app/lib/*.test.ts",
+    "test": "node --test app/lib/*.test.ts app/lib/asr/*.test.ts",
     "dev": "react-router dev --host 127.0.0.1 --port 5173 --strictPort",
     "typecheck": "tsc --noEmit",
     "build": "tsc --noEmit && react-router build",

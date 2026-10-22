@@ -5,23 +5,40 @@ export const MODEL = {
 } as const;
 export const SETTINGS = {
   runtime: "4.3.1",
-  device: "webgpu",
+  engine: "upstream-port-v1",
   dtype: "q4",
-  chunk_length_s: 30,
-  stride_length_s: 5,
-  return_timestamps: true,
-  max_new_tokens: 128,
+  max_length: 448,
+  beam_size: 5,
+  best_of: 5,
+  patience: 1,
+  length_penalty: 1,
+  temperatures: [0, 0.2, 0.4, 0.6, 0.8, 1],
+  compression_ratio_threshold: 2.4,
+  log_prob_threshold: -1,
+  no_speech_threshold: 0.6,
+  condition_on_previous_text: true,
+  prompt_reset_on_temperature: 0.5,
+  word_timestamps: true,
   no_repeat_ngram_size: 0,
-  do_sample: false,
+  repetition_penalty: 1,
+  suppress_blank: true,
+  max_initial_timestamp: 1,
+  initial_prompt: null,
+  prefix: null,
+  hotwords: null,
+  hallucination_silence_threshold: null,
+  samplingRng: "Math.random",
   promptTextSource: "none",
   timestampCorrection: "none",
-  pairing: 1,
+  pairing: "auto",
   window: 4,
   karaoke: false,
   vad: false,
 } as const;
 export type Command =
-  { type: "load" } | { type: "run"; audio: Float32Array } | { type: "release" };
+  | { type: "load"; backend: "wasm" | "webgpu" }
+  | { type: "run"; audio: Float32Array }
+  | { type: "release" };
 export type WorkerEvent =
   | { type: "progress"; data: unknown }
   | { type: "ready"; elapsedMs: number }
@@ -32,7 +49,9 @@ export type WorkerEvent =
       elapsedMs: number;
     }
   | { type: "released" }
-  | { type: "error"; message: string };
+  | { type: "status"; message: string }
+  | { type: "trace"; trace: unknown }
+  | { type: "error"; message: string; trace?: unknown };
 export type Anomaly = { index: number; kind: string };
 export type HeapSample = {
   elapsedMs: number;
@@ -53,24 +72,46 @@ export function inspectOutput(
   duration: number,
 ): { segments: Segment[]; anomalies: Anomaly[]; text: string } {
   const raw = output as {
+    engine?: unknown;
+    trace?: unknown;
     text?: unknown;
-    chunks?: { text?: unknown; timestamp?: unknown }[];
+    segments?: {
+      text?: unknown;
+      start?: unknown;
+      end?: unknown;
+      words?: unknown;
+    }[];
   };
-  if (!raw || !Array.isArray(raw.chunks))
-    throw new Error("辨識結果沒有原始段落 chunks；原始結果會保留於報告。");
-  const segments = raw.chunks.map((c) => {
+  if (
+    !raw ||
+    raw.engine !== SETTINGS.engine ||
+    !Array.isArray(raw.segments) ||
+    !Array.isArray(raw.trace)
+  )
+    throw new Error("辨識結果不屬於自訂 ASR 流程；需包含 segments 與 trace。");
+  const segments = raw.segments.map((c) => {
+    if (!c || typeof c.text !== "string") throw new Error("無效的 ASR 段落");
+    const words = c.words;
     if (
-      !c ||
-      typeof c.text !== "string" ||
-      !Array.isArray(c.timestamp) ||
-      c.timestamp.length !== 2
+      words !== undefined &&
+      (!Array.isArray(words) ||
+        words.some(
+          (w) =>
+            !w ||
+            typeof w.word !== "string" ||
+            !Number.isFinite(w.start) ||
+            !Number.isFinite(w.end),
+        ))
     )
-      throw new Error("無效的 ASR 段落");
-    const t = c.timestamp;
+      throw Error("無效的 ASR 詞時間");
     return {
       text: typeof c.text === "string" ? c.text : "",
-      start: typeof t[0] === "number" && Number.isFinite(t[0]) ? t[0] : null,
-      end: typeof t[1] === "number" && Number.isFinite(t[1]) ? t[1] : null,
+      start:
+        typeof c.start === "number" && Number.isFinite(c.start)
+          ? c.start
+          : null,
+      end: typeof c.end === "number" && Number.isFinite(c.end) ? c.end : null,
+      words: words as Segment["words"],
     };
   });
   const anomalies: Anomaly[] = [];

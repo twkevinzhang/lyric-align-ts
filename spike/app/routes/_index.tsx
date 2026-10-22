@@ -37,6 +37,7 @@ export default function Workspace() {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState("");
   const [gpuReady, setGpuReady] = useState(false);
+  const [backend, setBackend] = useState<"wasm" | "webgpu">("webgpu");
   const [device, setDevice] = useState<Record<string, unknown>>({
     status: "檢查中",
   });
@@ -162,6 +163,10 @@ export default function Workspace() {
                 ? (p.status ?? "")
                 : `${p.progress.toFixed(1)}%`,
           }));
+      } else if (data.type === "status") {
+        setPhase(data.message);
+      } else if (data.type === "trace") {
+        if (current.current) current.current.trace = data.trace;
       } else if (data.type === "ready") {
         setLoaded(true);
         setLoadMs(data.elapsedMs);
@@ -196,7 +201,10 @@ export default function Workspace() {
         worker.current = null;
         setLoaded(false);
         finish("模型已釋放，worker 已終止");
-      } else fail(data.message);
+      } else {
+        if (current.current && data.trace) current.current.trace = data.trace;
+        fail(data.message);
+      }
     };
     worker.current = instance;
     return instance;
@@ -242,11 +250,11 @@ export default function Workspace() {
     }
   }
   function loadModel() {
-    if (lock.current || loaded || !gpuReady) return;
+    if (lock.current || loaded || (backend === "webgpu" && !gpuReady)) return;
     enter("載入 small.en q4 模型", true);
     setProgress({});
     try {
-      send({ type: "load" });
+      send({ type: "load", backend });
     } catch (e) {
       fail(String(e));
     }
@@ -262,6 +270,7 @@ export default function Workspace() {
     setElapsed(0);
     current.current = {
       startedAt: new Date().toISOString(),
+      backend,
       audio,
       lyrics: lines,
       secondsTested: audio.duration,
@@ -304,7 +313,7 @@ export default function Workspace() {
       : null;
   const exportReport = () =>
     saveReport({
-      schema: 4,
+      schema: 5,
       profile: { model: MODEL, settings: SETTINGS },
       device,
       audio,
@@ -316,7 +325,7 @@ export default function Workspace() {
         ? { audioSha256: reference.audioSha256, source: reference.source }
         : null,
       limits:
-        "No lyrics supplied to ASR. Native ASR segments matched with pairing 1/window 4. Original segment boundaries retained; no acoustic realignment or correction. No backend inference.",
+        "Custom beam5/sampling5 ASR, no-vad; generated ASR words and upstream boundary rules, then auto/window4 pairing. No lyric prompts or additional timing correction. Runtime/model/audio decoding and RNG differ from CTranslate2; no bit-identical guarantee.",
     });
 
   return (
@@ -327,7 +336,7 @@ export default function Workspace() {
           <h1>從歌聲到歌詞時間</h1>
           <p>獨立辨識 · 段落順序配對 · 全曲處理</p>
         </div>
-        <span className="pill">small.en · q4 · WebGPU</span>
+        <span className="pill">small.en · q4 · {backend}</span>
       </header>
       <div className="status" role="status">
         <strong>{phase}</strong>
@@ -381,17 +390,32 @@ export default function Workspace() {
             />
           </label>
           <p className="note">
-            歌詞只在辨識完成後配對，不傳入
-            ASR。採用原始段落時間，未匹配行保持空值。
+            歌詞只在辨識完成後配對，不傳入 ASR。辨識完成後按 auto／window 4
+            配對，多行依上游呼吸規則切分；未匹配行保持空值。
           </p>
         </section>
         <section className="panel">
           <h2>02 / 全曲處理</h2>
           <p>
-            固定使用 small.en q4；30 秒視窗、5 秒重疊。首次載入需要下載模型。
+            固定使用 small.en q4，自訂 beam 5 與溫度重試，依時間 token 與 ASR
+            詞時間推進。首次載入需要下載模型。
           </p>
+          <label>
+            推論後端{" "}
+            <select
+              value={backend}
+              disabled={busy || loaded}
+              onChange={(e) => setBackend(e.target.value as "wasm" | "webgpu")}
+            >
+              <option value="webgpu">WebGPU</option>
+              <option value="wasm">WASM（單執行緒）</option>
+            </select>
+          </label>
           <div className="actions">
-            <button disabled={busy || loaded || !gpuReady} onClick={loadModel}>
+            <button
+              disabled={busy || loaded || (backend === "webgpu" && !gpuReady)}
+              onClick={loadModel}
+            >
               載入模型
             </button>
             <button
@@ -424,7 +448,7 @@ export default function Workspace() {
             <summary>裝置與固定設定</summary>
             <pre>
               {JSON.stringify(
-                { device, model: MODEL, settings: SETTINGS },
+                { device, backend, model: MODEL, settings: SETTINGS },
                 null,
                 2,
               )}
@@ -490,8 +514,9 @@ export default function Workspace() {
               </p>
             </div>
             <p className="note">
-              每行搜尋接下來最多 4 個 ASR 段落，英文字元相似度須大於 0.50。
-              成功時沿用段落起訖；未匹配行不補時間。WER 使用獨立 ASR 文字計算。
+              auto 群組搜尋接下來最多 4 個 ASR 段落，英文字元相似度須大於 0.50。
+              多行使用 ASR 詞間呼吸切分，未匹配行不補時間。WER 使用獨立 ASR
+              文字計算。
             </p>
             <div className="table-scroll">
               <table>

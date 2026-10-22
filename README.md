@@ -1,10 +1,10 @@
 # lyric-align-ts
 
-在瀏覽器以 **Whisper small.en／WebGPU／q4** 獨立辨識音訊，再依上游 [lyric-align](https://github.com/ijuinryukichi/lyric-align) 的 **pairing 1、window 4** 規則配對歌詞行。程式位於 `spike/`。
+瀏覽器端 Whisper **small.en／q4** 歌詞對齊工具。可選 **WASM（單執行緒）或 WebGPU**；ASR 不接收歌詞。程式位於 `spike/`。
 
 ## 執行
 
-需要 Node.js 24、npm 與可用的 WebGPU。
+需要 Node.js 24、npm 與桌面瀏覽器：
 
 ```sh
 cd spike
@@ -12,66 +12,38 @@ npm ci
 npm run dev
 ```
 
-開啟 `http://127.0.0.1:5173/`，選音檔、提供依演唱順序排列且每行一句的英文歌詞，載入模型後按「開始全曲對齊」。可播放音檔、展開匹配的 ASR 段落、切換執行紀錄、匯出診斷 JSON，或中止與釋放模型。重新整理會清除結果。
+開啟 `http://127.0.0.1:5173/`，選擇音檔、輸入依演唱順序排列的英文歌詞，選後端並載入模型，再開始全曲對齊。可中止、釋放模型或匯出本機 JSON。首次需下載模型，音訊與歌詞留在瀏覽器，沒有後端推論服務。
 
-首次使用從 Hugging Face 下載模型，後續可使用瀏覽器快取。音訊、歌詞與推論留在瀏覽器，沒有後端推論服務；清除快取後不保證離線可用。
-
-## 處理流程
+## 流程與固定基準
 
 ```text
-音檔 → 不帶歌詞提示的 ASR → 原生 ASR 段落
-                               ↓
-歌詞 → 字元模糊配對（pairing 1、window 4）
-                               ↓
-                   原始段落起訖／未匹配空值
+音檔 → 16kHz mono PCM → 全曲 log-Mel 正規化
+                            ↓
+               依 seek 取最多 30 秒特徵
+                            ↓
+      自訂 beam 5／sampling best_of 5 → fallback
+                            ↓
+      timestamp 段落 → ASR 詞時間 → 上游邊界規則
+                            ↓
+          更新 seek 與 ASR 前文，直到音訊結束
+                            ↓
+歌詞 → auto 群組 → window 4 字元配對 → 呼吸切分
+                            ↓
+                  行起訖／未匹配空值
 ```
 
-- Transformers.js **4.3.1**，模型 `onnx-community/whisper-small.en_timestamped`，revision `8085393831131554ad978a4e438295a734d3d2c0`。固定 `device: webgpu`、`dtype: q4`，失敗不切換裝置或精度。
-- 單聲道 16 kHz；30 秒推論視窗、5 秒 stride；`max_new_tokens: 128`、`do_sample: false`、`no_repeat_ngram_size: 0`。英文專用模型不傳 `language`／`task`。
-- `return_timestamps: true` 回傳 Whisper timestamp tokens 定義、經套件合併重疊後的段落。30 秒視窗不是配對段落。此流程不要求詞級時間，也不產生逐詞卡拉 OK 時間。
-- 歌詞不傳給辨識 Worker；ASR 完成後才使用當次歌詞快照配對。
-- 每行由目前游標起搜尋最多 4 個段落，採上游正規化與 Python `difflib.SequenceMatcher` 相容的字元相似度，保留大小寫與預設 `autojunk` 行為。英文門檻為 **>0.50**；核心同樣保留上游 CJK 比例判斷與 **>0.25** 門檻，但 ASR 模型仍只適用英文。
-- 同分保留最早候選；成功後游標移至選中段落下一段，失敗不前進。未匹配行保留空時間與候選分數。
-- `pairing: 1`、`karaoke: false`：每行直接採所選段落的原始起訖，無歌詞提示、全域詞序配對、額外聲學重對齊、Q25 或其他時間修整。
-- 缺少、零／負長度、超界、倒序與重疊時間只列為異常，不裁切、不修補。文字匹配狀態與時間有效性分開；段落若缺少邊界，行時間仍保留空值。
+- Transformers.js **4.3.1**，`onnx-community/whisper-small.en_timestamped`，revision `8085393831131554ad978a4e438295a734d3d2c0`，固定 q4。錯誤不會自動換模型、精度、後端或搜尋策略。
+- 規則來源：[lyric-align ebe62d8](https://github.com/ijuinryukichi/lyric-align/tree/ebe62d8a8628d0b2579987598f0442ebffcc68bb)、faster-whisper **1.2.1**、CTranslate2 **4.8.3**。只執行瀏覽器 q4 模型；Python 原始碼用於純規則驗證。
+- `pairing=auto`、`window=4`、`karaoke=false`、`--no-vad`。無初始提示、prefix、hotwords 或提供歌詞的入口；前文只來自 ASR 已產生且保留的段落 tokens。
+- 自訂解碼器使用 beam=5、patience=1、length_penalty=1；溫度為 0、0.2、0.4、0.6、0.8、1。非零溫度各抽樣五個獨立候選。實作 blank／non-speech suppression、timestamp masks、EOS、token 上限與機率統計；不呼叫 `pipeline()` 或 `generate()` 代替。
+- `max_length=448` 按 CTranslate2 的 context/start-step 語意計算生成上限，沒有額外 128-token 限制。no-vad 仍保留 no-speech 判斷；重試門檻為 compression ratio >2.4 或 avg logprob <−1，no-speech 門檻為 >0.6，依上游例外處理。
+- ASR 自身的詞時間包含指定 attention heads、有效 frames 正規化、文字軸 LayerNorm、median filter 7、DTW、英文詞分組、標點合併及 faster-whisper 原有邊界規則。這些只處理辨識文字，不對提供的歌詞重新做聲學推論。
+- auto 以歌詞行數／ASR 段落數取 Python ties-to-even，限 1–3。群組由目前游標搜尋最多四段，字元相似度同分選較早者，嚴格通過門檻才前進；多行依詞間呼吸切分，缺 words 時沿用段落時間。
+- 未匹配行保持空值。沒有全域詞序配對、歌詞提示、已知歌詞重對齊、Q25、插補或額外時間修整。不以任何指定匹配率作為調參目標。
 
-## 上游一致性驗證
+## 報告與驗證
 
-配對語意以固定上游提交 [`ebe62d8a8628d0b2579987598f0442ebffcc68bb`](https://github.com/ijuinryukichi/lyric-align/tree/ebe62d8a8628d0b2579987598f0442ebffcc68bb) 為準，範圍為 `align(..., pairing=1, window=4, karaoke=False)`。未移植 `pairing auto`、多行呼吸切分、karaoke 或插補。
-
-先將同一份 `segments.json` 與歌詞交給未修改的 Python 上游與 TypeScript，再逐項比較行文字、相似度、匹配狀態與起訖。已驗證官方 Amazing Grace 段落的 **12/12 行匹配、0 差異**；另一份本機素材的原始 ASR 只產生標點，雙方同為 **0/18 行匹配、0 差異**。此外，測試庫保留由固定上游產生的合成資料，涵蓋 38 組相似度與 12 組段落案例。
-
-可針對自己的資料重跑（`UPSTREAM_SRC` 為固定提交中包含 `lyric_align/` 的 `src/`）：
-
-```sh
-cd spike
-node scripts/compare-upstream.ts PYTHON UPSTREAM_SRC segments.json lyrics.txt
-```
-
-`PYTHON` 是 Python 執行檔路徑；此步只用上游純 Python 配對核心，不載入 Whisper。不相符時退出碼非零。`segments.json` 格式為上游的 `[{"start": 1, "end": 4, "text": "...", "words": []}]`。
-
-瀏覽器與 faster-whisper 的模型、量化、推論與切段仍不同，因此核心一致不代表同一音檔的 ASR 結果或時間完全相同。驗收不以舊版 15/17 成績為通過門檻，也不為達成分數加入修整。
-
-## 報告與人工參考
-
-匯出 **schema 4** 診斷 JSON，包含固定設定、音檔 SHA-256、當次歌詞快照、原始 ASR chunks、段落分析、行配對與來源段落索引、獨立 ASR WER、時間異常、失敗紀錄及 JS heap。舊版詞級 schema 3 不適用。
-
-評分指令會從原始 ASR 重算，不信任報告內快取的分析：
-
-```sh
-cd spike
-node scripts/evaluate-report.ts report.json reference-map.json
-```
-
-參考格式為 `{ "audioSha256": "…", "lyrics": ["…"], "references": [{ "lineIndex": 0, "start": 1.23 }] }`，行索引從 0 起算，未知起點為 `null`。只評估完整音檔、相同雜湊與相同歌詞；未匹配行納入成功率分母，誤差統計只計已匹配行。人工參考不傳給 Worker 或配對函式；行起點參考不能驗證行尾。
-
-`.local/`、依賴與建置產物由 Git 忽略。音檔、完整歌詞、原始辨識文字與報告只留本機。開發模式的本機素材按鈕讀取 `.local/test-media/amazing_grace/amazing_grace.m4a`、同目錄的 `amazing_grace.txt` 及可選的 `.local/results/reference-map.json`。Production build 不包含該按鈕或讀檔 middleware。
-
-## 驗證與限制
-
-目前內建 Chromium 155（NVIDIA Pascal adapter、`shader-f16: false`）的單次全曲實測：206.68 秒本機 Amazing Grace，推論約 25.20 秒，20 個原生段落、0 筆時間結構異常、ASR WER 69.2%、行匹配 **0/18**。前四段是誤辨識內容，均未達歌詞匹配門檻；依上游規則，失敗不前進游標，因此所有行都保持未匹配。將這次瀏覽器段落交給原版 Python 後，同樣得到 0/18，所有分數與結果零差異。這證明核心行為一致，並不表示目前 ASR 品質可用。
-
-原始報告保留於本機 `.local/results/segment-browser-report.json`。另以 500 組相似度與 80 組段落案例執行 Python／TypeScript 差異比較，均為零差異。品質結果如實保留，不加入跳段、降低門檻或時間修整。
+**schema 5** 記錄 backend、模型與設定、音檔及 PCM SHA-256、每輪 seek／有效 frames、候選 token 與分數、重試／選擇、ASR 前文來源及 reset、timestamp 原始段落、詞時間及段落形成、auto 群組與呼吸切分來源。舊 pipeline schema 4 不適用。中止／錯誤保留已收到的部分 trace，不冒充完成結果。
 
 ```sh
 cd spike
@@ -79,10 +51,20 @@ npm test
 npm run lint
 npm run typecheck
 npm run build
+node scripts/compare-upstream.ts PYTHON UPSTREAM_SRC segments.json lyrics.txt auto
+node scripts/evaluate-report.ts report.json reference-map.json
 ```
 
-測試涵蓋上游相似度與配對結果、window 邊界、同分／重複行、單詞行、嚴格門檻、原始段落起訖、歌詞標記清理、時間異常、參考隔離、評分分母及報告重算。
+配對比較只執行上游純 Python 核心，不載入 ASR 模型。fixtures 包含既有 pairing 1 案例、120 組 auto、48 組呼吸分組、150 組切段／seek、80 組詞邊界案例。評分從保存的 ASR 重算；人工參考只評分，從不送入 ASR 或配對器。
 
-模型下載、初始化或推論失敗會顯示錯誤；可中止、釋放與重新載入。JS heap 不等於總 RAM 或 VRAM，`dispose()` 與終止 Worker 不保證驅動完全回收。其他語言、手機、跨顯卡與跨曲品質未完整驗證。
+最新實測範圍、數字與限制見 [ASR 驗證報告](docs/asr-capability.md)。匹配成功不等於時間正確，WER 也不能單獨驗證段落邊界。
 
-字元相似度、段落配對與歌詞解析衍生自上游 MIT 授權程式，授權見 `spike/upstream.LICENSE`。
+## 仍存在的差異
+
+模型／量化／ONNX runtime 固定為瀏覽器版本，不能保證與上游 medium 或 CTranslate2 浮點結果相同。Web Audio 與 PyAV 的解碼／重採樣也不承諾 bit-identical。
+
+ONNX 輸出的是 softmax 後 attention；裁切後除以有效 frames 機率和，數學上對應裁切原始 QK 後 softmax。實作遇到零值、非有限值或零變異會報錯，不能宣稱與 CTranslate2 每個浮點相同。相同分數的 TopK 以 parent/token 排序；CTranslate2 裝置端同分順序沒有相同保證。sampling 使用瀏覽器 `Math.random()`，不保證與 CTranslate2 同一亂數序列。
+
+五份 cache 以獨立 CPU 複本隔離；WebGPU 模式包含下載／上傳成本。張量統計不包含權重、runtime workspace、瀏覽器或驅動，也不是總 RAM／VRAM。低階 session／forward adapter 固定於套件版本，升級需重新驗證。
+
+`.local/` 的模型、音檔、歌詞與完整辨識報告不提交。開發模式本機素材按鈕不包含於 production build。來源授權見 `spike/upstream.LICENSE` 與 `spike/asr-upstream.LICENSE`。

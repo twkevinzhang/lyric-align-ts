@@ -11,19 +11,23 @@ test("CLI recomputes successful raw output and preserves failed runs as excluded
   try {
     const run = {
       startedAt: "test",
+      backend: "webgpu",
       audio: { sha256: "hash", duration: 10 },
       secondsTested: 10,
       lyrics: ["Open gate"],
       elapsedMs: 100,
       output: {
+        backend: "webgpu",
+        engine: "upstream-port-v1",
+        trace: [],
         text: "Open gate",
-        chunks: [{ text: "Open gate", timestamp: [1, 3] }],
+        segments: [{ text: "Open gate", start: 1, end: 3, words: [] }],
       },
       analysis: { segments: [] },
       lines: [],
     };
     const report = {
-      schema: 4,
+      schema: 5,
       profile: { model: MODEL, settings: SETTINGS },
       audio: { sha256: "hash" },
       runs: [{ ...run, error: "aborted", output: undefined }, run],
@@ -58,10 +62,10 @@ test("CLI recomputes successful raw output and preserves failed runs as excluded
     assert.equal(parsed.excluded.length, 1);
     assert.equal(parsed.results[0].segmentRecords, 1);
     assert.equal(parsed.results[0].lineTiming.withinOneSecond, 1);
-    report.schema = 3;
+    report.schema = 4;
     writeFileSync(file, JSON.stringify(report));
     assert.notEqual(evaluate().status, 0);
-    report.schema = 4;
+    report.schema = 5;
     report.audio.sha256 = "different";
     writeFileSync(file, JSON.stringify(report));
     assert.notEqual(evaluate().status, 0);

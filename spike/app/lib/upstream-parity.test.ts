@@ -16,7 +16,7 @@ test("character ratios agree with pinned upstream including autojunk and Unicode
 });
 test("pairing 1/window 4 results agree with pinned upstream on synthetic segments", () => {
   for (const { segments, lyrics, expected } of fixture.cases) {
-    const rows = alignSegments(segments, lyrics).map((row) => ({
+    const rows = alignSegments(segments, lyrics, 1).map((row) => ({
       line: row.line,
       start: row.start,
       end: row.end,

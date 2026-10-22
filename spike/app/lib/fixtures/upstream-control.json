@@ -1,0 +1,8754 @@
+{
+  "source": "faster-whisper 1.2.1 pure AST-extracted functions, no model/backend import",
+  "sourceSha": "5d5ffb00018561d3d529b2c72e1d9f5fff055bea725f3cccc7c6c67f5cc8ffe4",
+  "splits": [
+    {
+      "tokens": [
+        50363,
+        1,
+        50383,
+        50388,
+        2,
+        50403
+      ],
+      "seek": 3000,
+      "size": 1,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3000,
+            "start": 30.0,
+            "end": 30.4,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          },
+          {
+            "seek": 3000,
+            "start": 30.5,
+            "end": 30.8,
+            "tokens": [
+              50388,
+              2,
+              50403
+            ]
+          }
+        ],
+        "seek": 3001,
+        "singleEnding": true
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        50363
+      ],
+      "seek": 0,
+      "size": 2,
+      "expected": {
+        "segments": [
+          {
+            "seek": 0,
+            "start": 0.0,
+            "end": 0.0,
+            "tokens": [
+              50363
+            ]
+          }
+        ],
+        "seek": 0,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383
+      ],
+      "seek": 3000,
+      "size": 1,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3000,
+            "start": 30.0,
+            "end": 30.4,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          }
+        ],
+        "seek": 3001,
+        "singleEnding": true
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383
+      ],
+      "seek": 0,
+      "size": 3000,
+      "expected": {
+        "segments": [
+          {
+            "seek": 0,
+            "start": 0.0,
+            "end": 0.4,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          }
+        ],
+        "seek": 3000,
+        "singleEnding": true
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383,
+        50388,
+        2,
+        50403
+      ],
+      "seek": 3001,
+      "size": 3000,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3001,
+            "start": 30.01,
+            "end": 30.41,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          },
+          {
+            "seek": 3001,
+            "start": 30.51,
+            "end": 30.810000000000002,
+            "tokens": [
+              50388,
+              2,
+              50403
+            ]
+          }
+        ],
+        "seek": 6001,
+        "singleEnding": true
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383,
+        50388,
+        2
+      ],
+      "seek": 3000,
+      "size": 3000,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3000,
+            "start": 30.0,
+            "end": 30.4,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          }
+        ],
+        "seek": 3040,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383,
+        50388,
+        2,
+        50403
+      ],
+      "seek": 3001,
+      "size": 1,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3001,
+            "start": 30.01,
+            "end": 30.41,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          },
+          {
+            "seek": 3001,
+            "start": 30.51,
+            "end": 30.810000000000002,
+            "tokens": [
+              50388,
+              2,
+              50403
+            ]
+          }
+        ],
+        "seek": 3002,
+        "singleEnding": true
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1
+      ],
+      "seek": 3000,
+      "size": 999,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3000,
+            "start": 30.0,
+            "end": 39.99,
+            "tokens": [
+              50363,
+              1
+            ]
+          }
+        ],
+        "seek": 3999,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383,
+        50388,
+        2
+      ],
+      "seek": 3001,
+      "size": 100,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3001,
+            "start": 30.01,
+            "end": 30.41,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          }
+        ],
+        "seek": 3041,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        1,
+        2
+      ],
+      "seek": 3000,
+      "size": 2,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3000,
+            "start": 30.0,
+            "end": 30.02,
+            "tokens": [
+              1,
+              2
+            ]
+          }
+        ],
+        "seek": 3002,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        50363
+      ],
+      "seek": 0,
+      "size": 999,
+      "expected": {
+        "segments": [
+          {
+            "seek": 0,
+            "start": 0.0,
+            "end": 0.0,
+            "tokens": [
+              50363
+            ]
+          }
+        ],
+        "seek": 0,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        1,
+        2
+      ],
+      "seek": 0,
+      "size": 100,
+      "expected": {
+        "segments": [
+          {
+            "seek": 0,
+            "start": 0.0,
+            "end": 1.0,
+            "tokens": [
+              1,
+              2
+            ]
+          }
+        ],
+        "seek": 100,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        1,
+        2
+      ],
+      "seek": 0,
+      "size": 2,
+      "expected": {
+        "segments": [
+          {
+            "seek": 0,
+            "start": 0.0,
+            "end": 0.02,
+            "tokens": [
+              1,
+              2
+            ]
+          }
+        ],
+        "seek": 2,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        1,
+        2
+      ],
+      "seek": 3001,
+      "size": 100,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3001,
+            "start": 30.01,
+            "end": 31.01,
+            "tokens": [
+              1,
+              2
+            ]
+          }
+        ],
+        "seek": 3101,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [],
+      "seek": 3000,
+      "size": 1,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3000,
+            "start": 30.0,
+            "end": 30.01,
+            "tokens": []
+          }
+        ],
+        "seek": 3001,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1
+      ],
+      "seek": 3001,
+      "size": 2,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3001,
+            "start": 30.01,
+            "end": 30.03,
+            "tokens": [
+              50363,
+              1
+            ]
+          }
+        ],
+        "seek": 3003,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [],
+      "seek": 4999,
+      "size": 999,
+      "expected": {
+        "segments": [
+          {
+            "seek": 4999,
+            "start": 49.99,
+            "end": 59.980000000000004,
+            "tokens": []
+          }
+        ],
+        "seek": 5998,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383,
+        50388,
+        2
+      ],
+      "seek": 3001,
+      "size": 999,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3001,
+            "start": 30.01,
+            "end": 30.41,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          }
+        ],
+        "seek": 3041,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [],
+      "seek": 3001,
+      "size": 100,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3001,
+            "start": 30.01,
+            "end": 31.01,
+            "tokens": []
+          }
+        ],
+        "seek": 3101,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [],
+      "seek": 0,
+      "size": 100,
+      "expected": {
+        "segments": [
+          {
+            "seek": 0,
+            "start": 0.0,
+            "end": 1.0,
+            "tokens": []
+          }
+        ],
+        "seek": 100,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        50363
+      ],
+      "seek": 0,
+      "size": 1,
+      "expected": {
+        "segments": [
+          {
+            "seek": 0,
+            "start": 0.0,
+            "end": 0.0,
+            "tokens": [
+              50363
+            ]
+          }
+        ],
+        "seek": 0,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383,
+        50388,
+        2
+      ],
+      "seek": 3001,
+      "size": 100,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3001,
+            "start": 30.01,
+            "end": 30.41,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          }
+        ],
+        "seek": 3041,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383
+      ],
+      "seek": 3001,
+      "size": 3000,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3001,
+            "start": 30.01,
+            "end": 30.41,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          }
+        ],
+        "seek": 6001,
+        "singleEnding": true
+      }
+    },
+    {
+      "tokens": [],
+      "seek": 3001,
+      "size": 1,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3001,
+            "start": 30.01,
+            "end": 30.020000000000003,
+            "tokens": []
+          }
+        ],
+        "seek": 3002,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383,
+        50388,
+        2
+      ],
+      "seek": 3001,
+      "size": 3000,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3001,
+            "start": 30.01,
+            "end": 30.41,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          }
+        ],
+        "seek": 3041,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383,
+        50388,
+        2,
+        50403
+      ],
+      "seek": 4999,
+      "size": 2,
+      "expected": {
+        "segments": [
+          {
+            "seek": 4999,
+            "start": 49.99,
+            "end": 50.39,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          },
+          {
+            "seek": 4999,
+            "start": 50.49,
+            "end": 50.79,
+            "tokens": [
+              50388,
+              2,
+              50403
+            ]
+          }
+        ],
+        "seek": 5001,
+        "singleEnding": true
+      }
+    },
+    {
+      "tokens": [
+        1,
+        2
+      ],
+      "seek": 0,
+      "size": 100,
+      "expected": {
+        "segments": [
+          {
+            "seek": 0,
+            "start": 0.0,
+            "end": 1.0,
+            "tokens": [
+              1,
+              2
+            ]
+          }
+        ],
+        "seek": 100,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1
+      ],
+      "seek": 3000,
+      "size": 2,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3000,
+            "start": 30.0,
+            "end": 30.02,
+            "tokens": [
+              50363,
+              1
+            ]
+          }
+        ],
+        "seek": 3002,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        50363
+      ],
+      "seek": 0,
+      "size": 1,
+      "expected": {
+        "segments": [
+          {
+            "seek": 0,
+            "start": 0.0,
+            "end": 0.0,
+            "tokens": [
+              50363
+            ]
+          }
+        ],
+        "seek": 0,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383,
+        50388,
+        2,
+        50403
+      ],
+      "seek": 3000,
+      "size": 2,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3000,
+            "start": 30.0,
+            "end": 30.4,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          },
+          {
+            "seek": 3000,
+            "start": 30.5,
+            "end": 30.8,
+            "tokens": [
+              50388,
+              2,
+              50403
+            ]
+          }
+        ],
+        "seek": 3002,
+        "singleEnding": true
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383
+      ],
+      "seek": 4999,
+      "size": 3000,
+      "expected": {
+        "segments": [
+          {
+            "seek": 4999,
+            "start": 49.99,
+            "end": 50.39,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          }
+        ],
+        "seek": 7999,
+        "singleEnding": true
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383,
+        50388,
+        2
+      ],
+      "seek": 4999,
+      "size": 3000,
+      "expected": {
+        "segments": [
+          {
+            "seek": 4999,
+            "start": 49.99,
+            "end": 50.39,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          }
+        ],
+        "seek": 5039,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [],
+      "seek": 3001,
+      "size": 999,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3001,
+            "start": 30.01,
+            "end": 40.0,
+            "tokens": []
+          }
+        ],
+        "seek": 4000,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        50363
+      ],
+      "seek": 3000,
+      "size": 999,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3000,
+            "start": 30.0,
+            "end": 30.0,
+            "tokens": [
+              50363
+            ]
+          }
+        ],
+        "seek": 3000,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [],
+      "seek": 0,
+      "size": 3000,
+      "expected": {
+        "segments": [
+          {
+            "seek": 0,
+            "start": 0.0,
+            "end": 30.0,
+            "tokens": []
+          }
+        ],
+        "seek": 3000,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [],
+      "seek": 3001,
+      "size": 2,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3001,
+            "start": 30.01,
+            "end": 30.03,
+            "tokens": []
+          }
+        ],
+        "seek": 3003,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383,
+        50388,
+        2,
+        50403
+      ],
+      "seek": 3001,
+      "size": 1,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3001,
+            "start": 30.01,
+            "end": 30.41,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          },
+          {
+            "seek": 3001,
+            "start": 30.51,
+            "end": 30.810000000000002,
+            "tokens": [
+              50388,
+              2,
+              50403
+            ]
+          }
+        ],
+        "seek": 3002,
+        "singleEnding": true
+      }
+    },
+    {
+      "tokens": [
+        1,
+        2
+      ],
+      "seek": 4999,
+      "size": 100,
+      "expected": {
+        "segments": [
+          {
+            "seek": 4999,
+            "start": 49.99,
+            "end": 50.99,
+            "tokens": [
+              1,
+              2
+            ]
+          }
+        ],
+        "seek": 5099,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        1,
+        2
+      ],
+      "seek": 0,
+      "size": 1,
+      "expected": {
+        "segments": [
+          {
+            "seek": 0,
+            "start": 0.0,
+            "end": 0.01,
+            "tokens": [
+              1,
+              2
+            ]
+          }
+        ],
+        "seek": 1,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1
+      ],
+      "seek": 3000,
+      "size": 100,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3000,
+            "start": 30.0,
+            "end": 31.0,
+            "tokens": [
+              50363,
+              1
+            ]
+          }
+        ],
+        "seek": 3100,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383,
+        50388,
+        2
+      ],
+      "seek": 3000,
+      "size": 3000,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3000,
+            "start": 30.0,
+            "end": 30.4,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          }
+        ],
+        "seek": 3040,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383,
+        50388,
+        2
+      ],
+      "seek": 4999,
+      "size": 999,
+      "expected": {
+        "segments": [
+          {
+            "seek": 4999,
+            "start": 49.99,
+            "end": 50.39,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          }
+        ],
+        "seek": 5039,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        50363
+      ],
+      "seek": 3001,
+      "size": 999,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3001,
+            "start": 30.01,
+            "end": 30.01,
+            "tokens": [
+              50363
+            ]
+          }
+        ],
+        "seek": 3001,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [],
+      "seek": 4999,
+      "size": 2,
+      "expected": {
+        "segments": [
+          {
+            "seek": 4999,
+            "start": 49.99,
+            "end": 50.010000000000005,
+            "tokens": []
+          }
+        ],
+        "seek": 5001,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        50363
+      ],
+      "seek": 3000,
+      "size": 100,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3000,
+            "start": 30.0,
+            "end": 30.0,
+            "tokens": [
+              50363
+            ]
+          }
+        ],
+        "seek": 3000,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [],
+      "seek": 3001,
+      "size": 2,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3001,
+            "start": 30.01,
+            "end": 30.03,
+            "tokens": []
+          }
+        ],
+        "seek": 3003,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383,
+        50388,
+        2
+      ],
+      "seek": 3000,
+      "size": 1,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3000,
+            "start": 30.0,
+            "end": 30.4,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          }
+        ],
+        "seek": 3040,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1
+      ],
+      "seek": 4999,
+      "size": 3000,
+      "expected": {
+        "segments": [
+          {
+            "seek": 4999,
+            "start": 49.99,
+            "end": 79.99000000000001,
+            "tokens": [
+              50363,
+              1
+            ]
+          }
+        ],
+        "seek": 7999,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1
+      ],
+      "seek": 4999,
+      "size": 100,
+      "expected": {
+        "segments": [
+          {
+            "seek": 4999,
+            "start": 49.99,
+            "end": 50.99,
+            "tokens": [
+              50363,
+              1
+            ]
+          }
+        ],
+        "seek": 5099,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1
+      ],
+      "seek": 3000,
+      "size": 3000,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3000,
+            "start": 30.0,
+            "end": 60.0,
+            "tokens": [
+              50363,
+              1
+            ]
+          }
+        ],
+        "seek": 6000,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383,
+        50388,
+        2
+      ],
+      "seek": 0,
+      "size": 100,
+      "expected": {
+        "segments": [
+          {
+            "seek": 0,
+            "start": 0.0,
+            "end": 0.4,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          }
+        ],
+        "seek": 40,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383
+      ],
+      "seek": 0,
+      "size": 100,
+      "expected": {
+        "segments": [
+          {
+            "seek": 0,
+            "start": 0.0,
+            "end": 0.4,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          }
+        ],
+        "seek": 100,
+        "singleEnding": true
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        50363
+      ],
+      "seek": 4999,
+      "size": 3000,
+      "expected": {
+        "segments": [
+          {
+            "seek": 4999,
+            "start": 49.99,
+            "end": 49.99,
+            "tokens": [
+              50363
+            ]
+          }
+        ],
+        "seek": 4999,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        50363
+      ],
+      "seek": 3000,
+      "size": 100,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3000,
+            "start": 30.0,
+            "end": 30.0,
+            "tokens": [
+              50363
+            ]
+          }
+        ],
+        "seek": 3000,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383,
+        50388,
+        2,
+        50403
+      ],
+      "seek": 3001,
+      "size": 1,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3001,
+            "start": 30.01,
+            "end": 30.41,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          },
+          {
+            "seek": 3001,
+            "start": 30.51,
+            "end": 30.810000000000002,
+            "tokens": [
+              50388,
+              2,
+              50403
+            ]
+          }
+        ],
+        "seek": 3002,
+        "singleEnding": true
+      }
+    },
+    {
+      "tokens": [],
+      "seek": 3001,
+      "size": 2,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3001,
+            "start": 30.01,
+            "end": 30.03,
+            "tokens": []
+          }
+        ],
+        "seek": 3003,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1
+      ],
+      "seek": 4999,
+      "size": 1,
+      "expected": {
+        "segments": [
+          {
+            "seek": 4999,
+            "start": 49.99,
+            "end": 50.0,
+            "tokens": [
+              50363,
+              1
+            ]
+          }
+        ],
+        "seek": 5000,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383,
+        50388,
+        2
+      ],
+      "seek": 3000,
+      "size": 2,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3000,
+            "start": 30.0,
+            "end": 30.4,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          }
+        ],
+        "seek": 3040,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        1,
+        2
+      ],
+      "seek": 4999,
+      "size": 100,
+      "expected": {
+        "segments": [
+          {
+            "seek": 4999,
+            "start": 49.99,
+            "end": 50.99,
+            "tokens": [
+              1,
+              2
+            ]
+          }
+        ],
+        "seek": 5099,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383,
+        50388,
+        2
+      ],
+      "seek": 3001,
+      "size": 1,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3001,
+            "start": 30.01,
+            "end": 30.41,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          }
+        ],
+        "seek": 3041,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383,
+        50388,
+        2,
+        50403
+      ],
+      "seek": 3001,
+      "size": 1,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3001,
+            "start": 30.01,
+            "end": 30.41,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          },
+          {
+            "seek": 3001,
+            "start": 30.51,
+            "end": 30.810000000000002,
+            "tokens": [
+              50388,
+              2,
+              50403
+            ]
+          }
+        ],
+        "seek": 3002,
+        "singleEnding": true
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1
+      ],
+      "seek": 4999,
+      "size": 1,
+      "expected": {
+        "segments": [
+          {
+            "seek": 4999,
+            "start": 49.99,
+            "end": 50.0,
+            "tokens": [
+              50363,
+              1
+            ]
+          }
+        ],
+        "seek": 5000,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1
+      ],
+      "seek": 3000,
+      "size": 3000,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3000,
+            "start": 30.0,
+            "end": 60.0,
+            "tokens": [
+              50363,
+              1
+            ]
+          }
+        ],
+        "seek": 6000,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383,
+        50388,
+        2
+      ],
+      "seek": 4999,
+      "size": 100,
+      "expected": {
+        "segments": [
+          {
+            "seek": 4999,
+            "start": 49.99,
+            "end": 50.39,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          }
+        ],
+        "seek": 5039,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383,
+        50388,
+        2,
+        50403
+      ],
+      "seek": 0,
+      "size": 2,
+      "expected": {
+        "segments": [
+          {
+            "seek": 0,
+            "start": 0.0,
+            "end": 0.4,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          },
+          {
+            "seek": 0,
+            "start": 0.5,
+            "end": 0.8,
+            "tokens": [
+              50388,
+              2,
+              50403
+            ]
+          }
+        ],
+        "seek": 2,
+        "singleEnding": true
+      }
+    },
+    {
+      "tokens": [
+        1,
+        2
+      ],
+      "seek": 4999,
+      "size": 999,
+      "expected": {
+        "segments": [
+          {
+            "seek": 4999,
+            "start": 49.99,
+            "end": 59.980000000000004,
+            "tokens": [
+              1,
+              2
+            ]
+          }
+        ],
+        "seek": 5998,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383,
+        50388,
+        2
+      ],
+      "seek": 3001,
+      "size": 1,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3001,
+            "start": 30.01,
+            "end": 30.41,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          }
+        ],
+        "seek": 3041,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383,
+        50388,
+        2,
+        50403
+      ],
+      "seek": 3001,
+      "size": 2,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3001,
+            "start": 30.01,
+            "end": 30.41,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          },
+          {
+            "seek": 3001,
+            "start": 30.51,
+            "end": 30.810000000000002,
+            "tokens": [
+              50388,
+              2,
+              50403
+            ]
+          }
+        ],
+        "seek": 3003,
+        "singleEnding": true
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        50363
+      ],
+      "seek": 4999,
+      "size": 2,
+      "expected": {
+        "segments": [
+          {
+            "seek": 4999,
+            "start": 49.99,
+            "end": 49.99,
+            "tokens": [
+              50363
+            ]
+          }
+        ],
+        "seek": 4999,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        1,
+        2
+      ],
+      "seek": 0,
+      "size": 999,
+      "expected": {
+        "segments": [
+          {
+            "seek": 0,
+            "start": 0.0,
+            "end": 9.99,
+            "tokens": [
+              1,
+              2
+            ]
+          }
+        ],
+        "seek": 999,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383,
+        50388,
+        2,
+        50403
+      ],
+      "seek": 0,
+      "size": 999,
+      "expected": {
+        "segments": [
+          {
+            "seek": 0,
+            "start": 0.0,
+            "end": 0.4,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          },
+          {
+            "seek": 0,
+            "start": 0.5,
+            "end": 0.8,
+            "tokens": [
+              50388,
+              2,
+              50403
+            ]
+          }
+        ],
+        "seek": 999,
+        "singleEnding": true
+      }
+    },
+    {
+      "tokens": [
+        1,
+        2
+      ],
+      "seek": 4999,
+      "size": 100,
+      "expected": {
+        "segments": [
+          {
+            "seek": 4999,
+            "start": 49.99,
+            "end": 50.99,
+            "tokens": [
+              1,
+              2
+            ]
+          }
+        ],
+        "seek": 5099,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        1,
+        2
+      ],
+      "seek": 0,
+      "size": 1,
+      "expected": {
+        "segments": [
+          {
+            "seek": 0,
+            "start": 0.0,
+            "end": 0.01,
+            "tokens": [
+              1,
+              2
+            ]
+          }
+        ],
+        "seek": 1,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [],
+      "seek": 3001,
+      "size": 999,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3001,
+            "start": 30.01,
+            "end": 40.0,
+            "tokens": []
+          }
+        ],
+        "seek": 4000,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        50363
+      ],
+      "seek": 4999,
+      "size": 100,
+      "expected": {
+        "segments": [
+          {
+            "seek": 4999,
+            "start": 49.99,
+            "end": 49.99,
+            "tokens": [
+              50363
+            ]
+          }
+        ],
+        "seek": 4999,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383,
+        50388,
+        2,
+        50403
+      ],
+      "seek": 0,
+      "size": 100,
+      "expected": {
+        "segments": [
+          {
+            "seek": 0,
+            "start": 0.0,
+            "end": 0.4,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          },
+          {
+            "seek": 0,
+            "start": 0.5,
+            "end": 0.8,
+            "tokens": [
+              50388,
+              2,
+              50403
+            ]
+          }
+        ],
+        "seek": 100,
+        "singleEnding": true
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383,
+        50388,
+        2,
+        50403
+      ],
+      "seek": 3000,
+      "size": 100,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3000,
+            "start": 30.0,
+            "end": 30.4,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          },
+          {
+            "seek": 3000,
+            "start": 30.5,
+            "end": 30.8,
+            "tokens": [
+              50388,
+              2,
+              50403
+            ]
+          }
+        ],
+        "seek": 3100,
+        "singleEnding": true
+      }
+    },
+    {
+      "tokens": [],
+      "seek": 3001,
+      "size": 999,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3001,
+            "start": 30.01,
+            "end": 40.0,
+            "tokens": []
+          }
+        ],
+        "seek": 4000,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383,
+        50388,
+        2
+      ],
+      "seek": 0,
+      "size": 1,
+      "expected": {
+        "segments": [
+          {
+            "seek": 0,
+            "start": 0.0,
+            "end": 0.4,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          }
+        ],
+        "seek": 40,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [],
+      "seek": 3001,
+      "size": 2,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3001,
+            "start": 30.01,
+            "end": 30.03,
+            "tokens": []
+          }
+        ],
+        "seek": 3003,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383
+      ],
+      "seek": 3001,
+      "size": 1,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3001,
+            "start": 30.01,
+            "end": 30.41,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          }
+        ],
+        "seek": 3002,
+        "singleEnding": true
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383,
+        50388,
+        2,
+        50403
+      ],
+      "seek": 3000,
+      "size": 2,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3000,
+            "start": 30.0,
+            "end": 30.4,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          },
+          {
+            "seek": 3000,
+            "start": 30.5,
+            "end": 30.8,
+            "tokens": [
+              50388,
+              2,
+              50403
+            ]
+          }
+        ],
+        "seek": 3002,
+        "singleEnding": true
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1
+      ],
+      "seek": 3001,
+      "size": 999,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3001,
+            "start": 30.01,
+            "end": 40.0,
+            "tokens": [
+              50363,
+              1
+            ]
+          }
+        ],
+        "seek": 4000,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383
+      ],
+      "seek": 3001,
+      "size": 999,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3001,
+            "start": 30.01,
+            "end": 30.41,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          }
+        ],
+        "seek": 4000,
+        "singleEnding": true
+      }
+    },
+    {
+      "tokens": [],
+      "seek": 3000,
+      "size": 1,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3000,
+            "start": 30.0,
+            "end": 30.01,
+            "tokens": []
+          }
+        ],
+        "seek": 3001,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [],
+      "seek": 0,
+      "size": 3000,
+      "expected": {
+        "segments": [
+          {
+            "seek": 0,
+            "start": 0.0,
+            "end": 30.0,
+            "tokens": []
+          }
+        ],
+        "seek": 3000,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1
+      ],
+      "seek": 4999,
+      "size": 1,
+      "expected": {
+        "segments": [
+          {
+            "seek": 4999,
+            "start": 49.99,
+            "end": 50.0,
+            "tokens": [
+              50363,
+              1
+            ]
+          }
+        ],
+        "seek": 5000,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383
+      ],
+      "seek": 3000,
+      "size": 999,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3000,
+            "start": 30.0,
+            "end": 30.4,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          }
+        ],
+        "seek": 3999,
+        "singleEnding": true
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1
+      ],
+      "seek": 4999,
+      "size": 1,
+      "expected": {
+        "segments": [
+          {
+            "seek": 4999,
+            "start": 49.99,
+            "end": 50.0,
+            "tokens": [
+              50363,
+              1
+            ]
+          }
+        ],
+        "seek": 5000,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        50363
+      ],
+      "seek": 0,
+      "size": 999,
+      "expected": {
+        "segments": [
+          {
+            "seek": 0,
+            "start": 0.0,
+            "end": 0.0,
+            "tokens": [
+              50363
+            ]
+          }
+        ],
+        "seek": 0,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        50363
+      ],
+      "seek": 4999,
+      "size": 1,
+      "expected": {
+        "segments": [
+          {
+            "seek": 4999,
+            "start": 49.99,
+            "end": 49.99,
+            "tokens": [
+              50363
+            ]
+          }
+        ],
+        "seek": 4999,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383,
+        50388,
+        2
+      ],
+      "seek": 3001,
+      "size": 999,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3001,
+            "start": 30.01,
+            "end": 30.41,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          }
+        ],
+        "seek": 3041,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        1,
+        2
+      ],
+      "seek": 3001,
+      "size": 100,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3001,
+            "start": 30.01,
+            "end": 31.01,
+            "tokens": [
+              1,
+              2
+            ]
+          }
+        ],
+        "seek": 3101,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383,
+        50388,
+        2,
+        50403
+      ],
+      "seek": 0,
+      "size": 999,
+      "expected": {
+        "segments": [
+          {
+            "seek": 0,
+            "start": 0.0,
+            "end": 0.4,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          },
+          {
+            "seek": 0,
+            "start": 0.5,
+            "end": 0.8,
+            "tokens": [
+              50388,
+              2,
+              50403
+            ]
+          }
+        ],
+        "seek": 999,
+        "singleEnding": true
+      }
+    },
+    {
+      "tokens": [
+        1,
+        2
+      ],
+      "seek": 3000,
+      "size": 999,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3000,
+            "start": 30.0,
+            "end": 39.99,
+            "tokens": [
+              1,
+              2
+            ]
+          }
+        ],
+        "seek": 3999,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1
+      ],
+      "seek": 3000,
+      "size": 3000,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3000,
+            "start": 30.0,
+            "end": 60.0,
+            "tokens": [
+              50363,
+              1
+            ]
+          }
+        ],
+        "seek": 6000,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        1,
+        2
+      ],
+      "seek": 4999,
+      "size": 2,
+      "expected": {
+        "segments": [
+          {
+            "seek": 4999,
+            "start": 49.99,
+            "end": 50.010000000000005,
+            "tokens": [
+              1,
+              2
+            ]
+          }
+        ],
+        "seek": 5001,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [],
+      "seek": 0,
+      "size": 100,
+      "expected": {
+        "segments": [
+          {
+            "seek": 0,
+            "start": 0.0,
+            "end": 1.0,
+            "tokens": []
+          }
+        ],
+        "seek": 100,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        1,
+        2
+      ],
+      "seek": 4999,
+      "size": 1,
+      "expected": {
+        "segments": [
+          {
+            "seek": 4999,
+            "start": 49.99,
+            "end": 50.0,
+            "tokens": [
+              1,
+              2
+            ]
+          }
+        ],
+        "seek": 5000,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        1,
+        2
+      ],
+      "seek": 3000,
+      "size": 2,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3000,
+            "start": 30.0,
+            "end": 30.02,
+            "tokens": [
+              1,
+              2
+            ]
+          }
+        ],
+        "seek": 3002,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383,
+        50388,
+        2
+      ],
+      "seek": 3000,
+      "size": 2,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3000,
+            "start": 30.0,
+            "end": 30.4,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          }
+        ],
+        "seek": 3040,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383,
+        50388,
+        2
+      ],
+      "seek": 4999,
+      "size": 3000,
+      "expected": {
+        "segments": [
+          {
+            "seek": 4999,
+            "start": 49.99,
+            "end": 50.39,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          }
+        ],
+        "seek": 5039,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1
+      ],
+      "seek": 3000,
+      "size": 100,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3000,
+            "start": 30.0,
+            "end": 31.0,
+            "tokens": [
+              50363,
+              1
+            ]
+          }
+        ],
+        "seek": 3100,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        50363
+      ],
+      "seek": 4999,
+      "size": 999,
+      "expected": {
+        "segments": [
+          {
+            "seek": 4999,
+            "start": 49.99,
+            "end": 49.99,
+            "tokens": [
+              50363
+            ]
+          }
+        ],
+        "seek": 4999,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1
+      ],
+      "seek": 0,
+      "size": 1,
+      "expected": {
+        "segments": [
+          {
+            "seek": 0,
+            "start": 0.0,
+            "end": 0.01,
+            "tokens": [
+              50363,
+              1
+            ]
+          }
+        ],
+        "seek": 1,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        50363
+      ],
+      "seek": 3001,
+      "size": 2,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3001,
+            "start": 30.01,
+            "end": 30.01,
+            "tokens": [
+              50363
+            ]
+          }
+        ],
+        "seek": 3001,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383,
+        50388,
+        2
+      ],
+      "seek": 0,
+      "size": 3000,
+      "expected": {
+        "segments": [
+          {
+            "seek": 0,
+            "start": 0.0,
+            "end": 0.4,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          }
+        ],
+        "seek": 40,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1
+      ],
+      "seek": 0,
+      "size": 3000,
+      "expected": {
+        "segments": [
+          {
+            "seek": 0,
+            "start": 0.0,
+            "end": 30.0,
+            "tokens": [
+              50363,
+              1
+            ]
+          }
+        ],
+        "seek": 3000,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        50363
+      ],
+      "seek": 3001,
+      "size": 2,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3001,
+            "start": 30.01,
+            "end": 30.01,
+            "tokens": [
+              50363
+            ]
+          }
+        ],
+        "seek": 3001,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        50363
+      ],
+      "seek": 0,
+      "size": 100,
+      "expected": {
+        "segments": [
+          {
+            "seek": 0,
+            "start": 0.0,
+            "end": 0.0,
+            "tokens": [
+              50363
+            ]
+          }
+        ],
+        "seek": 0,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383,
+        50388,
+        2
+      ],
+      "seek": 3000,
+      "size": 100,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3000,
+            "start": 30.0,
+            "end": 30.4,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          }
+        ],
+        "seek": 3040,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1
+      ],
+      "seek": 0,
+      "size": 1,
+      "expected": {
+        "segments": [
+          {
+            "seek": 0,
+            "start": 0.0,
+            "end": 0.01,
+            "tokens": [
+              50363,
+              1
+            ]
+          }
+        ],
+        "seek": 1,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [],
+      "seek": 4999,
+      "size": 2,
+      "expected": {
+        "segments": [
+          {
+            "seek": 4999,
+            "start": 49.99,
+            "end": 50.010000000000005,
+            "tokens": []
+          }
+        ],
+        "seek": 5001,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        1,
+        2
+      ],
+      "seek": 4999,
+      "size": 100,
+      "expected": {
+        "segments": [
+          {
+            "seek": 4999,
+            "start": 49.99,
+            "end": 50.99,
+            "tokens": [
+              1,
+              2
+            ]
+          }
+        ],
+        "seek": 5099,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        50363
+      ],
+      "seek": 4999,
+      "size": 1,
+      "expected": {
+        "segments": [
+          {
+            "seek": 4999,
+            "start": 49.99,
+            "end": 49.99,
+            "tokens": [
+              50363
+            ]
+          }
+        ],
+        "seek": 4999,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383,
+        50388,
+        2,
+        50403
+      ],
+      "seek": 3001,
+      "size": 1,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3001,
+            "start": 30.01,
+            "end": 30.41,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          },
+          {
+            "seek": 3001,
+            "start": 30.51,
+            "end": 30.810000000000002,
+            "tokens": [
+              50388,
+              2,
+              50403
+            ]
+          }
+        ],
+        "seek": 3002,
+        "singleEnding": true
+      }
+    },
+    {
+      "tokens": [
+        1,
+        2
+      ],
+      "seek": 4999,
+      "size": 999,
+      "expected": {
+        "segments": [
+          {
+            "seek": 4999,
+            "start": 49.99,
+            "end": 59.980000000000004,
+            "tokens": [
+              1,
+              2
+            ]
+          }
+        ],
+        "seek": 5998,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383,
+        50388,
+        2
+      ],
+      "seek": 4999,
+      "size": 100,
+      "expected": {
+        "segments": [
+          {
+            "seek": 4999,
+            "start": 49.99,
+            "end": 50.39,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          }
+        ],
+        "seek": 5039,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383,
+        50388,
+        2,
+        50403
+      ],
+      "seek": 0,
+      "size": 3000,
+      "expected": {
+        "segments": [
+          {
+            "seek": 0,
+            "start": 0.0,
+            "end": 0.4,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          },
+          {
+            "seek": 0,
+            "start": 0.5,
+            "end": 0.8,
+            "tokens": [
+              50388,
+              2,
+              50403
+            ]
+          }
+        ],
+        "seek": 3000,
+        "singleEnding": true
+      }
+    },
+    {
+      "tokens": [
+        1,
+        2
+      ],
+      "seek": 3001,
+      "size": 2,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3001,
+            "start": 30.01,
+            "end": 30.03,
+            "tokens": [
+              1,
+              2
+            ]
+          }
+        ],
+        "seek": 3003,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1
+      ],
+      "seek": 0,
+      "size": 100,
+      "expected": {
+        "segments": [
+          {
+            "seek": 0,
+            "start": 0.0,
+            "end": 1.0,
+            "tokens": [
+              50363,
+              1
+            ]
+          }
+        ],
+        "seek": 100,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383
+      ],
+      "seek": 3001,
+      "size": 1,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3001,
+            "start": 30.01,
+            "end": 30.41,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          }
+        ],
+        "seek": 3002,
+        "singleEnding": true
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        50363
+      ],
+      "seek": 3001,
+      "size": 3000,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3001,
+            "start": 30.01,
+            "end": 30.01,
+            "tokens": [
+              50363
+            ]
+          }
+        ],
+        "seek": 3001,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1
+      ],
+      "seek": 3001,
+      "size": 999,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3001,
+            "start": 30.01,
+            "end": 40.0,
+            "tokens": [
+              50363,
+              1
+            ]
+          }
+        ],
+        "seek": 4000,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        50363
+      ],
+      "seek": 3001,
+      "size": 999,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3001,
+            "start": 30.01,
+            "end": 30.01,
+            "tokens": [
+              50363
+            ]
+          }
+        ],
+        "seek": 3001,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        50363
+      ],
+      "seek": 3001,
+      "size": 1,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3001,
+            "start": 30.01,
+            "end": 30.01,
+            "tokens": [
+              50363
+            ]
+          }
+        ],
+        "seek": 3001,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [],
+      "seek": 0,
+      "size": 3000,
+      "expected": {
+        "segments": [
+          {
+            "seek": 0,
+            "start": 0.0,
+            "end": 30.0,
+            "tokens": []
+          }
+        ],
+        "seek": 3000,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383
+      ],
+      "seek": 3001,
+      "size": 999,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3001,
+            "start": 30.01,
+            "end": 30.41,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          }
+        ],
+        "seek": 4000,
+        "singleEnding": true
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383
+      ],
+      "seek": 4999,
+      "size": 999,
+      "expected": {
+        "segments": [
+          {
+            "seek": 4999,
+            "start": 49.99,
+            "end": 50.39,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          }
+        ],
+        "seek": 5998,
+        "singleEnding": true
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383,
+        50388,
+        2
+      ],
+      "seek": 3001,
+      "size": 100,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3001,
+            "start": 30.01,
+            "end": 30.41,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          }
+        ],
+        "seek": 3041,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        1,
+        2
+      ],
+      "seek": 4999,
+      "size": 999,
+      "expected": {
+        "segments": [
+          {
+            "seek": 4999,
+            "start": 49.99,
+            "end": 59.980000000000004,
+            "tokens": [
+              1,
+              2
+            ]
+          }
+        ],
+        "seek": 5998,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1
+      ],
+      "seek": 4999,
+      "size": 100,
+      "expected": {
+        "segments": [
+          {
+            "seek": 4999,
+            "start": 49.99,
+            "end": 50.99,
+            "tokens": [
+              50363,
+              1
+            ]
+          }
+        ],
+        "seek": 5099,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [],
+      "seek": 3000,
+      "size": 2,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3000,
+            "start": 30.0,
+            "end": 30.02,
+            "tokens": []
+          }
+        ],
+        "seek": 3002,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1
+      ],
+      "seek": 0,
+      "size": 2,
+      "expected": {
+        "segments": [
+          {
+            "seek": 0,
+            "start": 0.0,
+            "end": 0.02,
+            "tokens": [
+              50363,
+              1
+            ]
+          }
+        ],
+        "seek": 2,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383,
+        50388,
+        2
+      ],
+      "seek": 3001,
+      "size": 100,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3001,
+            "start": 30.01,
+            "end": 30.41,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          }
+        ],
+        "seek": 3041,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383
+      ],
+      "seek": 4999,
+      "size": 3000,
+      "expected": {
+        "segments": [
+          {
+            "seek": 4999,
+            "start": 49.99,
+            "end": 50.39,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          }
+        ],
+        "seek": 7999,
+        "singleEnding": true
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        50363
+      ],
+      "seek": 0,
+      "size": 3000,
+      "expected": {
+        "segments": [
+          {
+            "seek": 0,
+            "start": 0.0,
+            "end": 0.0,
+            "tokens": [
+              50363
+            ]
+          }
+        ],
+        "seek": 0,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383,
+        50388,
+        2
+      ],
+      "seek": 3000,
+      "size": 2,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3000,
+            "start": 30.0,
+            "end": 30.4,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          }
+        ],
+        "seek": 3040,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        50363
+      ],
+      "seek": 4999,
+      "size": 100,
+      "expected": {
+        "segments": [
+          {
+            "seek": 4999,
+            "start": 49.99,
+            "end": 49.99,
+            "tokens": [
+              50363
+            ]
+          }
+        ],
+        "seek": 4999,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        50363
+      ],
+      "seek": 0,
+      "size": 1,
+      "expected": {
+        "segments": [
+          {
+            "seek": 0,
+            "start": 0.0,
+            "end": 0.0,
+            "tokens": [
+              50363
+            ]
+          }
+        ],
+        "seek": 0,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383
+      ],
+      "seek": 0,
+      "size": 2,
+      "expected": {
+        "segments": [
+          {
+            "seek": 0,
+            "start": 0.0,
+            "end": 0.4,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          }
+        ],
+        "seek": 2,
+        "singleEnding": true
+      }
+    },
+    {
+      "tokens": [
+        1,
+        2
+      ],
+      "seek": 3001,
+      "size": 100,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3001,
+            "start": 30.01,
+            "end": 31.01,
+            "tokens": [
+              1,
+              2
+            ]
+          }
+        ],
+        "seek": 3101,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383,
+        50388,
+        2,
+        50403
+      ],
+      "seek": 3000,
+      "size": 999,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3000,
+            "start": 30.0,
+            "end": 30.4,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          },
+          {
+            "seek": 3000,
+            "start": 30.5,
+            "end": 30.8,
+            "tokens": [
+              50388,
+              2,
+              50403
+            ]
+          }
+        ],
+        "seek": 3999,
+        "singleEnding": true
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383,
+        50388,
+        2,
+        50403
+      ],
+      "seek": 3000,
+      "size": 1,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3000,
+            "start": 30.0,
+            "end": 30.4,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          },
+          {
+            "seek": 3000,
+            "start": 30.5,
+            "end": 30.8,
+            "tokens": [
+              50388,
+              2,
+              50403
+            ]
+          }
+        ],
+        "seek": 3001,
+        "singleEnding": true
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383,
+        50388,
+        2,
+        50403
+      ],
+      "seek": 4999,
+      "size": 3000,
+      "expected": {
+        "segments": [
+          {
+            "seek": 4999,
+            "start": 49.99,
+            "end": 50.39,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          },
+          {
+            "seek": 4999,
+            "start": 50.49,
+            "end": 50.79,
+            "tokens": [
+              50388,
+              2,
+              50403
+            ]
+          }
+        ],
+        "seek": 7999,
+        "singleEnding": true
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        50363
+      ],
+      "seek": 3001,
+      "size": 100,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3001,
+            "start": 30.01,
+            "end": 30.01,
+            "tokens": [
+              50363
+            ]
+          }
+        ],
+        "seek": 3001,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1
+      ],
+      "seek": 4999,
+      "size": 100,
+      "expected": {
+        "segments": [
+          {
+            "seek": 4999,
+            "start": 49.99,
+            "end": 50.99,
+            "tokens": [
+              50363,
+              1
+            ]
+          }
+        ],
+        "seek": 5099,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1
+      ],
+      "seek": 3000,
+      "size": 999,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3000,
+            "start": 30.0,
+            "end": 39.99,
+            "tokens": [
+              50363,
+              1
+            ]
+          }
+        ],
+        "seek": 3999,
+        "singleEnding": false
+      }
+    },
+    {
+      "tokens": [
+        50363,
+        1,
+        50383
+      ],
+      "seek": 0,
+      "size": 2,
+      "expected": {
+        "segments": [
+          {
+            "seek": 0,
+            "start": 0.0,
+            "end": 0.4,
+            "tokens": [
+              50363,
+              1,
+              50383
+            ]
+          }
+        ],
+        "seek": 2,
+        "singleEnding": true
+      }
+    },
+    {
+      "tokens": [
+        1,
+        2
+      ],
+      "seek": 3000,
+      "size": 999,
+      "expected": {
+        "segments": [
+          {
+            "seek": 3000,
+            "start": 30.0,
+            "end": 39.99,
+            "tokens": [
+              1,
+              2
+            ]
+          }
+        ],
+        "seek": 3999,
+        "singleEnding": false
+      }
+    }
+  ],
+  "words": [
+    {
+      "segments": [
+        {
+          "seek": 0,
+          "start": 0.5,
+          "end": 2,
+          "tokens": [
+            1,
+            2
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": ",",
+          "tokens": [
+            1
+          ],
+          "start": 0,
+          "end": 0.2,
+          "probability": 0.8
+        },
+        {
+          "word": ",",
+          "tokens": [
+            2
+          ],
+          "start": 0.02,
+          "end": 0.02,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 0,
+      "expected": [
+        {
+          "seek": 0,
+          "start": 0.0,
+          "end": 0.2,
+          "tokens": [
+            1,
+            2
+          ],
+          "words": [
+            {
+              "word": ",,",
+              "start": 0.0,
+              "end": 0.2,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 300,
+          "start": 3.5,
+          "end": 5,
+          "tokens": [
+            1,
+            2
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": ",",
+          "tokens": [
+            1
+          ],
+          "start": 0.0,
+          "end": 0.2,
+          "probability": 0.8
+        },
+        {
+          "word": ".",
+          "tokens": [
+            2
+          ],
+          "start": 1,
+          "end": 1.2,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 0,
+      "expected": [
+        {
+          "seek": 300,
+          "start": 3.0,
+          "end": 3.2,
+          "tokens": [
+            1,
+            2
+          ],
+          "words": [
+            {
+              "word": ",.",
+              "start": 3.0,
+              "end": 3.2,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 300,
+          "start": 3.5,
+          "end": 4,
+          "tokens": []
+        }
+      ],
+      "alignment": [],
+      "lastSpeech": 0,
+      "expected": [
+        {
+          "seek": 300,
+          "start": 3.5,
+          "end": 4,
+          "tokens": [],
+          "words": []
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 0,
+          "start": 0.5,
+          "end": 3,
+          "tokens": [
+            1,
+            2,
+            3
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": " (",
+          "tokens": [
+            1
+          ],
+          "start": 0.0,
+          "end": 0.02,
+          "probability": 0.8
+        },
+        {
+          "word": " world",
+          "tokens": [
+            2
+          ],
+          "start": 1,
+          "end": 1,
+          "probability": 0.8
+        },
+        {
+          "word": " world",
+          "tokens": [
+            3
+          ],
+          "start": 0.04,
+          "end": 0.8400000000000001,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 1,
+      "expected": [
+        {
+          "seek": 0,
+          "start": 1.0,
+          "end": 0.84,
+          "tokens": [
+            1,
+            2,
+            3
+          ],
+          "words": [
+            {
+              "word": " ( world",
+              "start": 1.0,
+              "end": 1.0,
+              "probability": 0.8
+            },
+            {
+              "word": " world",
+              "start": 0.04,
+              "end": 0.84,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 1000,
+          "start": 10.5,
+          "end": 16,
+          "tokens": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": " (",
+          "tokens": [
+            1
+          ],
+          "start": 0,
+          "end": 3,
+          "probability": 0.8
+        },
+        {
+          "word": ",",
+          "tokens": [
+            2
+          ],
+          "start": 0.02,
+          "end": 0.04,
+          "probability": 0.8
+        },
+        {
+          "word": " (",
+          "tokens": [
+            3
+          ],
+          "start": 2,
+          "end": 2.8,
+          "probability": 0.8
+        },
+        {
+          "word": ".",
+          "tokens": [
+            4
+          ],
+          "start": 9,
+          "end": 9.8,
+          "probability": 0.8
+        },
+        {
+          "word": " hello",
+          "tokens": [
+            5
+          ],
+          "start": 4,
+          "end": 4.02,
+          "probability": 0.8
+        },
+        {
+          "word": ",",
+          "tokens": [
+            6
+          ],
+          "start": 5,
+          "end": 5.8,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 10,
+      "expected": [
+        {
+          "seek": 1000,
+          "start": 10.02,
+          "end": 14.02,
+          "tokens": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "words": [
+            {
+              "word": " (,",
+              "start": 10.02,
+              "end": 10.04,
+              "probability": 0.8
+            },
+            {
+              "word": " (.",
+              "start": 19.0,
+              "end": 19.8,
+              "probability": 0.8
+            },
+            {
+              "word": " hello,",
+              "start": 14.0,
+              "end": 14.02,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 0,
+          "start": 0.5,
+          "end": 6,
+          "tokens": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": " world",
+          "tokens": [
+            1
+          ],
+          "start": 0,
+          "end": 0.02,
+          "probability": 0.8
+        },
+        {
+          "word": " (",
+          "tokens": [
+            2
+          ],
+          "start": 0.2,
+          "end": 1.0,
+          "probability": 0.8
+        },
+        {
+          "word": " hello",
+          "tokens": [
+            3
+          ],
+          "start": 2,
+          "end": 2,
+          "probability": 0.8
+        },
+        {
+          "word": " world",
+          "tokens": [
+            4
+          ],
+          "start": 9,
+          "end": 9.8,
+          "probability": 0.8
+        },
+        {
+          "word": "!",
+          "tokens": [
+            5
+          ],
+          "start": 0.08,
+          "end": 0.08,
+          "probability": 0.8
+        },
+        {
+          "word": ".",
+          "tokens": [
+            6
+          ],
+          "start": 1.0,
+          "end": 1.2,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 1,
+      "expected": [
+        {
+          "seek": 0,
+          "start": 0.0,
+          "end": 9.8,
+          "tokens": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "words": [
+            {
+              "word": " world",
+              "start": 0.0,
+              "end": 0.02,
+              "probability": 0.8
+            },
+            {
+              "word": " ( hello",
+              "start": 2.0,
+              "end": 2.0,
+              "probability": 0.8
+            },
+            {
+              "word": " world!.",
+              "start": 9.0,
+              "end": 9.8,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 1000,
+          "start": 10.5,
+          "end": 12,
+          "tokens": [
+            1,
+            2
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": ".",
+          "tokens": [
+            1
+          ],
+          "start": 0.0,
+          "end": 0.8,
+          "probability": 0.8
+        },
+        {
+          "word": " (",
+          "tokens": [
+            2
+          ],
+          "start": 1,
+          "end": 1,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 11,
+      "expected": [
+        {
+          "seek": 1000,
+          "start": 10.0,
+          "end": 11.0,
+          "tokens": [
+            1,
+            2
+          ],
+          "words": [
+            {
+              "word": ".",
+              "start": 10.0,
+              "end": 10.8,
+              "probability": 0.8
+            },
+            {
+              "word": " (",
+              "start": 11.0,
+              "end": 11.0,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 300,
+          "start": 3.5,
+          "end": 6,
+          "tokens": [
+            1,
+            2,
+            3
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": ".",
+          "tokens": [
+            1
+          ],
+          "start": 0,
+          "end": 0,
+          "probability": 0.8
+        },
+        {
+          "word": "!",
+          "tokens": [
+            2
+          ],
+          "start": 1,
+          "end": 1,
+          "probability": 0.8
+        },
+        {
+          "word": " hello",
+          "tokens": [
+            3
+          ],
+          "start": 0.4,
+          "end": 3.4,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 4,
+      "expected": [
+        {
+          "seek": 300,
+          "start": 3.0,
+          "end": 6.4,
+          "tokens": [
+            1,
+            2,
+            3
+          ],
+          "words": [
+            {
+              "word": ".!",
+              "start": 3.0,
+              "end": 3.0,
+              "probability": 0.8
+            },
+            {
+              "word": " hello",
+              "start": 5.0,
+              "end": 6.4,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 300,
+          "start": 3.5,
+          "end": 9,
+          "tokens": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": ".",
+          "tokens": [
+            1
+          ],
+          "start": 0,
+          "end": 0.2,
+          "probability": 0.8
+        },
+        {
+          "word": "!",
+          "tokens": [
+            2
+          ],
+          "start": 0.02,
+          "end": 0.22,
+          "probability": 0.8
+        },
+        {
+          "word": " (",
+          "tokens": [
+            3
+          ],
+          "start": 6,
+          "end": 6,
+          "probability": 0.8
+        },
+        {
+          "word": "!",
+          "tokens": [
+            4
+          ],
+          "start": 9,
+          "end": 9.8,
+          "probability": 0.8
+        },
+        {
+          "word": ",",
+          "tokens": [
+            5
+          ],
+          "start": 0.8,
+          "end": 1.0,
+          "probability": 0.8
+        },
+        {
+          "word": ",",
+          "tokens": [
+            6
+          ],
+          "start": 0.1,
+          "end": 3.1,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 3,
+      "expected": [
+        {
+          "seek": 300,
+          "start": 3.0,
+          "end": 12.4,
+          "tokens": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "words": [
+            {
+              "word": ".!",
+              "start": 3.0,
+              "end": 3.2,
+              "probability": 0.8
+            },
+            {
+              "word": " (!,,",
+              "start": 12.0,
+              "end": 12.4,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 300,
+          "start": 3.5,
+          "end": 4,
+          "tokens": [
+            1
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": " hello",
+          "tokens": [
+            1
+          ],
+          "start": 0,
+          "end": 0,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 4,
+      "expected": [
+        {
+          "seek": 300,
+          "start": 3.0,
+          "end": 3.0,
+          "tokens": [
+            1
+          ],
+          "words": [
+            {
+              "word": " hello",
+              "start": 3.0,
+              "end": 3.0,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 1000,
+          "start": 10.5,
+          "end": 13,
+          "tokens": [
+            1,
+            2,
+            3
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": ",",
+          "tokens": [
+            1
+          ],
+          "start": 0,
+          "end": 0.02,
+          "probability": 0.8
+        },
+        {
+          "word": "!",
+          "tokens": [
+            2
+          ],
+          "start": 0.2,
+          "end": 1.0,
+          "probability": 0.8
+        },
+        {
+          "word": ".",
+          "tokens": [
+            3
+          ],
+          "start": 2,
+          "end": 2,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 0,
+      "expected": [
+        {
+          "seek": 1000,
+          "start": 10.0,
+          "end": 10.02,
+          "tokens": [
+            1,
+            2,
+            3
+          ],
+          "words": [
+            {
+              "word": ",!.",
+              "start": 10.0,
+              "end": 10.02,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 300,
+          "start": 3.5,
+          "end": 4,
+          "tokens": [
+            1
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": "!",
+          "tokens": [
+            1
+          ],
+          "start": 0.0,
+          "end": 0.2,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 3,
+      "expected": [
+        {
+          "seek": 300,
+          "start": 3.0,
+          "end": 3.2,
+          "tokens": [
+            1
+          ],
+          "words": [
+            {
+              "word": "!",
+              "start": 3.0,
+              "end": 3.2,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 0,
+          "start": 0.5,
+          "end": 1,
+          "tokens": [
+            1
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": " (",
+          "tokens": [
+            1
+          ],
+          "start": 0.0,
+          "end": 0.02,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 1,
+      "expected": [
+        {
+          "seek": 0,
+          "start": 0.0,
+          "end": 0.02,
+          "tokens": [
+            1
+          ],
+          "words": [
+            {
+              "word": " (",
+              "start": 0.0,
+              "end": 0.02,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 300,
+          "start": 3.5,
+          "end": 6,
+          "tokens": [
+            1,
+            2,
+            3
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": " world",
+          "tokens": [
+            1
+          ],
+          "start": 0,
+          "end": 0.02,
+          "probability": 0.8
+        },
+        {
+          "word": " world",
+          "tokens": [
+            2
+          ],
+          "start": 1,
+          "end": 1,
+          "probability": 0.8
+        },
+        {
+          "word": ",",
+          "tokens": [
+            3
+          ],
+          "start": 2,
+          "end": 2.02,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 0,
+      "expected": [
+        {
+          "seek": 300,
+          "start": 2.98,
+          "end": 4.0,
+          "tokens": [
+            1,
+            2,
+            3
+          ],
+          "words": [
+            {
+              "word": " world",
+              "start": 2.98,
+              "end": 3.02,
+              "probability": 0.8
+            },
+            {
+              "word": " world,",
+              "start": 4.0,
+              "end": 4.0,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 0,
+          "start": 0.5,
+          "end": 3,
+          "tokens": [
+            1,
+            2,
+            3
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": ",",
+          "tokens": [
+            1
+          ],
+          "start": 0,
+          "end": 0,
+          "probability": 0.8
+        },
+        {
+          "word": ".",
+          "tokens": [
+            2
+          ],
+          "start": 0.2,
+          "end": 0.22,
+          "probability": 0.8
+        },
+        {
+          "word": ",",
+          "tokens": [
+            3
+          ],
+          "start": 0.4,
+          "end": 1.2000000000000002,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 0,
+      "expected": [
+        {
+          "seek": 0,
+          "start": 0.0,
+          "end": 0.0,
+          "tokens": [
+            1,
+            2,
+            3
+          ],
+          "words": [
+            {
+              "word": ",.,",
+              "start": 0.0,
+              "end": 0.0,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 0,
+          "start": 0.5,
+          "end": 6,
+          "tokens": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": ",",
+          "tokens": [
+            1
+          ],
+          "start": 0.0,
+          "end": 0.8,
+          "probability": 0.8
+        },
+        {
+          "word": "!",
+          "tokens": [
+            2
+          ],
+          "start": 1,
+          "end": 1.02,
+          "probability": 0.8
+        },
+        {
+          "word": ".",
+          "tokens": [
+            3
+          ],
+          "start": 0.04,
+          "end": 3.04,
+          "probability": 0.8
+        },
+        {
+          "word": " hello",
+          "tokens": [
+            4
+          ],
+          "start": 3,
+          "end": 6,
+          "probability": 0.8
+        },
+        {
+          "word": " world",
+          "tokens": [
+            5
+          ],
+          "start": 12,
+          "end": 12.2,
+          "probability": 0.8
+        },
+        {
+          "word": " (",
+          "tokens": [
+            6
+          ],
+          "start": 1.0,
+          "end": 1.02,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 1,
+      "expected": [
+        {
+          "seek": 0,
+          "start": 0.0,
+          "end": 1.02,
+          "tokens": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "words": [
+            {
+              "word": ",!.",
+              "start": 0.0,
+              "end": 0.8,
+              "probability": 0.8
+            },
+            {
+              "word": " hello",
+              "start": 5.0,
+              "end": 6.0,
+              "probability": 0.8
+            },
+            {
+              "word": " world",
+              "start": 12.0,
+              "end": 12.2,
+              "probability": 0.8
+            },
+            {
+              "word": " (",
+              "start": 1.0,
+              "end": 1.02,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 300,
+          "start": 3.5,
+          "end": 4,
+          "tokens": [
+            1
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": ",",
+          "tokens": [
+            1
+          ],
+          "start": 0,
+          "end": 0,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 3,
+      "expected": [
+        {
+          "seek": 300,
+          "start": 3.0,
+          "end": 3.0,
+          "tokens": [
+            1
+          ],
+          "words": [
+            {
+              "word": ",",
+              "start": 3.0,
+              "end": 3.0,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 300,
+          "start": 3.5,
+          "end": 4,
+          "tokens": []
+        }
+      ],
+      "alignment": [],
+      "lastSpeech": 0,
+      "expected": [
+        {
+          "seek": 300,
+          "start": 3.5,
+          "end": 4,
+          "tokens": [],
+          "words": []
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 0,
+          "start": 0.5,
+          "end": 1,
+          "tokens": [
+            1
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": " (",
+          "tokens": [
+            1
+          ],
+          "start": 0,
+          "end": 0,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 0,
+      "expected": [
+        {
+          "seek": 0,
+          "start": 0.0,
+          "end": 0.0,
+          "tokens": [
+            1
+          ],
+          "words": [
+            {
+              "word": " (",
+              "start": 0.0,
+              "end": 0.0,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 300,
+          "start": 3.5,
+          "end": 9,
+          "tokens": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": " world",
+          "tokens": [
+            1
+          ],
+          "start": 0,
+          "end": 0,
+          "probability": 0.8
+        },
+        {
+          "word": " world",
+          "tokens": [
+            2
+          ],
+          "start": 0.02,
+          "end": 0.02,
+          "probability": 0.8
+        },
+        {
+          "word": ".",
+          "tokens": [
+            3
+          ],
+          "start": 6,
+          "end": 9,
+          "probability": 0.8
+        },
+        {
+          "word": " hello",
+          "tokens": [
+            4
+          ],
+          "start": 9,
+          "end": 9,
+          "probability": 0.8
+        },
+        {
+          "word": " (",
+          "tokens": [
+            5
+          ],
+          "start": 0.08,
+          "end": 0.88,
+          "probability": 0.8
+        },
+        {
+          "word": " world",
+          "tokens": [
+            6
+          ],
+          "start": 1.0,
+          "end": 1.8,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 3,
+      "expected": [
+        {
+          "seek": 300,
+          "start": 3.0,
+          "end": 4.8,
+          "tokens": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "words": [
+            {
+              "word": " world",
+              "start": 3.0,
+              "end": 3.0,
+              "probability": 0.8
+            },
+            {
+              "word": " world.",
+              "start": 3.02,
+              "end": 3.02,
+              "probability": 0.8
+            },
+            {
+              "word": " hello",
+              "start": 12.0,
+              "end": 12.0,
+              "probability": 0.8
+            },
+            {
+              "word": " ( world",
+              "start": 4.0,
+              "end": 4.8,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 1000,
+          "start": 10.5,
+          "end": 13,
+          "tokens": [
+            1,
+            2,
+            3
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": " world",
+          "tokens": [
+            1
+          ],
+          "start": 0.0,
+          "end": 0.2,
+          "probability": 0.8
+        },
+        {
+          "word": "!",
+          "tokens": [
+            2
+          ],
+          "start": 3,
+          "end": 3,
+          "probability": 0.8
+        },
+        {
+          "word": " (",
+          "tokens": [
+            3
+          ],
+          "start": 6,
+          "end": 6.02,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 11,
+      "expected": [
+        {
+          "seek": 1000,
+          "start": 10.0,
+          "end": 16.02,
+          "tokens": [
+            1,
+            2,
+            3
+          ],
+          "words": [
+            {
+              "word": " world!",
+              "start": 10.0,
+              "end": 10.2,
+              "probability": 0.8
+            },
+            {
+              "word": " (",
+              "start": 16.0,
+              "end": 16.02,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 1000,
+          "start": 10.5,
+          "end": 13,
+          "tokens": [
+            1,
+            2,
+            3
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": " (",
+          "tokens": [
+            1
+          ],
+          "start": 0.0,
+          "end": 0.0,
+          "probability": 0.8
+        },
+        {
+          "word": " (",
+          "tokens": [
+            2
+          ],
+          "start": 3,
+          "end": 3.2,
+          "probability": 0.8
+        },
+        {
+          "word": " (",
+          "tokens": [
+            3
+          ],
+          "start": 0.4,
+          "end": 0.42000000000000004,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 11,
+      "expected": [
+        {
+          "seek": 1000,
+          "start": 10.4,
+          "end": 10.42,
+          "tokens": [
+            1,
+            2,
+            3
+          ],
+          "words": [
+            {
+              "word": " ( ( (",
+              "start": 10.4,
+              "end": 10.42,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 1000,
+          "start": 10.5,
+          "end": 16,
+          "tokens": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": ",",
+          "tokens": [
+            1
+          ],
+          "start": 0.0,
+          "end": 0.0,
+          "probability": 0.8
+        },
+        {
+          "word": ",",
+          "tokens": [
+            2
+          ],
+          "start": 3,
+          "end": 3.02,
+          "probability": 0.8
+        },
+        {
+          "word": "!",
+          "tokens": [
+            3
+          ],
+          "start": 6,
+          "end": 6.2,
+          "probability": 0.8
+        },
+        {
+          "word": "!",
+          "tokens": [
+            4
+          ],
+          "start": 0.06,
+          "end": 0.06,
+          "probability": 0.8
+        },
+        {
+          "word": "!",
+          "tokens": [
+            5
+          ],
+          "start": 0.08,
+          "end": 0.08,
+          "probability": 0.8
+        },
+        {
+          "word": " hello",
+          "tokens": [
+            6
+          ],
+          "start": 15,
+          "end": 18,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 0,
+      "expected": [
+        {
+          "seek": 1000,
+          "start": 9.6,
+          "end": 28.0,
+          "tokens": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "words": [
+            {
+              "word": ",,!!!",
+              "start": 9.6,
+              "end": 10.0,
+              "probability": 0.8
+            },
+            {
+              "word": " hello",
+              "start": 27.6,
+              "end": 28.0,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 0,
+          "start": 0.5,
+          "end": 2,
+          "tokens": [
+            1,
+            2
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": ",",
+          "tokens": [
+            1
+          ],
+          "start": 0,
+          "end": 0.2,
+          "probability": 0.8
+        },
+        {
+          "word": "!",
+          "tokens": [
+            2
+          ],
+          "start": 3,
+          "end": 3,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 0,
+      "expected": [
+        {
+          "seek": 0,
+          "start": 0.0,
+          "end": 0.2,
+          "tokens": [
+            1,
+            2
+          ],
+          "words": [
+            {
+              "word": ",!",
+              "start": 0.0,
+              "end": 0.2,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 0,
+          "start": 0.5,
+          "end": 6,
+          "tokens": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": " hello",
+          "tokens": [
+            1
+          ],
+          "start": 0,
+          "end": 0.2,
+          "probability": 0.8
+        },
+        {
+          "word": " (",
+          "tokens": [
+            2
+          ],
+          "start": 3,
+          "end": 3.02,
+          "probability": 0.8
+        },
+        {
+          "word": ".",
+          "tokens": [
+            3
+          ],
+          "start": 0.4,
+          "end": 0.42000000000000004,
+          "probability": 0.8
+        },
+        {
+          "word": ",",
+          "tokens": [
+            4
+          ],
+          "start": 0.06,
+          "end": 0.26,
+          "probability": 0.8
+        },
+        {
+          "word": " (",
+          "tokens": [
+            5
+          ],
+          "start": 0.08,
+          "end": 0.88,
+          "probability": 0.8
+        },
+        {
+          "word": " world",
+          "tokens": [
+            6
+          ],
+          "start": 1.0,
+          "end": 1.2,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 0,
+      "expected": [
+        {
+          "seek": 0,
+          "start": 0.0,
+          "end": 1.2,
+          "tokens": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "words": [
+            {
+              "word": " hello",
+              "start": 0.0,
+              "end": 0.2,
+              "probability": 0.8
+            },
+            {
+              "word": " (.,",
+              "start": 0.4,
+              "end": 0.42,
+              "probability": 0.8
+            },
+            {
+              "word": " ( world",
+              "start": 1.0,
+              "end": 1.2,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 1000,
+          "start": 10.5,
+          "end": 12,
+          "tokens": [
+            1,
+            2
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": "!",
+          "tokens": [
+            1
+          ],
+          "start": 0,
+          "end": 0.8,
+          "probability": 0.8
+        },
+        {
+          "word": ",",
+          "tokens": [
+            2
+          ],
+          "start": 0.02,
+          "end": 3.02,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 10,
+      "expected": [
+        {
+          "seek": 1000,
+          "start": 10.0,
+          "end": 10.8,
+          "tokens": [
+            1,
+            2
+          ],
+          "words": [
+            {
+              "word": "!,",
+              "start": 10.0,
+              "end": 10.8,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 300,
+          "start": 3.5,
+          "end": 5,
+          "tokens": [
+            1,
+            2
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": " world",
+          "tokens": [
+            1
+          ],
+          "start": 0,
+          "end": 0.02,
+          "probability": 0.8
+        },
+        {
+          "word": " (",
+          "tokens": [
+            2
+          ],
+          "start": 0.02,
+          "end": 0.04,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 3,
+      "expected": [
+        {
+          "seek": 300,
+          "start": 3.0,
+          "end": 3.04,
+          "tokens": [
+            1,
+            2
+          ],
+          "words": [
+            {
+              "word": " world",
+              "start": 3.0,
+              "end": 3.02,
+              "probability": 0.8
+            },
+            {
+              "word": " (",
+              "start": 3.02,
+              "end": 3.04,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 1000,
+          "start": 10.5,
+          "end": 11,
+          "tokens": [
+            1
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": "!",
+          "tokens": [
+            1
+          ],
+          "start": 0,
+          "end": 0.8,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 0,
+      "expected": [
+        {
+          "seek": 1000,
+          "start": 10.0,
+          "end": 10.8,
+          "tokens": [
+            1
+          ],
+          "words": [
+            {
+              "word": "!",
+              "start": 10.0,
+              "end": 10.8,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 300,
+          "start": 3.5,
+          "end": 4,
+          "tokens": [
+            1
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": ",",
+          "tokens": [
+            1
+          ],
+          "start": 0.0,
+          "end": 0.8,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 3,
+      "expected": [
+        {
+          "seek": 300,
+          "start": 3.0,
+          "end": 3.8,
+          "tokens": [
+            1
+          ],
+          "words": [
+            {
+              "word": ",",
+              "start": 3.0,
+              "end": 3.8,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 0,
+          "start": 0.5,
+          "end": 1,
+          "tokens": []
+        }
+      ],
+      "alignment": [],
+      "lastSpeech": 0,
+      "expected": [
+        {
+          "seek": 0,
+          "start": 0.5,
+          "end": 1,
+          "tokens": [],
+          "words": []
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 1000,
+          "start": 10.5,
+          "end": 11,
+          "tokens": []
+        }
+      ],
+      "alignment": [],
+      "lastSpeech": 10,
+      "expected": [
+        {
+          "seek": 1000,
+          "start": 10.5,
+          "end": 11,
+          "tokens": [],
+          "words": []
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 1000,
+          "start": 10.5,
+          "end": 13,
+          "tokens": [
+            1,
+            2,
+            3
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": ",",
+          "tokens": [
+            1
+          ],
+          "start": 0,
+          "end": 0.8,
+          "probability": 0.8
+        },
+        {
+          "word": " (",
+          "tokens": [
+            2
+          ],
+          "start": 0.2,
+          "end": 0.4,
+          "probability": 0.8
+        },
+        {
+          "word": " world",
+          "tokens": [
+            3
+          ],
+          "start": 0.04,
+          "end": 3.04,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 11,
+      "expected": [
+        {
+          "seek": 1000,
+          "start": 10.0,
+          "end": 13.04,
+          "tokens": [
+            1,
+            2,
+            3
+          ],
+          "words": [
+            {
+              "word": ",",
+              "start": 10.0,
+              "end": 10.8,
+              "probability": 0.8
+            },
+            {
+              "word": " ( world",
+              "start": 10.04,
+              "end": 13.04,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 300,
+          "start": 3.5,
+          "end": 4,
+          "tokens": []
+        }
+      ],
+      "alignment": [],
+      "lastSpeech": 0,
+      "expected": [
+        {
+          "seek": 300,
+          "start": 3.5,
+          "end": 4,
+          "tokens": [],
+          "words": []
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 0,
+          "start": 0.5,
+          "end": 1,
+          "tokens": [
+            1
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": ",",
+          "tokens": [
+            1
+          ],
+          "start": 0,
+          "end": 3,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 1,
+      "expected": [
+        {
+          "seek": 0,
+          "start": 0.0,
+          "end": 1,
+          "tokens": [
+            1
+          ],
+          "words": [
+            {
+              "word": ",",
+              "start": 0.0,
+              "end": 1,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 300,
+          "start": 3.5,
+          "end": 9,
+          "tokens": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": " (",
+          "tokens": [
+            1
+          ],
+          "start": 0,
+          "end": 0.8,
+          "probability": 0.8
+        },
+        {
+          "word": "!",
+          "tokens": [
+            2
+          ],
+          "start": 0.02,
+          "end": 0.22,
+          "probability": 0.8
+        },
+        {
+          "word": ",",
+          "tokens": [
+            3
+          ],
+          "start": 0.4,
+          "end": 0.4,
+          "probability": 0.8
+        },
+        {
+          "word": " (",
+          "tokens": [
+            4
+          ],
+          "start": 9,
+          "end": 9.02,
+          "probability": 0.8
+        },
+        {
+          "word": "!",
+          "tokens": [
+            5
+          ],
+          "start": 12,
+          "end": 12.8,
+          "probability": 0.8
+        },
+        {
+          "word": ",",
+          "tokens": [
+            6
+          ],
+          "start": 5,
+          "end": 5,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 0,
+      "expected": [
+        {
+          "seek": 300,
+          "start": 2.22,
+          "end": 15.8,
+          "tokens": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "words": [
+            {
+              "word": " (!,",
+              "start": 2.22,
+              "end": 3.22,
+              "probability": 0.8
+            },
+            {
+              "word": " (!,",
+              "start": 15.0,
+              "end": 15.8,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 300,
+          "start": 3.5,
+          "end": 6,
+          "tokens": [
+            1,
+            2,
+            3
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": " hello",
+          "tokens": [
+            1
+          ],
+          "start": 0,
+          "end": 3,
+          "probability": 0.8
+        },
+        {
+          "word": "!",
+          "tokens": [
+            2
+          ],
+          "start": 0.02,
+          "end": 0.22,
+          "probability": 0.8
+        },
+        {
+          "word": ".",
+          "tokens": [
+            3
+          ],
+          "start": 0.04,
+          "end": 0.04,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 3,
+      "expected": [
+        {
+          "seek": 300,
+          "start": 4.6,
+          "end": 6.0,
+          "tokens": [
+            1,
+            2,
+            3
+          ],
+          "words": [
+            {
+              "word": " hello!.",
+              "start": 4.6,
+              "end": 6.0,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 300,
+          "start": 3.5,
+          "end": 5,
+          "tokens": [
+            1,
+            2
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": ",",
+          "tokens": [
+            1
+          ],
+          "start": 0.0,
+          "end": 0.2,
+          "probability": 0.8
+        },
+        {
+          "word": ",",
+          "tokens": [
+            2
+          ],
+          "start": 0.2,
+          "end": 0.4,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 3,
+      "expected": [
+        {
+          "seek": 300,
+          "start": 3.0,
+          "end": 3.2,
+          "tokens": [
+            1,
+            2
+          ],
+          "words": [
+            {
+              "word": ",,",
+              "start": 3.0,
+              "end": 3.2,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 1000,
+          "start": 10.5,
+          "end": 11,
+          "tokens": [
+            1
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": ",",
+          "tokens": [
+            1
+          ],
+          "start": 0.0,
+          "end": 0.8,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 0,
+      "expected": [
+        {
+          "seek": 1000,
+          "start": 10.0,
+          "end": 10.8,
+          "tokens": [
+            1
+          ],
+          "words": [
+            {
+              "word": ",",
+              "start": 10.0,
+              "end": 10.8,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 1000,
+          "start": 10.5,
+          "end": 16,
+          "tokens": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": "!",
+          "tokens": [
+            1
+          ],
+          "start": 0,
+          "end": 0.02,
+          "probability": 0.8
+        },
+        {
+          "word": "!",
+          "tokens": [
+            2
+          ],
+          "start": 1,
+          "end": 1.2,
+          "probability": 0.8
+        },
+        {
+          "word": " world",
+          "tokens": [
+            3
+          ],
+          "start": 0.04,
+          "end": 3.04,
+          "probability": 0.8
+        },
+        {
+          "word": " world",
+          "tokens": [
+            4
+          ],
+          "start": 3,
+          "end": 3,
+          "probability": 0.8
+        },
+        {
+          "word": " (",
+          "tokens": [
+            5
+          ],
+          "start": 0.8,
+          "end": 1.6,
+          "probability": 0.8
+        },
+        {
+          "word": "!",
+          "tokens": [
+            6
+          ],
+          "start": 15,
+          "end": 15,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 11,
+      "expected": [
+        {
+          "seek": 1000,
+          "start": 10.0,
+          "end": 25.0,
+          "tokens": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "words": [
+            {
+              "word": "!!",
+              "start": 10.0,
+              "end": 10.02,
+              "probability": 0.8
+            },
+            {
+              "word": " world",
+              "start": 12.04,
+              "end": 13.04,
+              "probability": 0.8
+            },
+            {
+              "word": " world",
+              "start": 13.0,
+              "end": 13.0,
+              "probability": 0.8
+            },
+            {
+              "word": " (!",
+              "start": 25.0,
+              "end": 25.0,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 1000,
+          "start": 10.5,
+          "end": 16,
+          "tokens": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": " world",
+          "tokens": [
+            1
+          ],
+          "start": 0,
+          "end": 3,
+          "probability": 0.8
+        },
+        {
+          "word": " hello",
+          "tokens": [
+            2
+          ],
+          "start": 0.02,
+          "end": 0.22,
+          "probability": 0.8
+        },
+        {
+          "word": " (",
+          "tokens": [
+            3
+          ],
+          "start": 6,
+          "end": 6,
+          "probability": 0.8
+        },
+        {
+          "word": ".",
+          "tokens": [
+            4
+          ],
+          "start": 0.6000000000000001,
+          "end": 1.4000000000000001,
+          "probability": 0.8
+        },
+        {
+          "word": " hello",
+          "tokens": [
+            5
+          ],
+          "start": 4,
+          "end": 4.02,
+          "probability": 0.8
+        },
+        {
+          "word": " world",
+          "tokens": [
+            6
+          ],
+          "start": 1.0,
+          "end": 1.02,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 0,
+      "expected": [
+        {
+          "seek": 1000,
+          "start": 12.6,
+          "end": 11.02,
+          "tokens": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "words": [
+            {
+              "word": " world",
+              "start": 12.6,
+              "end": 13.0,
+              "probability": 0.8
+            },
+            {
+              "word": " hello",
+              "start": 10.02,
+              "end": 10.22,
+              "probability": 0.8
+            },
+            {
+              "word": " (.",
+              "start": 10.6,
+              "end": 11.0,
+              "probability": 0.8
+            },
+            {
+              "word": " hello",
+              "start": 14.0,
+              "end": 14.02,
+              "probability": 0.8
+            },
+            {
+              "word": " world",
+              "start": 11.0,
+              "end": 11.02,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 0,
+          "start": 0.5,
+          "end": 3,
+          "tokens": [
+            1,
+            2,
+            3
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": " world",
+          "tokens": [
+            1
+          ],
+          "start": 0,
+          "end": 3,
+          "probability": 0.8
+        },
+        {
+          "word": " (",
+          "tokens": [
+            2
+          ],
+          "start": 1,
+          "end": 1.8,
+          "probability": 0.8
+        },
+        {
+          "word": "!",
+          "tokens": [
+            3
+          ],
+          "start": 2,
+          "end": 5,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 0,
+      "expected": [
+        {
+          "seek": 0,
+          "start": 1.6,
+          "end": 3.4,
+          "tokens": [
+            1,
+            2,
+            3
+          ],
+          "words": [
+            {
+              "word": " world",
+              "start": 1.6,
+              "end": 3.0,
+              "probability": 0.8
+            },
+            {
+              "word": " (!",
+              "start": 2.0,
+              "end": 3.4,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 300,
+          "start": 3.5,
+          "end": 9,
+          "tokens": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": ",",
+          "tokens": [
+            1
+          ],
+          "start": 0.0,
+          "end": 0.02,
+          "probability": 0.8
+        },
+        {
+          "word": "!",
+          "tokens": [
+            2
+          ],
+          "start": 0.2,
+          "end": 1.0,
+          "probability": 0.8
+        },
+        {
+          "word": "!",
+          "tokens": [
+            3
+          ],
+          "start": 6,
+          "end": 6.2,
+          "probability": 0.8
+        },
+        {
+          "word": " (",
+          "tokens": [
+            4
+          ],
+          "start": 9,
+          "end": 9.8,
+          "probability": 0.8
+        },
+        {
+          "word": " (",
+          "tokens": [
+            5
+          ],
+          "start": 0.08,
+          "end": 0.1,
+          "probability": 0.8
+        },
+        {
+          "word": " world",
+          "tokens": [
+            6
+          ],
+          "start": 0.1,
+          "end": 3.1,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 4,
+      "expected": [
+        {
+          "seek": 300,
+          "start": 3.0,
+          "end": 6.1,
+          "tokens": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "words": [
+            {
+              "word": ",!!",
+              "start": 3.0,
+              "end": 3.02,
+              "probability": 0.8
+            },
+            {
+              "word": " ( ( world",
+              "start": 3.1,
+              "end": 6.1,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 0,
+          "start": 0.5,
+          "end": 1,
+          "tokens": [
+            1
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": ",",
+          "tokens": [
+            1
+          ],
+          "start": 0,
+          "end": 0.02,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 0,
+      "expected": [
+        {
+          "seek": 0,
+          "start": 0.0,
+          "end": 0.02,
+          "tokens": [
+            1
+          ],
+          "words": [
+            {
+              "word": ",",
+              "start": 0.0,
+              "end": 0.02,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 300,
+          "start": 3.5,
+          "end": 5,
+          "tokens": [
+            1,
+            2
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": ",",
+          "tokens": [
+            1
+          ],
+          "start": 0.0,
+          "end": 0.0,
+          "probability": 0.8
+        },
+        {
+          "word": ",",
+          "tokens": [
+            2
+          ],
+          "start": 0.2,
+          "end": 0.4,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 4,
+      "expected": [
+        {
+          "seek": 300,
+          "start": 3.0,
+          "end": 3.0,
+          "tokens": [
+            1,
+            2
+          ],
+          "words": [
+            {
+              "word": ",,",
+              "start": 3.0,
+              "end": 3.0,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 1000,
+          "start": 10.5,
+          "end": 11,
+          "tokens": [
+            1
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": ".",
+          "tokens": [
+            1
+          ],
+          "start": 0,
+          "end": 0.2,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 10,
+      "expected": [
+        {
+          "seek": 1000,
+          "start": 10.0,
+          "end": 10.2,
+          "tokens": [
+            1
+          ],
+          "words": [
+            {
+              "word": ".",
+              "start": 10.0,
+              "end": 10.2,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 1000,
+          "start": 10.5,
+          "end": 11,
+          "tokens": []
+        }
+      ],
+      "alignment": [],
+      "lastSpeech": 11,
+      "expected": [
+        {
+          "seek": 1000,
+          "start": 10.5,
+          "end": 11,
+          "tokens": [],
+          "words": []
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 0,
+          "start": 0.5,
+          "end": 1,
+          "tokens": [
+            1
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": ",",
+          "tokens": [
+            1
+          ],
+          "start": 0.0,
+          "end": 0.8,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 1,
+      "expected": [
+        {
+          "seek": 0,
+          "start": 0.0,
+          "end": 0.8,
+          "tokens": [
+            1
+          ],
+          "words": [
+            {
+              "word": ",",
+              "start": 0.0,
+              "end": 0.8,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 1000,
+          "start": 10.5,
+          "end": 11,
+          "tokens": []
+        }
+      ],
+      "alignment": [],
+      "lastSpeech": 10,
+      "expected": [
+        {
+          "seek": 1000,
+          "start": 10.5,
+          "end": 11,
+          "tokens": [],
+          "words": []
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 0,
+          "start": 0.5,
+          "end": 6,
+          "tokens": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": " world",
+          "tokens": [
+            1
+          ],
+          "start": 0,
+          "end": 0.2,
+          "probability": 0.8
+        },
+        {
+          "word": ",",
+          "tokens": [
+            2
+          ],
+          "start": 1,
+          "end": 1.8,
+          "probability": 0.8
+        },
+        {
+          "word": " (",
+          "tokens": [
+            3
+          ],
+          "start": 6,
+          "end": 6.8,
+          "probability": 0.8
+        },
+        {
+          "word": " world",
+          "tokens": [
+            4
+          ],
+          "start": 0.6000000000000001,
+          "end": 1.4000000000000001,
+          "probability": 0.8
+        },
+        {
+          "word": ",",
+          "tokens": [
+            5
+          ],
+          "start": 0.08,
+          "end": 0.88,
+          "probability": 0.8
+        },
+        {
+          "word": " (",
+          "tokens": [
+            6
+          ],
+          "start": 0.1,
+          "end": 3.1,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 1,
+      "expected": [
+        {
+          "seek": 0,
+          "start": 0.0,
+          "end": 3.1,
+          "tokens": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "words": [
+            {
+              "word": " world,",
+              "start": 0.0,
+              "end": 0.2,
+              "probability": 0.8
+            },
+            {
+              "word": " ( world,",
+              "start": 0.6,
+              "end": 1.4,
+              "probability": 0.8
+            },
+            {
+              "word": " (",
+              "start": 0.1,
+              "end": 3.1,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 300,
+          "start": 3.5,
+          "end": 4,
+          "tokens": [
+            1
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": ",",
+          "tokens": [
+            1
+          ],
+          "start": 0.0,
+          "end": 0.2,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 3,
+      "expected": [
+        {
+          "seek": 300,
+          "start": 3.0,
+          "end": 3.2,
+          "tokens": [
+            1
+          ],
+          "words": [
+            {
+              "word": ",",
+              "start": 3.0,
+              "end": 3.2,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 1000,
+          "start": 10.5,
+          "end": 11,
+          "tokens": []
+        }
+      ],
+      "alignment": [],
+      "lastSpeech": 10,
+      "expected": [
+        {
+          "seek": 1000,
+          "start": 10.5,
+          "end": 11,
+          "tokens": [],
+          "words": []
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 0,
+          "start": 0.5,
+          "end": 1,
+          "tokens": []
+        }
+      ],
+      "alignment": [],
+      "lastSpeech": 0,
+      "expected": [
+        {
+          "seek": 0,
+          "start": 0.5,
+          "end": 1,
+          "tokens": [],
+          "words": []
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 0,
+          "start": 0.5,
+          "end": 3,
+          "tokens": [
+            1,
+            2,
+            3
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": " world",
+          "tokens": [
+            1
+          ],
+          "start": 0,
+          "end": 0.02,
+          "probability": 0.8
+        },
+        {
+          "word": " world",
+          "tokens": [
+            2
+          ],
+          "start": 3,
+          "end": 3.2,
+          "probability": 0.8
+        },
+        {
+          "word": " world",
+          "tokens": [
+            3
+          ],
+          "start": 6,
+          "end": 6.02,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 0,
+      "expected": [
+        {
+          "seek": 0,
+          "start": 0.0,
+          "end": 6.02,
+          "tokens": [
+            1,
+            2,
+            3
+          ],
+          "words": [
+            {
+              "word": " world",
+              "start": 0.0,
+              "end": 0.02,
+              "probability": 0.8
+            },
+            {
+              "word": " world",
+              "start": 3.0,
+              "end": 3.2,
+              "probability": 0.8
+            },
+            {
+              "word": " world",
+              "start": 6.0,
+              "end": 6.02,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 0,
+          "start": 0.5,
+          "end": 6,
+          "tokens": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": ",",
+          "tokens": [
+            1
+          ],
+          "start": 0,
+          "end": 0,
+          "probability": 0.8
+        },
+        {
+          "word": "!",
+          "tokens": [
+            2
+          ],
+          "start": 0.02,
+          "end": 0.04,
+          "probability": 0.8
+        },
+        {
+          "word": " world",
+          "tokens": [
+            3
+          ],
+          "start": 2,
+          "end": 5,
+          "probability": 0.8
+        },
+        {
+          "word": " (",
+          "tokens": [
+            4
+          ],
+          "start": 0.6000000000000001,
+          "end": 0.6000000000000001,
+          "probability": 0.8
+        },
+        {
+          "word": "!",
+          "tokens": [
+            5
+          ],
+          "start": 0.8,
+          "end": 1.0,
+          "probability": 0.8
+        },
+        {
+          "word": " (",
+          "tokens": [
+            6
+          ],
+          "start": 5,
+          "end": 8,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 0,
+      "expected": [
+        {
+          "seek": 0,
+          "start": 0.0,
+          "end": 8.0,
+          "tokens": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "words": [
+            {
+              "word": ",!",
+              "start": 0.0,
+              "end": 0.0,
+              "probability": 0.8
+            },
+            {
+              "word": " world",
+              "start": 3.6,
+              "end": 5.0,
+              "probability": 0.8
+            },
+            {
+              "word": " (!",
+              "start": 0.8,
+              "end": 1.0,
+              "probability": 0.8
+            },
+            {
+              "word": " (",
+              "start": 6.6,
+              "end": 8.0,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 1000,
+          "start": 10.5,
+          "end": 13,
+          "tokens": [
+            1,
+            2,
+            3
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": ".",
+          "tokens": [
+            1
+          ],
+          "start": 0,
+          "end": 3,
+          "probability": 0.8
+        },
+        {
+          "word": ",",
+          "tokens": [
+            2
+          ],
+          "start": 0.2,
+          "end": 0.22,
+          "probability": 0.8
+        },
+        {
+          "word": " world",
+          "tokens": [
+            3
+          ],
+          "start": 2,
+          "end": 2.2,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 11,
+      "expected": [
+        {
+          "seek": 1000,
+          "start": 12.6,
+          "end": 12.2,
+          "tokens": [
+            1,
+            2,
+            3
+          ],
+          "words": [
+            {
+              "word": ".,",
+              "start": 12.6,
+              "end": 13.0,
+              "probability": 0.8
+            },
+            {
+              "word": " world",
+              "start": 12.0,
+              "end": 12.2,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 300,
+          "start": 3.5,
+          "end": 4,
+          "tokens": [
+            1
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": "!",
+          "tokens": [
+            1
+          ],
+          "start": 0,
+          "end": 3,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 3,
+      "expected": [
+        {
+          "seek": 300,
+          "start": 4.6,
+          "end": 6.0,
+          "tokens": [
+            1
+          ],
+          "words": [
+            {
+              "word": "!",
+              "start": 4.6,
+              "end": 6.0,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 0,
+          "start": 0.5,
+          "end": 3,
+          "tokens": [
+            1,
+            2,
+            3
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": " hello",
+          "tokens": [
+            1
+          ],
+          "start": 0.0,
+          "end": 0.2,
+          "probability": 0.8
+        },
+        {
+          "word": " hello",
+          "tokens": [
+            2
+          ],
+          "start": 0.2,
+          "end": 0.2,
+          "probability": 0.8
+        },
+        {
+          "word": " hello",
+          "tokens": [
+            3
+          ],
+          "start": 0.04,
+          "end": 0.04,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 0,
+      "expected": [
+        {
+          "seek": 0,
+          "start": 0.0,
+          "end": 0.04,
+          "tokens": [
+            1,
+            2,
+            3
+          ],
+          "words": [
+            {
+              "word": " hello",
+              "start": 0.0,
+              "end": 0.2,
+              "probability": 0.8
+            },
+            {
+              "word": " hello",
+              "start": 0.2,
+              "end": 0.2,
+              "probability": 0.8
+            },
+            {
+              "word": " hello",
+              "start": 0.04,
+              "end": 0.04,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 1000,
+          "start": 10.5,
+          "end": 13,
+          "tokens": [
+            1,
+            2,
+            3
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": " (",
+          "tokens": [
+            1
+          ],
+          "start": 0,
+          "end": 0.2,
+          "probability": 0.8
+        },
+        {
+          "word": " (",
+          "tokens": [
+            2
+          ],
+          "start": 1,
+          "end": 1,
+          "probability": 0.8
+        },
+        {
+          "word": ".",
+          "tokens": [
+            3
+          ],
+          "start": 2,
+          "end": 2.8,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 11,
+      "expected": [
+        {
+          "seek": 1000,
+          "start": 12.0,
+          "end": 12.8,
+          "tokens": [
+            1,
+            2,
+            3
+          ],
+          "words": [
+            {
+              "word": " ( (.",
+              "start": 12.0,
+              "end": 12.8,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 300,
+          "start": 3.5,
+          "end": 5,
+          "tokens": [
+            1,
+            2
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": " world",
+          "tokens": [
+            1
+          ],
+          "start": 0.0,
+          "end": 0.8,
+          "probability": 0.8
+        },
+        {
+          "word": "!",
+          "tokens": [
+            2
+          ],
+          "start": 0.2,
+          "end": 3.2,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 4,
+      "expected": [
+        {
+          "seek": 300,
+          "start": 3.0,
+          "end": 3.8,
+          "tokens": [
+            1,
+            2
+          ],
+          "words": [
+            {
+              "word": " world!",
+              "start": 3.0,
+              "end": 3.8,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 300,
+          "start": 3.5,
+          "end": 5,
+          "tokens": [
+            1,
+            2
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": "!",
+          "tokens": [
+            1
+          ],
+          "start": 0.0,
+          "end": 0.0,
+          "probability": 0.8
+        },
+        {
+          "word": " hello",
+          "tokens": [
+            2
+          ],
+          "start": 3,
+          "end": 3.2,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 0,
+      "expected": [
+        {
+          "seek": 300,
+          "start": 2.5999999999999996,
+          "end": 6.2,
+          "tokens": [
+            1,
+            2
+          ],
+          "words": [
+            {
+              "word": "!",
+              "start": 2.5999999999999996,
+              "end": 3.0,
+              "probability": 0.8
+            },
+            {
+              "word": " hello",
+              "start": 6.0,
+              "end": 6.2,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 1000,
+          "start": 10.5,
+          "end": 11,
+          "tokens": [
+            1
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": " hello",
+          "tokens": [
+            1
+          ],
+          "start": 0,
+          "end": 0.2,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 0,
+      "expected": [
+        {
+          "seek": 1000,
+          "start": 10.0,
+          "end": 10.2,
+          "tokens": [
+            1
+          ],
+          "words": [
+            {
+              "word": " hello",
+              "start": 10.0,
+              "end": 10.2,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 1000,
+          "start": 10.5,
+          "end": 16,
+          "tokens": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": "!",
+          "tokens": [
+            1
+          ],
+          "start": 0.0,
+          "end": 0.02,
+          "probability": 0.8
+        },
+        {
+          "word": "!",
+          "tokens": [
+            2
+          ],
+          "start": 0.02,
+          "end": 3.02,
+          "probability": 0.8
+        },
+        {
+          "word": ".",
+          "tokens": [
+            3
+          ],
+          "start": 6,
+          "end": 6.2,
+          "probability": 0.8
+        },
+        {
+          "word": " world",
+          "tokens": [
+            4
+          ],
+          "start": 9,
+          "end": 12,
+          "probability": 0.8
+        },
+        {
+          "word": ",",
+          "tokens": [
+            5
+          ],
+          "start": 4,
+          "end": 4.8,
+          "probability": 0.8
+        },
+        {
+          "word": ",",
+          "tokens": [
+            6
+          ],
+          "start": 5,
+          "end": 8,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 0,
+      "expected": [
+        {
+          "seek": 1000,
+          "start": 8.62,
+          "end": 22.0,
+          "tokens": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "words": [
+            {
+              "word": "!!.",
+              "start": 8.62,
+              "end": 10.02,
+              "probability": 0.8
+            },
+            {
+              "word": " world,,",
+              "start": 20.6,
+              "end": 22.0,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 300,
+          "start": 3.5,
+          "end": 5,
+          "tokens": [
+            1,
+            2
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": " hello",
+          "tokens": [
+            1
+          ],
+          "start": 0.0,
+          "end": 0.02,
+          "probability": 0.8
+        },
+        {
+          "word": ",",
+          "tokens": [
+            2
+          ],
+          "start": 0.2,
+          "end": 0.2,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 3,
+      "expected": [
+        {
+          "seek": 300,
+          "start": 3.0,
+          "end": 3.02,
+          "tokens": [
+            1,
+            2
+          ],
+          "words": [
+            {
+              "word": " hello,",
+              "start": 3.0,
+              "end": 3.02,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 0,
+          "start": 0.5,
+          "end": 1,
+          "tokens": []
+        }
+      ],
+      "alignment": [],
+      "lastSpeech": 0,
+      "expected": [
+        {
+          "seek": 0,
+          "start": 0.5,
+          "end": 1,
+          "tokens": [],
+          "words": []
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 0,
+          "start": 0.5,
+          "end": 2,
+          "tokens": [
+            1,
+            2
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": ".",
+          "tokens": [
+            1
+          ],
+          "start": 0.0,
+          "end": 0.02,
+          "probability": 0.8
+        },
+        {
+          "word": " world",
+          "tokens": [
+            2
+          ],
+          "start": 0.2,
+          "end": 0.2,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 1,
+      "expected": [
+        {
+          "seek": 0,
+          "start": 0.0,
+          "end": 0.2,
+          "tokens": [
+            1,
+            2
+          ],
+          "words": [
+            {
+              "word": ".",
+              "start": 0.0,
+              "end": 0.02,
+              "probability": 0.8
+            },
+            {
+              "word": " world",
+              "start": 0.2,
+              "end": 0.2,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 0,
+          "start": 0.5,
+          "end": 6,
+          "tokens": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": ",",
+          "tokens": [
+            1
+          ],
+          "start": 0.0,
+          "end": 0.0,
+          "probability": 0.8
+        },
+        {
+          "word": ",",
+          "tokens": [
+            2
+          ],
+          "start": 1,
+          "end": 1.02,
+          "probability": 0.8
+        },
+        {
+          "word": " world",
+          "tokens": [
+            3
+          ],
+          "start": 6,
+          "end": 6.2,
+          "probability": 0.8
+        },
+        {
+          "word": "!",
+          "tokens": [
+            4
+          ],
+          "start": 9,
+          "end": 9,
+          "probability": 0.8
+        },
+        {
+          "word": " hello",
+          "tokens": [
+            5
+          ],
+          "start": 0.8,
+          "end": 3.8,
+          "probability": 0.8
+        },
+        {
+          "word": ",",
+          "tokens": [
+            6
+          ],
+          "start": 15,
+          "end": 15,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 0,
+      "expected": [
+        {
+          "seek": 0,
+          "start": 0.0,
+          "end": 3.8,
+          "tokens": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "words": [
+            {
+              "word": ",,",
+              "start": 0.0,
+              "end": 0.0,
+              "probability": 0.8
+            },
+            {
+              "word": " world!",
+              "start": 6.0,
+              "end": 6.2,
+              "probability": 0.8
+            },
+            {
+              "word": " hello,",
+              "start": 3.4,
+              "end": 3.8,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 0,
+          "start": 0.5,
+          "end": 1,
+          "tokens": [
+            1
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": "!",
+          "tokens": [
+            1
+          ],
+          "start": 0.0,
+          "end": 0.8,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 0,
+      "expected": [
+        {
+          "seek": 0,
+          "start": 0.0,
+          "end": 0.8,
+          "tokens": [
+            1
+          ],
+          "words": [
+            {
+              "word": "!",
+              "start": 0.0,
+              "end": 0.8,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 0,
+          "start": 0.5,
+          "end": 2,
+          "tokens": [
+            1,
+            2
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": " hello",
+          "tokens": [
+            1
+          ],
+          "start": 0.0,
+          "end": 3.0,
+          "probability": 0.8
+        },
+        {
+          "word": ",",
+          "tokens": [
+            2
+          ],
+          "start": 1,
+          "end": 1.2,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 0,
+      "expected": [
+        {
+          "seek": 0,
+          "start": 1.6,
+          "end": 2,
+          "tokens": [
+            1,
+            2
+          ],
+          "words": [
+            {
+              "word": " hello,",
+              "start": 1.6,
+              "end": 2.3,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 300,
+          "start": 3.5,
+          "end": 9,
+          "tokens": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": ".",
+          "tokens": [
+            1
+          ],
+          "start": 0,
+          "end": 0,
+          "probability": 0.8
+        },
+        {
+          "word": " world",
+          "tokens": [
+            2
+          ],
+          "start": 0.2,
+          "end": 0.22,
+          "probability": 0.8
+        },
+        {
+          "word": " world",
+          "tokens": [
+            3
+          ],
+          "start": 2,
+          "end": 2,
+          "probability": 0.8
+        },
+        {
+          "word": ",",
+          "tokens": [
+            4
+          ],
+          "start": 3,
+          "end": 3.02,
+          "probability": 0.8
+        },
+        {
+          "word": ",",
+          "tokens": [
+            5
+          ],
+          "start": 0.08,
+          "end": 0.1,
+          "probability": 0.8
+        },
+        {
+          "word": " (",
+          "tokens": [
+            6
+          ],
+          "start": 1.0,
+          "end": 4.0,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 3,
+      "expected": [
+        {
+          "seek": 300,
+          "start": 3.0,
+          "end": 7.0,
+          "tokens": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "words": [
+            {
+              "word": ".",
+              "start": 3.0,
+              "end": 3.0,
+              "probability": 0.8
+            },
+            {
+              "word": " world",
+              "start": 3.2,
+              "end": 3.22,
+              "probability": 0.8
+            },
+            {
+              "word": " world,,",
+              "start": 5.0,
+              "end": 5.0,
+              "probability": 0.8
+            },
+            {
+              "word": " (",
+              "start": 4.0,
+              "end": 7.0,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 1000,
+          "start": 10.5,
+          "end": 11,
+          "tokens": [
+            1
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": "!",
+          "tokens": [
+            1
+          ],
+          "start": 0.0,
+          "end": 0.2,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 11,
+      "expected": [
+        {
+          "seek": 1000,
+          "start": 10.0,
+          "end": 10.2,
+          "tokens": [
+            1
+          ],
+          "words": [
+            {
+              "word": "!",
+              "start": 10.0,
+              "end": 10.2,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 300,
+          "start": 3.5,
+          "end": 6,
+          "tokens": [
+            1,
+            2,
+            3
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": " world",
+          "tokens": [
+            1
+          ],
+          "start": 0.0,
+          "end": 0.2,
+          "probability": 0.8
+        },
+        {
+          "word": " world",
+          "tokens": [
+            2
+          ],
+          "start": 1,
+          "end": 1,
+          "probability": 0.8
+        },
+        {
+          "word": " world",
+          "tokens": [
+            3
+          ],
+          "start": 6,
+          "end": 6.2,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 4,
+      "expected": [
+        {
+          "seek": 300,
+          "start": 3.0,
+          "end": 9.2,
+          "tokens": [
+            1,
+            2,
+            3
+          ],
+          "words": [
+            {
+              "word": " world",
+              "start": 3.0,
+              "end": 3.2,
+              "probability": 0.8
+            },
+            {
+              "word": " world",
+              "start": 4.0,
+              "end": 4.0,
+              "probability": 0.8
+            },
+            {
+              "word": " world",
+              "start": 9.0,
+              "end": 9.2,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 0,
+          "start": 0.5,
+          "end": 3,
+          "tokens": [
+            1,
+            2,
+            3
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": " (",
+          "tokens": [
+            1
+          ],
+          "start": 0,
+          "end": 0,
+          "probability": 0.8
+        },
+        {
+          "word": ".",
+          "tokens": [
+            2
+          ],
+          "start": 0.2,
+          "end": 1.0,
+          "probability": 0.8
+        },
+        {
+          "word": " world",
+          "tokens": [
+            3
+          ],
+          "start": 6,
+          "end": 6.2,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 0,
+      "expected": [
+        {
+          "seek": 0,
+          "start": 0.2,
+          "end": 6.2,
+          "tokens": [
+            1,
+            2,
+            3
+          ],
+          "words": [
+            {
+              "word": " (.",
+              "start": 0.2,
+              "end": 1.0,
+              "probability": 0.8
+            },
+            {
+              "word": " world",
+              "start": 6.0,
+              "end": 6.2,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 0,
+          "start": 0.5,
+          "end": 3,
+          "tokens": [
+            1,
+            2,
+            3
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": " (",
+          "tokens": [
+            1
+          ],
+          "start": 0.0,
+          "end": 0.2,
+          "probability": 0.8
+        },
+        {
+          "word": " (",
+          "tokens": [
+            2
+          ],
+          "start": 1,
+          "end": 1.02,
+          "probability": 0.8
+        },
+        {
+          "word": " world",
+          "tokens": [
+            3
+          ],
+          "start": 6,
+          "end": 6,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 0,
+      "expected": [
+        {
+          "seek": 0,
+          "start": 6.0,
+          "end": 6.0,
+          "tokens": [
+            1,
+            2,
+            3
+          ],
+          "words": [
+            {
+              "word": " ( ( world",
+              "start": 6.0,
+              "end": 6.0,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 300,
+          "start": 3.5,
+          "end": 5,
+          "tokens": [
+            1,
+            2
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": "!",
+          "tokens": [
+            1
+          ],
+          "start": 0.0,
+          "end": 0.0,
+          "probability": 0.8
+        },
+        {
+          "word": " hello",
+          "tokens": [
+            2
+          ],
+          "start": 3,
+          "end": 3,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 0,
+      "expected": [
+        {
+          "seek": 300,
+          "start": 3.0,
+          "end": 6.0,
+          "tokens": [
+            1,
+            2
+          ],
+          "words": [
+            {
+              "word": "!",
+              "start": 3.0,
+              "end": 3.0,
+              "probability": 0.8
+            },
+            {
+              "word": " hello",
+              "start": 6.0,
+              "end": 6.0,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 0,
+          "start": 0.5,
+          "end": 3,
+          "tokens": [
+            1,
+            2,
+            3
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": " hello",
+          "tokens": [
+            1
+          ],
+          "start": 0.0,
+          "end": 0.8,
+          "probability": 0.8
+        },
+        {
+          "word": " world",
+          "tokens": [
+            2
+          ],
+          "start": 0.2,
+          "end": 1.0,
+          "probability": 0.8
+        },
+        {
+          "word": " (",
+          "tokens": [
+            3
+          ],
+          "start": 0.4,
+          "end": 0.4,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 1,
+      "expected": [
+        {
+          "seek": 0,
+          "start": 0.0,
+          "end": 0.4,
+          "tokens": [
+            1,
+            2,
+            3
+          ],
+          "words": [
+            {
+              "word": " hello",
+              "start": 0.0,
+              "end": 0.8,
+              "probability": 0.8
+            },
+            {
+              "word": " world",
+              "start": 0.2,
+              "end": 1.0,
+              "probability": 0.8
+            },
+            {
+              "word": " (",
+              "start": 0.4,
+              "end": 0.4,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 300,
+          "start": 3.5,
+          "end": 4,
+          "tokens": []
+        }
+      ],
+      "alignment": [],
+      "lastSpeech": 3,
+      "expected": [
+        {
+          "seek": 300,
+          "start": 3.5,
+          "end": 4,
+          "tokens": [],
+          "words": []
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 1000,
+          "start": 10.5,
+          "end": 13,
+          "tokens": [
+            1,
+            2,
+            3
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": ",",
+          "tokens": [
+            1
+          ],
+          "start": 0.0,
+          "end": 0.0,
+          "probability": 0.8
+        },
+        {
+          "word": ".",
+          "tokens": [
+            2
+          ],
+          "start": 0.02,
+          "end": 0.22,
+          "probability": 0.8
+        },
+        {
+          "word": ".",
+          "tokens": [
+            3
+          ],
+          "start": 0.04,
+          "end": 0.24000000000000002,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 11,
+      "expected": [
+        {
+          "seek": 1000,
+          "start": 10.0,
+          "end": 10.0,
+          "tokens": [
+            1,
+            2,
+            3
+          ],
+          "words": [
+            {
+              "word": ",..",
+              "start": 10.0,
+              "end": 10.0,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 0,
+          "start": 0.5,
+          "end": 2,
+          "tokens": [
+            1,
+            2
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": "!",
+          "tokens": [
+            1
+          ],
+          "start": 0.0,
+          "end": 0.0,
+          "probability": 0.8
+        },
+        {
+          "word": " (",
+          "tokens": [
+            2
+          ],
+          "start": 3,
+          "end": 3.02,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 1,
+      "expected": [
+        {
+          "seek": 0,
+          "start": 0.0,
+          "end": 3.02,
+          "tokens": [
+            1,
+            2
+          ],
+          "words": [
+            {
+              "word": "!",
+              "start": 0.0,
+              "end": 0.0,
+              "probability": 0.8
+            },
+            {
+              "word": " (",
+              "start": 3.0,
+              "end": 3.02,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 1000,
+          "start": 10.5,
+          "end": 13,
+          "tokens": [
+            1,
+            2,
+            3
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": " hello",
+          "tokens": [
+            1
+          ],
+          "start": 0.0,
+          "end": 0.0,
+          "probability": 0.8
+        },
+        {
+          "word": "!",
+          "tokens": [
+            2
+          ],
+          "start": 0.2,
+          "end": 0.2,
+          "probability": 0.8
+        },
+        {
+          "word": " world",
+          "tokens": [
+            3
+          ],
+          "start": 0.4,
+          "end": 0.4,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 0,
+      "expected": [
+        {
+          "seek": 1000,
+          "start": 10.0,
+          "end": 10.4,
+          "tokens": [
+            1,
+            2,
+            3
+          ],
+          "words": [
+            {
+              "word": " hello!",
+              "start": 10.0,
+              "end": 10.0,
+              "probability": 0.8
+            },
+            {
+              "word": " world",
+              "start": 10.4,
+              "end": 10.4,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "segments": [
+        {
+          "seek": 300,
+          "start": 3.5,
+          "end": 9,
+          "tokens": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ]
+        }
+      ],
+      "alignment": [
+        {
+          "word": ".",
+          "tokens": [
+            1
+          ],
+          "start": 0.0,
+          "end": 0.02,
+          "probability": 0.8
+        },
+        {
+          "word": " (",
+          "tokens": [
+            2
+          ],
+          "start": 0.2,
+          "end": 1.0,
+          "probability": 0.8
+        },
+        {
+          "word": ".",
+          "tokens": [
+            3
+          ],
+          "start": 6,
+          "end": 6.02,
+          "probability": 0.8
+        },
+        {
+          "word": ".",
+          "tokens": [
+            4
+          ],
+          "start": 0.06,
+          "end": 0.06,
+          "probability": 0.8
+        },
+        {
+          "word": ",",
+          "tokens": [
+            5
+          ],
+          "start": 4,
+          "end": 4.02,
+          "probability": 0.8
+        },
+        {
+          "word": ",",
+          "tokens": [
+            6
+          ],
+          "start": 15,
+          "end": 18,
+          "probability": 0.8
+        }
+      ],
+      "lastSpeech": 0,
+      "expected": [
+        {
+          "seek": 300,
+          "start": 2.98,
+          "end": 9.02,
+          "tokens": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "words": [
+            {
+              "word": ".",
+              "start": 2.98,
+              "end": 3.02,
+              "probability": 0.8
+            },
+            {
+              "word": " (..,,",
+              "start": 9.0,
+              "end": 9.02,
+              "probability": 0.8
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
