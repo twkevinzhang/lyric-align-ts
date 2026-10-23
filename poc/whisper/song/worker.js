@@ -1,7 +1,8 @@
 let running=false;
 self.onmessage=async({data:config})=>{
   if(running)return;running=true;
-  let module;
+  let module;const profile=[];
+  const log=(line)=>{if(String(line).startsWith('POCPROFILE '))profile.push(line);else console.log(line);};
   const post=async(path,body,headers={})=>{const r=await fetch(`${path}${path.includes('?')?'&':'?'}run=${config.runId}`,{method:'POST',body,headers});if(!r.ok)throw new Error(`${path}: ${r.status} ${await r.text()}`);};
   try{
     if(!self.crossOriginIsolated||typeof SharedArrayBuffer==='undefined')throw new Error('COOP/COEP and shared memory are required');
@@ -10,7 +11,7 @@ self.onmessage=async({data:config})=>{
     const hash=Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',model)),b=>b.toString(16).padStart(2,'0')).join('');
     if(hash!==config.modelSha256)throw new Error('Model hash mismatch');
     importScripts('/wasm/parity.js');
-    module=await createWhisperParity({noInitialRun:true,mainScriptUrlOrBlob:new URL('/wasm/parity.js',self.location.href).href,locateFile:name=>new URL(`/wasm/${name}`,self.location.href).href,print:console.log,printErr:console.log});
+    module=await createWhisperParity({noInitialRun:true,mainScriptUrlOrBlob:new URL('/wasm/parity.js',self.location.href).href,locateFile:name=>new URL(`/wasm/${name}`,self.location.href).href,print:log,printErr:log});
     module.FS.writeFile('/model.bin',new Uint8Array(model));model=null;
     const setThreads=n=>{
       if(!module._poc_set_threads){if(n!==1)throw new Error('This build supports only one inference thread');return;}
@@ -47,7 +48,7 @@ self.onmessage=async({data:config})=>{
             }finally{if(qp)module._free(qp);module._free(dp);}
           }
         }finally{module._free(ptr);}
-      }else if(command==='close'){module._poc_close();}
+      }else if(command==='close'){module._poc_close();if(profile.length)await post('/profile',JSON.stringify(profile));}
       else throw new Error(`Unknown command ${command}`);
       await post(`/reply?id=${id}`,output,{'X-Compute-Ms':String(performance.now()-start),'X-Mel-Ms':String(module._poc_mel_ms?.()??0),'X-Encoder-Ms':String(module._poc_encoder_ms?.()??0),'X-Threads':String(module._poc_get_threads?.()??1),'X-Heap-Bytes':String(module.HEAPU8.byteLength)});
       if(command==='close'){self.postMessage('完成');break;}

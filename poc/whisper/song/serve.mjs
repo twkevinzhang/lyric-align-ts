@@ -2,17 +2,23 @@ import {createServer} from 'node:http';
 import {readFile,writeFile} from 'node:fs/promises';
 import {resolve} from 'node:path';
 import {randomUUID} from 'node:crypto';
-import {prepare,official,options,out,local,lock,hash,threadSettings} from './common.mjs';
+import {prepare,official,options,out,local,lock,hash,threadSettings,language} from './common.mjs';
 const input=await prepare();
 const {Whisper}=await official('recognition/WhisperSTT.js');
 const port=5174, origin=`http://127.0.0.1:${port}`,runId=randomUUID();
 const variant=process.env.SONG_WASM_BUILD || 'wasm';
-if(!['wasm','generic','simd'].includes(variant))throw new Error('Unknown WASM build');
+if(!['wasm','compact12'].includes(variant))throw new Error('Unknown WASM build');
 const calibrate=process.env.SONG_MODE==='calibrate';
 const calibrationThreads=(process.env.SONG_CALIBRATE_THREADS||'1,2,4,6').split(',').map(Number);
-if(calibrationThreads.some(n=>!Number.isInteger(n)||n<1||n>6))throw new Error('Invalid calibration counts');
+const calibrationWarmupCount=Number(process.env.SONG_CALIBRATE_WARMUP||'0');
+if(!Number.isInteger(calibrationWarmupCount)||calibrationWarmupCount<0||calibrationWarmupCount>=calibrationThreads.length)throw new Error('Invalid warmup count');
+if(calibrationThreads.some(n=>!Number.isInteger(n)||n<1||n>threadSettings.poolSize))throw new Error('Invalid calibration counts');
 const buildDirectory=resolve(local,`build-song-${variant}`);
+const buildCache=await readFile(resolve(buildDirectory,'CMakeCache.txt'),'utf8');
+const builtPool=Number(/^POC_PTHREAD_POOL_SIZE:STRING=(\d+)\r?$/m.exec(buildCache)?.[1]);
+if(builtPool!==threadSettings.poolSize)throw new Error('Configured worker pool does not match compiled pool');
 const buildHashes={js:hash(await readFile(resolve(buildDirectory,'parity.js'))),wasm:hash(await readFile(resolve(buildDirectory,'parity.wasm')))};
+const optimization=variant==='compact12'?JSON.parse(await readFile(resolve(local,'compact-source.json'))):null;
 let pending,waiter,started=false,status='等待 Chrome 執行',result,cancelled=false;
 const metrics={encodeMs:0,decodeMs:0,encodeCalls:0,decodeCalls:0,rpcMs:0,melMs:0,encoderOnlyMs:0,peakObservedHeapBytes:0,calls:[]};
 let sequence=0;
@@ -35,15 +41,15 @@ async function run(browserInfo){
     if(calibrate){
       const pcm=input.audio.audioChannels[0].subarray(0,480000),bytes=Buffer.from(pcm.buffer,pcm.byteOffset,pcm.byteLength);
       const measurements=[];
-      for(const threads of calibrationThreads){
+      for(const [index,threads] of calibrationThreads.entries()){
         status=`校準 ${variant} / ${threads} threads`;
         await rpc('threads',Buffer.from([threads]));
         const t=performance.now();await rpc('encode',bytes);
-        measurements.push({threads,wallMs:performance.now()-t,...metrics.calls.at(-1)});
+        measurements.push({threads,warmup:index<calibrationWarmupCount,wallMs:performance.now()-t,...metrics.calls.at(-1)});
         await writeFile(resolve(out,'calibration-progress.json'),JSON.stringify(measurements,null,2));
       }
       await rpc('close');
-      result={...input.metadata,variant,buildHashes,browserInfo,calibrationPcmSha256:hash(bytes),secondsTested:30,measurements};
+      result={...input.metadata,variant,buildHashes,optimization,browserInfo,calibrationPcmSha256:hash(bytes),secondsTested:30,calibrationWarmupCount,measurements};
       await writeFile(resolve(out,'calibration.json'),JSON.stringify(result,null,2));status='完成：執行緒校準';return;
     }
     whisper.context={
@@ -52,8 +58,8 @@ async function run(browserInfo){
       getLogits:()=>logits.slice(),getCrossAttentionQKs:async()=>qk,release:()=>{},
     };
     const alignStart=performance.now();
-    const timeline=await whisper.align(input.audio,input.lyrics,'en','transcribe',options,{logLevel:'info'});
-    const completed={...input.metadata,backend:'chrome-wasm-node-orchestrator',variant,buildHashes,runId,browserInfo,initializationSeconds,alignmentSeconds:(performance.now()-alignStart)/1000,totalSeconds:(performance.now()-start)/1000,metrics,timeline};
+    const timeline=await whisper.align(input.audio,input.lyrics,language,'transcribe',options,{logLevel:'info'});
+    const completed={...input.metadata,backend:'chrome-wasm-node-orchestrator',variant,buildHashes,optimization,runId,browserInfo,initializationSeconds,alignmentSeconds:(performance.now()-alignStart)/1000,totalSeconds:(performance.now()-start)/1000,metrics,timeline};
     await rpc('close');
     await writeFile(resolve(out,'wasm.json'),JSON.stringify(completed,null,2));result=completed;
     status=`完成：${timeline.length} 個詞，${result.totalSeconds.toFixed(2)} 秒`;
@@ -79,12 +85,13 @@ const server=createServer(async(req,res)=>{
     if(req.method==='GET'&&url.pathname==='/next'){if(waiter)throw new Error('Duplicate worker');waiter=res;res.on('close',()=>{if(waiter===res)waiter=undefined;});dispatch();return;}
     if(req.method!=='POST'||req.headers.origin!==origin){res.writeHead(403).end();return;}
     const chunks=[];let size=0;for await(const chunk of req){size+=chunk.length;if(size>32*1024*1024)throw new Error('Payload too large');chunks.push(chunk);}const bytes=Buffer.concat(chunks);
+    if(url.pathname==='/profile'){await writeFile(resolve(out,'operations.json'),bytes);res.end('ok');return;}
     if(url.pathname==='/start'){if(started)throw new Error('Already started');started=true;res.end('ok');void run(JSON.parse(bytes));return;}
     if(url.pathname==='/reply'){
       if(!pending||String(pending.id)!==url.searchParams.get('id'))throw new Error('Unexpected reply');
       const ms=Number(req.headers['x-compute-ms']);if(!Number.isFinite(ms)||ms<0)throw new Error('Invalid duration');
       const melMs=Number(req.headers['x-mel-ms']),encoderMs=Number(req.headers['x-encoder-ms']),threads=Number(req.headers['x-threads']);
-      if(pending.method==='encode'&&(!Number.isFinite(melMs)||!Number.isFinite(encoderMs)||melMs<0||encoderMs<0||!Number.isInteger(threads)||threads<1||threads>6))throw new Error('Invalid encoder metrics');
+      if(pending.method==='encode'&&(!Number.isFinite(melMs)||!Number.isFinite(encoderMs)||melMs<0||encoderMs<0||!Number.isInteger(threads)||threads<1||threads>threadSettings.poolSize))throw new Error('Invalid encoder metrics');
       const current=pending;pending=undefined;
       metrics.peakObservedHeapBytes=Math.max(metrics.peakObservedHeapBytes,Number(req.headers['x-heap-bytes']||0));
       if(['encode','decode'].includes(current.method)){metrics[`${current.method}Ms`]+=ms;metrics[`${current.method}Calls`]++;}

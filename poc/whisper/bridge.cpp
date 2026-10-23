@@ -14,8 +14,11 @@ extern "C" int whisper_poc_trace_begin(const char* directory);
 extern "C" int whisper_poc_trace_end();
 #endif
 extern "C" {
+#ifndef POC_MAX_THREADS
+#define POC_MAX_THREADS 6
+#endif
 int poc_set_threads(int count) {
-    if (count < 1 || count > 6) return -1;
+    if (count < 1 || count > POC_MAX_THREADS) return -1;
     threadCount = count;
     return 0;
 }
