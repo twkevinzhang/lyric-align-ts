@@ -1,0 +1,33 @@
+import { readFile, mkdir, realpath } from 'node:fs/promises';
+import { resolve } from 'node:path';
+import { pathToFileURL } from 'node:url';
+import { createHash } from 'node:crypto';
+import {threadConfig} from './thread-config.mjs';
+export const root = resolve(import.meta.dirname, '../../..');
+export const local = resolve(root, '.local/whisper-poc');
+export const threadSettings=threadConfig(process.env.SONG_THREADS ?? '1');
+export const profile=process.env.SONG_OUTPUT || 'song';
+if(!/^[a-z][a-z0-9-]*$/.test(profile)) throw new Error('Invalid SONG_OUTPUT');
+export const out = resolve(local, profile);
+export const media = process.env.SONG_DIR || 'C:/Users/DragonXwin10/Downloads/audio/TestSet/amazing_grace';
+export const echo = await realpath(process.env.ECHOGARDEN_DIR || 'C:/Projects/lyric-align-ts/.local/echogarden-test/node_modules/echogarden');
+export const official = path => import(pathToFileURL(resolve(echo, 'dist', path)).href);
+export const hash = bytes => createHash('sha256').update(bytes).digest('hex');
+export const lock = JSON.parse(await readFile(resolve(root, 'poc/whisper/lock.json')));
+export const options = { model: 'small', enableGPU: false, threadCount: threadSettings.threads, gpuDeviceIndex: 0, timestampAccuracy: 'medium', maxTokensPerPart: 448, endTokenThreshold: 0.9 };
+export async function prepare() {
+  await mkdir(out, {recursive:true});
+  const pkg = JSON.parse(await readFile(resolve(echo,'package.json')));
+  if(pkg.version !== '3.4.0') throw new Error('This benchmark pins Echogarden 3.4.0');
+  const modelPath=resolve(local,lock.model.file);
+  if(hash(await readFile(modelPath))!==lock.model.sha256) throw new Error('Model mismatch');
+  const audioPath=resolve(media,'256k-16kHz-單聲道.wav');
+  const lyricsBytes=await readFile(resolve(media,'Original.txt'));
+  const lyrics=lyricsBytes.toString('utf8').replace(/^\uFEFF/,'');
+  const {ensureRawAudio}=await official('audio/AudioUtilities.js');
+  const t=performance.now();
+  const audio=await ensureRawAudio(audioPath,16000,1,{logLevel:'warning'});
+  const audioPreparationSeconds=(performance.now()-t)/1000;
+  const metadata={echogarden:pkg.version, sourceSha256:hash(await readFile(resolve(echo,'dist/recognition/WhisperSTT.js'))), modelSha256:lock.model.sha256,audioSha256:hash(await readFile(audioPath)),lyricsSha256:hash(lyricsBytes),pcmSha256:hash(Buffer.from(audio.audioChannels[0].buffer,audio.audioChannels[0].byteOffset,audio.audioChannels[0].byteLength)),audioSeconds:audio.audioChannels[0].length/16000,audioPreparationSeconds,options,referenceUsedForInference:false,mode:'guided-lyrics-alignment',crop:false,isolate:false};
+  return {audio,lyrics,modelPath,metadata};
+}

@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="zh-Hant"><meta charset="utf-8"><title>Whisper CPU / WASM parity PoC</title>
+<h1>Whisper small 多語 CPU / WASM PoC</h1>
+<p>固定合成 Mel 與 token 輸入；驗證 logits、QK，不評分字幕品質。</p>
+<button id="run">執行 WASM 比較</button><pre id="status">準備就緒</pre>
+<script type="module">
+const button = document.querySelector('#run');
+const status = document.querySelector('#status');
+button.onclick = async () => {
+  button.disabled = true;
+  const worker = new Worker('/browser-worker.js');
+  worker.onmessage = ({ data }) => {
+    if (data.progress) status.textContent += '\n' + data.progress;
+    if (data.done || data.error) {
+      status.textContent += '\n' + (data.error || '完成；結果已儲存本機，請執行比較器。');
+      worker.terminate(); button.disabled = false;
+    }
+  };
+  worker.onerror = event => { status.textContent += '\n' + event.message; worker.terminate(); button.disabled = false; };
+  try {
+    const session = await (await fetch('/session.json')).json();
+    worker.postMessage(session);
+  } catch (error) { status.textContent += '\n' + error; worker.terminate(); button.disabled = false; }
+};
+</script></html>
