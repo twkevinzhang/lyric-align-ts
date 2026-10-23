@@ -1,4 +1,5 @@
 import {normalize} from './score.mjs';
+const hasMissingText=w=>w.confidence===0||(w.timeline??[]).some(hasMissingText);
 // Monotonic character alignment handles omitted text without shifting every later cue.
 // Reference timestamps never participate in matching.
 export function scoreCues(run,reference){
@@ -15,7 +16,7 @@ export function scoreCues(run,reference){
  const rows=reference.map((cue,index)=>{const a=offset;offset+=Array.from(normalize(cue.text)).length;const indices=Array.from(mapping.slice(a,offset));
  const complete=indices.length>0&&indices.every((v,k)=>v>=0&&(!k||v===indices[k-1]+1));
  const wordIds=[...new Set(indices.filter(x=>x>=0).map(x=>owners[x]))];const group=wordIds.map(x=>run.timeline[x]);
- const valid=complete&&group.every(w=>w.confidence!==0&&Number.isFinite(w.startTime)&&w.startTime>=0&&w.startTime<=run.audioSeconds)&&group.every((w,k)=>!k||w.startTime>=group[k-1].startTime);
+ const valid=complete&&group.every(w=>!hasMissingText(w)&&Number.isFinite(w.startTime)&&w.startTime>=0&&w.startTime<=run.audioSeconds)&&group.every((w,k)=>!k||w.startTime>=group[k-1].startTime);
  return {line:index+1,text:cue.text,referenceStart:cue.start,start:group[0]?.startTime??null,end:group.at(-1)?.endTime??null,usable:valid,textComplete:complete,error:valid?group[0].startTime-cue.start:null};});
  const errors=rows.filter(r=>r.usable).map(r=>Math.abs(r.error));
  return {total:rows.length,matched:errors.length,withinOne:errors.filter(e=>e<=1+1e-9).length,max:errors.length?Math.max(...errors):null,mean:errors.length?errors.reduce((a,b)=>a+b)/errors.length:null,characterEditDistance:dp[n*width+m],rows};

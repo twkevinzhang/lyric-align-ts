@@ -7,6 +7,43 @@
 #include <cstring>
 #include <initializer_list>
 #include <cmath>
+#ifdef POC_WEIGHT_CACHE_TEST
+#include "ggml-backend.h"
+extern "C" void poc_compact_cache_clear();
+extern "C" size_t poc_compact_cache_size();
+static bool testWeightCache(){
+ const int n=64,rows=17;
+ ggml_init_params ip={4*1024*1024,nullptr,false};auto *ctx=ggml_init(ip);
+ auto *a=ggml_new_tensor_2d(ctx,GGML_TYPE_Q5_1,n,rows);
+ auto *b=ggml_new_tensor_2d(ctx,GGML_TYPE_F32,n,1);
+ auto buffer=ggml_backend_buft_alloc_buffer(ggml_backend_cpu_buffer_type(),ggml_nbytes(a));
+ a->data=nullptr; // Replace the unused arena allocation with a marked weight buffer.
+ ggml_backend_tensor_alloc(buffer,a,ggml_backend_buffer_get_base(buffer));
+ ggml_backend_buffer_set_usage(buffer,GGML_BACKEND_BUFFER_USAGE_WEIGHTS);
+ auto *c=ggml_mul_mat(ctx,a,b);auto *gf=ggml_new_graph(ctx);ggml_build_forward_expand(gf,c);
+ float values[n];block_q8_1 quantized[n/32];
+ for(int generation=0;generation<2;generation++){
+  poc_compact_cache_clear();if(poc_compact_cache_size()!=0)return false;
+  for(int row=0;row<rows;row++){
+   for(int j=0;j<n;j++)values[j]=((row*19+j*7+generation*31)%101-50)*0.0317f;
+   quantize_row_q5_1(values,(char*)a->data+row*a->nb[1],n);
+  }
+  size_t cacheBytes=0;
+  for(int pass=0;pass<3;pass++){
+   for(int j=0;j<n;j++)((float*)b->data)[j]=((j*13+pass*7)%53-26)*0.071f;
+   if(ggml_graph_compute_with_ctx(ctx,gf,6)!=GGML_STATUS_SUCCESS)return false;
+   quantize_row_q8_1((float*)b->data,quantized,n);
+   for(int row=0;row<rows;row++){
+    float expected;ggml_vec_dot_q5_1_q8_1(n,&expected,0,(char*)a->data+row*a->nb[1],0,quantized,0,1);
+    if(std::fabs(expected-((float*)c->data)[row])>0.001+0.001*std::fabs(expected))return false;
+   }
+   if(!poc_compact_cache_size()||(pass&&cacheBytes!=poc_compact_cache_size()))return false;
+   cacheBytes=poc_compact_cache_size();
+  }
+ }
+ poc_compact_cache_clear();ggml_backend_buffer_free(buffer);ggml_free(ctx);return poc_compact_cache_size()==0;
+}
+#endif
 #if POC_TEST_MAX_THREADS >= 12
 static constexpr int testThreadCounts[]={1,6,8,12};
 #else
@@ -33,6 +70,10 @@ static bool f16Matches(float expected,float actual) {
 }
 int main(){
  ggml_cpu_init();
+#ifdef POC_WEIGHT_CACHE_TEST
+ if(!testWeightCache()){puts("FAIL immutable weight cache reuse/reset");return 12;}
+ puts("PASS immutable weight cache reuse, changing activations and model reset");
+#endif
 #ifdef POC_QTILE_BYTE
  for(int q=0;q<32;q++)for(int v=-128;v<128;v++) {
   block_q5_1 x[POC_QTILE_ROWS]={};block_q8_1 y[2]={};float out[2*POC_QTILE_ROWS];

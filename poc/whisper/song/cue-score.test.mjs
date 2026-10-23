@@ -1,4 +1,8 @@
 import {test} from 'node:test';import assert from 'node:assert/strict';import {scoreCues} from './cue-score.mjs';
+test('a synthesized suffix nested inside a real word consumes the invalid quota',()=>{
+ const run={audioSeconds:10,timeline:[{text:'amazing',confidence:0.9,startTime:2,endTime:3,timeline:[{text:'amaz',confidence:0.9},{text:'ing',confidence:0}]}]};
+ assert.equal(scoreCues(run,[{text:'amazing',start:2}]).rows[0].usable,false);
+});
 test('missing character fails only its cue, repeated later text stays ordered',()=>{
  const refs=[{text:'abc',start:1},{text:'xyz',start:4},{text:'abc',start:7}];
  const run={audioSeconds:10,timeline:[{text:'ac',startTime:1,endTime:2},{text:'xyz',startTime:4,endTime:5},{text:'abc',startTime:8,endTime:9}]};

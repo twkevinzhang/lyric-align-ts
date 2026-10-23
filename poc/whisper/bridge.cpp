@@ -8,6 +8,13 @@ static whisper_context* ctx = nullptr;
 static whisper_state* state = nullptr;
 static int lastTokenCount = 0;
 static int threadCount = 1;
+static int timeScale = 1;
+#ifdef POC_TIME_SCALE
+extern "C" int whisper_poc_compress_mel_with_state(whisper_state*,int);
+extern "C" int whisper_poc_set_vocab_subset(const int32_t*,int);
+extern "C" int whisper_poc_set_audio_context(whisper_state*,int);
+extern "C" void poc_compact_cache_clear();
+#endif
 static double melMs = 0, encoderMs = 0;
 #ifdef POC_TRACE
 extern "C" int whisper_poc_trace_begin(const char* directory);
@@ -23,6 +30,27 @@ int poc_set_threads(int count) {
     return 0;
 }
 int poc_get_threads() { return threadCount; }
+int poc_set_audio_context(int frames) {
+#ifdef POC_TIME_SCALE
+    return state?whisper_poc_set_audio_context(state,frames):-1;
+#else
+    return frames==1500?0:-1;
+#endif
+}
+int poc_set_vocab_subset(const int32_t* ids,int count) {
+#ifdef POC_TIME_SCALE
+    return whisper_poc_set_vocab_subset(ids,count);
+#else
+    return count==0?0:-1;
+#endif
+}
+int poc_set_time_scale(int factor) {
+    if (factor < 1 || factor > 4) return -1;
+#ifndef POC_TIME_SCALE
+    if (factor != 1) return -1;
+#endif
+    timeScale=factor;return 0;
+}
 double poc_mel_ms() { return melMs; }
 double poc_encoder_ms() { return encoderMs; }
 int poc_trace_begin(const char* directory) {
@@ -40,22 +68,28 @@ int poc_trace_end() {
 #endif
 }
 void poc_close() {
+#ifdef POC_TIME_SCALE
+    poc_compact_cache_clear();
+    whisper_poc_set_vocab_subset(nullptr,0);
+#endif
     if (state) whisper_free_state(state);
     if (ctx) whisper_free(ctx);
     state = nullptr; ctx = nullptr; lastTokenCount = 0;
 }
-int poc_open(const char* model) {
+int poc_open_model(const char* model, int modelSize) {
     poc_close();
     auto params = whisper_context_default_params();
     params.use_gpu = false;
     params.flash_attn = false;
     params.dtw_token_timestamps = true;
-    params.dtw_aheads_preset = WHISPER_AHEADS_SMALL;
+    if (modelSize < 0 || modelSize > 2) return -1;
+    params.dtw_aheads_preset = modelSize == 0 ? WHISPER_AHEADS_TINY : modelSize == 1 ? WHISPER_AHEADS_BASE : WHISPER_AHEADS_SMALL;
     ctx = whisper_init_from_file_with_params_no_state(model, params);
     if (ctx) state = whisper_init_state(ctx);
     if (!state) { poc_close(); return -1; }
     return 0;
 }
+int poc_open(const char* model) { return poc_open_model(model, 2); }
 int poc_encode(const float* mel, int frames, int bins) {
     if (!state || !mel || frames != 3000 || bins != 80) return -1;
     int rc = whisper_set_mel_with_state(ctx, state, mel, frames, bins);
@@ -70,9 +104,12 @@ int poc_decode(const int32_t* tokens, int count, int past) {
     return rc;
 }
 int poc_encode_samples(const float* samples, int count) {
-    if (!state || !samples || count <= 0 || count > 480000) return -1;
+    if (!state || !samples || count <= 0 || count > 480000*timeScale) return -1;
     const auto start = std::chrono::steady_clock::now();
     int rc = whisper_pcm_to_mel_with_state(ctx, state, samples, count, threadCount);
+#ifdef POC_TIME_SCALE
+    if (!rc) rc = whisper_poc_compress_mel_with_state(state,timeScale);
+#endif
     const auto encoded = std::chrono::steady_clock::now();
     melMs = std::chrono::duration<double, std::milli>(encoded - start).count();
     if (!rc) rc = whisper_encode_with_state(ctx, state, 0, threadCount);

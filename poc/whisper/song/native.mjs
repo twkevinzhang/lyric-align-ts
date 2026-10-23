@@ -1,10 +1,11 @@
 import {writeFile,readFile} from 'node:fs/promises';
 import {resolve} from 'node:path';
-import {prepare,official,options,out,hash,language} from './common.mjs';
+import {prepare,official,options,out,hash,language,cachePolicy,decoderThreads,audioTimeScale} from './common.mjs';
+if(cachePolicy!=='upstream'||audioTimeScale!==1||decoderThreads!==options.threadCount||Number(process.env.SONG_SPECULATIVE_BATCH??1)!==1)throw Error('Native diagnostic does not implement these Worker-only settings');
 const input=await prepare();
 const {Whisper,loadLibraryPackages}=await official('recognition/WhisperSTT.js');
 const {libPath}=await loadLibraryPackages(false,{logLevel:'info'});
-const whisper=new Whisper('small',input.modelPath,libPath);
+const whisper=new Whisper(options.model,input.modelPath,libPath);
 const start=performance.now();
 const metrics={encodeMs:0,decodeMs:0,encodeCalls:0,decodeCalls:0,initialLogits:[]};
 if(process.env.SONG_DIAGNOSTIC==='1') {
