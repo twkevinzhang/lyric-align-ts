@@ -2,14 +2,38 @@
 
 把歌曲音檔與已知歌詞對齊，回傳逐詞／逐句時間軸與 SRT。模型、tokenizer、解碼控制與 DTW 都在瀏覽器 Worker 中執行，網站只需要提供靜態資產，沒有 Node.js 推論伺服器。
 
-目前是實驗性 npm 套件候選版本，尚未上傳 npm。沿用 fast 的 tiny Q5_1／CPU WASM 演算法；句首提前、句尾偏差與零長度時間軸仍須聽校。這是歌詞引導對齊，不是任意音訊的自由聽寫服務。
+目前分支產出實驗性 `lyric-align-ts@0.1.1` 本機套件，尚未發布。保留 fast 的 tiny Q5_1／CPU WASM 歌詞引導對齊，並提供 contract v1 的獨立 ASR／文字配對 session。句首提前、句尾偏差與零長度時間軸仍須聽校；session 的三首全曲驗證尚未達全行匹配，不能宣稱無時間碼歌曲流程可用。
+
+## 與 yt-subtitle 整合
+
+```ts
+import { createBinding } from 'lyric-align-ts';
+import type { AudioInput } from 'lyric-align-ts/binding';
+
+const binding = createBinding(); // 不載入模型、不建立 Worker
+const session = await binding.createSession();
+const context = { signal: new AbortController().signal };
+const audio: AudioInput = { pcm: completeMonoPcm, sampleRate: 16000 };
+try {
+  await session.prepare({ language: 'en' }, context);
+  const segments = await session.transcribe(audio, { language: 'en' }, context);
+  const result = await session.align(segments, originalLyricLines, { karaoke: false }, context);
+  // 消費端驗證每行原文、matched、秒數及完整覆蓋，全部成功才原子套用。
+} finally {
+  await session.dispose();
+}
+```
+
+本版宣告 `en/ja/zh`、`wasm`、固定 tiny Q5_1 模型、`threshold` 與 `karaoke=false`；`lyricsContext=false`，不支援 `pairing/window`。未指定語言時使用 prepare 的語言，否則預設英文。模型可搬至自架 URL，但 SHA256 固定，不因此更換模型。
+
+根入口仍保留既有 `AudioInput`／`Progress` 型別；session 同名契約型別從 `lyric-align-ts/binding` 匯入，或在根入口使用 `ContractAudioInput`／`ContractProgress`。完整規格、消費端接線證據、歌曲限制見 [session 契約](docs/session-contract.md)。這個 tiny/WASM 分支不是其他分支的 small.en/WebGPU 發布物。
 
 ## 快速開始
 
 先依 [開發文件](docs/development.md) 建置並產生 tarball，再於使用端安裝：
 
 ```sh
-npm install ./lyric-align-ts-0.1.0.tgz
+npm install ./lyric-align-ts-0.1.1.tgz
 ```
 
 將安裝後的 `node_modules/lyric-align-ts/dist/` 複製到網站的 `public/lyric-align-ts/`，讓 Worker 和 WASM／tokenizer 資產有固定 URL。模型權重另外取得，預設從固定 Hugging Face revision 下載 tiny Q5_1 並驗證 SHA256；也可以設定自架的 modelUrl。
@@ -54,6 +78,7 @@ ESM bundler 使用者應明示設定上述資產 URL；不用 bundler、直接�
 
 | API | 用途 |
 |---|---|
+| createBinding(options?) / binding | contract v1 binding，提供 capabilities 與 createSession；session 見上節 |
 | createAligner(options?) | 載入並驗證模型、WASM 與 tokenizer，回傳可重用的 aligner |
 | aligner.align({ audio, lyrics, language, signal?, onProgress? }) | 完整音檔對齊，回傳 words、cues、srt、audioSeconds、metrics |
 | aligner.dispose() | 終止 Worker 並拒絕尚未完成的工作；可重複呼叫 |

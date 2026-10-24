@@ -16,12 +16,15 @@ pnpm run build
 pnpm run typecheck
 pnpm test
 pnpm run test:browser
+pnpm run test:contract
 pnpm run test:package
 ```
 
 build:native 取得固定 whisper.cpp commit，建立 self-contained checkout，套用固定運算核心與 mel/batch/subset 改動，然後編譯 parity.js/parity.wasm 並執行 mel／矩陣測試。Docker 路徑可以 DOCKER_BIN 指定。程式碼與容差不為通過測試而放寬。
 
 build 把 browser Worker、公開 ESM、型別與四個資產打包到 dist/。tokenizer 資料下載自固定 OpenAI commit，驗證 SHA256 後移除與舊 fast 相同的 unused final token。模型權重不打進 npm 包；model.mjs 另行下載並驗證 tiny Q5_1。
+
+session 入口另外產出 dist/binding.js 與契約型別；真實 ASR、整首配對及選用的 yt-subtitle 唯讀接線檢查見 [session 契約](session-contract.md)。test:contract 使用原生來源自帶 JFK fixture，不需要私有歌曲；全曲 fixture 可另外傳給 scripts/test-contract-browser.mjs。
 
 本機已有可信的 WASM 建置時，可明示設定 NATIVE_BUILD_DIR 供 build 使用；不能以此宣稱重新編譯已通過。build 會清理專案內的 dist/，不修改模型或測試輸入。
 

@@ -1,6 +1,6 @@
 {
   "name": "lyric-align-ts",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Browser CPU/WASM alignment of supplied lyrics to music",
   "repository": { "type": "git", "url": "git+https://github.com/twkevinzhang/lyric-align-ts.git" },
   "homepage": "https://github.com/twkevinzhang/lyric-align-ts#readme",
@@ -15,6 +15,7 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js" },
+    "./binding": { "types": "./dist/binding.d.ts", "import": "./dist/binding.js" },
     "./worker": "./dist/worker.js",
     "./assets/*": "./dist/assets/*",
     "./package.json": "./package.json"
@@ -28,6 +29,7 @@
     "typecheck": "tsc --noEmit && tsc -p tsconfig.worker.json",
     "test": "node --test tests/core/*.test.mjs tests/api/*.test.mjs tests/engine/*.test.mjs tests/native/*.test.mjs",
     "test:browser": "node scripts/test-browser.mjs",
+    "test:contract": "node scripts/test-contract-browser.mjs",
     "test:package": "node scripts/test-package.mjs",
     "dev": "node scripts/serve-demo.mjs",
     "prepack": "node scripts/check-dist.mjs"

@@ -1,6 +1,6 @@
 # Browser npm package design
 
-User approved direct implementation on 2026-10-24: remove legacy spike and poc/whisper structure, retain current fast algorithm, expose a genuinely browser-only npm package. No Node server or native binding at runtime. Existing timestamp accuracy issues remain documented rather than silently changing the algorithm.
+Browser-only npm package with both the retained fast guided alignment API and the session contract described in [session-contract.md](../../session-contract.md). No Node server or native binding at runtime. Existing timestamp accuracy issues remain documented.
 
 ## Decisions
 
@@ -17,7 +17,8 @@ User approved direct implementation on 2026-10-24: remove legacy spike and poc/w
 ## Worker contract
 
 Request {id,type:'initialize',options:{modelUrl,modelSha256,assetBaseUrl,threads}}; {id,type:'align',audio:Float32Array,lyrics:string,language:string}; {id,type:'dispose'}.
-Response {id,type:'result',result}; {id,type:'error',error:{name,message}}; {id,type:'progress',stage,completed?,total?}.
+The session also sends {id,type:'transcribe',audio:Float32Array,language:string} and {id,type:'align-segments',segments,lyrics,options}. These return contract Segment[] and AlignedLine[] respectively.
+Response {id,type:'result',result}; {id,type:'error',error:{name,message,code?}}; {id,type:'progress',stage,completed?,total?}. Public session progress uses the typed contract and does not invent units for legacy counters.
 initialize result {ready:true}; align result {words:TimelineEntry[],metrics:{initializationSeconds?,alignmentSeconds,totalSeconds}}. TimelineEntry {text,startTime,endTime,confidence?,timeline?,id?,type?}.
 
 ## Acceptance

@@ -6,6 +6,7 @@ import {naturalJapaneseSpacing} from '../core/lyrics.mjs';
 import {tokenTextUnits} from '../core/token-units.mjs';
 import {lookaheadBudget,trimAttentionPrefix} from '../core/attention-trim.mjs';
 import {decodeKnownTokens} from './guided-decode.mjs';
+import {transcribeAudio} from './transcribe.mjs';
 export function validatePcm(audio){if(!(audio instanceof Float32Array)||!audio.length)throw Error('PCM must be a nonempty Float32Array');for(const sample of audio)if(!Number.isFinite(sample))throw Error('PCM samples must be finite');}
 export class BrowserEngine{
   constructor(config={}){this.config={timeScale:2,batchSize:128,audioContext:1500,guided:false,profile:false,...config};if(![1,2,3,4].includes(this.config.timeScale)||![375,750,1500].includes(this.config.audioContext)||!Number.isInteger(this.config.batchSize)||this.config.batchSize<1||this.config.batchSize>440)throw Error('Invalid engine configuration');}
@@ -58,5 +59,6 @@ export class BrowserEngine{
     if(language==='ja')words=tokenTextUnits(words,tokens=>w.tokensToText(tokens),token=>w.isTextToken(token));scaleTimeline(words,this.config.timeScale,audio.length/16000);
     return{words,metrics:{initializationSeconds:this.initializationSeconds,alignmentSeconds:(performance.now()-alignStart)/1000,totalSeconds:this.initializationSeconds+(performance.now()-alignStart)/1000,...(profile?{profile}:{})}};
   }
+  async transcribe(audio,language){validatePcm(audio);return transcribeAudio(this,audio,language);}
   dispose(){this.whisper?.tiktoken?.free();this.whisper=undefined;this.module?._poc_close();this.module?.PThread?.terminateAllThreads();this.module=undefined;}
 }

@@ -10,6 +10,7 @@ await mkdir(resolve(root,'dist'),{recursive:true});
 await prepareAssets();
 const common={bundle:true,platform:'browser',target:['es2022'],sourcemap:true,legalComments:'eof',metafile:true};
 const main=await build({...common,entryPoints:[resolve(root,'src/index.ts')],outfile:resolve(root,'dist/index.js'),format:'esm'});
+await build({...common,entryPoints:[resolve(root,'src/binding.ts')],outfile:resolve(root,'dist/binding.js'),format:'esm'});
 const worker=await build({...common,entryPoints:[resolve(root,'src/worker.ts')],outfile:resolve(root,'dist/worker.js'),format:'iife'});
 execFileSync(process.execPath,[resolve(root,'node_modules/typescript/bin/tsc'),'--emitDeclarationOnly'],{cwd:root,stdio:'inherit'});
 // Declaration imports must resolve in a tarball containing .d.ts, not source .ts.

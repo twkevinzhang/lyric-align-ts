@@ -6,8 +6,11 @@ export { parseSrt } from './subtitles.ts';
 export type { SourceCue } from './subtitles.ts';
 export type * from './types.ts';
 
-export const DEFAULT_MODEL_URL = 'https://huggingface.co/ggerganov/whisper.cpp/resolve/5359861c739e955e79d9a303bcbc70fb988958b1/ggml-tiny-q5_1.bin';
-export const DEFAULT_MODEL_SHA256 = '818710568da3ca15689e31a743197b520007872ff9576237bda97bd1b469c3d7';
+import { DEFAULT_MODEL_URL, DEFAULT_MODEL_SHA256 } from './model.ts';
+export { DEFAULT_MODEL_URL, DEFAULT_MODEL_SHA256 } from './model.ts';
+export { binding, createBinding } from './binding.ts';
+export type { BindingOptions } from './binding.ts';
+export type { LyricAlignBinding, LyricAlignSession, Capabilities, OperationContext, PrepareOptions, TranscribeOptions, AlignOptions, Segment, Word, AlignedLine, ErrorCode, LibraryError, AudioInput as ContractAudioInput, Progress as ContractProgress } from './contract.ts';
 type Pending = { resolve: (value: any) => void; reject: (error: Error) => void; progress?: (p: Progress) => void };
 const abortError = () => new DOMException('Alignment was aborted; create a new aligner to continue', 'AbortError');
 
