@@ -1,0 +1,10 @@
+import {createHash} from 'node:crypto';
+import {mkdir,writeFile} from 'node:fs/promises';
+import {resolve} from 'node:path';
+import {local,lock} from './paths.mjs';
+const response=await fetch(lock.model.url);
+if(!response.ok)throw Error(`Model HTTP ${response.status}`);
+const data=Buffer.from(await response.arrayBuffer());
+if(createHash('sha256').update(data).digest('hex')!==lock.model.sha256)throw Error('Model SHA-256 mismatch');
+await mkdir(local,{recursive:true});
+await writeFile(resolve(local,lock.model.file),data);

@@ -1,0 +1,31 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+import {resolve} from 'node:path';
+import {execFileSync} from 'node:child_process';
+import {createHash} from 'node:crypto';
+const root=resolve(import.meta.dirname,'../..');
+const read=file=>readFile(resolve(root,file),'utf8');
+test('native build pins compiler, source and separately acquired tiny model',async()=>{
+ const lock=JSON.parse(await read('native/lock.json'));
+ assert.equal(lock.commit,'ca0598eb272bf3ef16f8163ab0bd98503803dee8');
+ assert.match(lock.buildImage,/@sha256:[a-f0-9]{64}$/);
+ assert.equal(lock.model.sha256,'818710568da3ca15689e31a743197b520007872ff9576237bda97bd1b469c3d7');
+ assert.match(await read('scripts/native/paths.mjs'),/clone','--no-hardlinks/);
+ const build=await read('scripts/native/build.sh');
+ assert.match(build,/-DPOC_PTHREAD_POOL_SIZE=12/);
+ assert.match(build,/-ffp-contract=off/);
+ for(const f of ['build.sh','packed-source.mjs','compact-source.mjs','timescale-source.mjs'])assert.doesNotMatch(await read(`scripts/native/${f}`),/poc\/whisper|[A-Z]:\/|cached-weights|source-experimental/);
+});
+test('source preparation reproduces the verified fast kernel and is idempotent',{skip:process.env.NATIVE_SOURCE_TEST!=='1'},async()=>{
+ const prepare=()=>execFileSync(process.execPath,['scripts/native/prepare.mjs'],{cwd:root,stdio:'pipe'});
+ const hash=s=>createHash('sha256').update(s).digest('hex');
+ prepare();
+ const cpu=await read('.local/native/source-timescale/ggml/src/ggml-cpu/ggml-cpu.c');
+ assert.equal(hash(cpu),'9776e3eb13dcd2a0cbf95d5ae14d7649622f78354159d7de8ca62b32eabc76c0');
+ const whisper=await read('.local/native/source-timescale/src/whisper.cpp');
+ assert.equal(hash(whisper),'aeaba06e0f84a6c7115d7c0459b373ff0f877a8f3c764fa0c25324608acc3f6d');
+ prepare();
+ assert.equal(await read('.local/native/source-timescale/src/whisper.cpp'),whisper);
+ assert.equal(await read('.local/native/source-timescale/ggml/src/ggml-cpu/ggml-cpu.c'),cpu);
+});

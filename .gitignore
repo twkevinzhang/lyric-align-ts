@@ -4,3 +4,6 @@
 **/.react-router/
 **/dist/
 *.tsbuildinfo
+/.superpowers/
+*.tgz
+/coverage/

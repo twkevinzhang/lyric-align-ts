@@ -65,7 +65,7 @@ lyrics 接受字串（每行一句）或字串陣列；language 必須明示，�
 
 options 可設定 workerUrl、assetBaseUrl、modelUrl、modelSha256、threads、signal、onProgress。模型必須與 tiny 多語架構相容，custom URL 仍須通過指定 SHA256；沒有自動辨識任意模型的功能。threads 支援 1、2、4、6、8、12，預設 8；即使 1 個運算執行緒仍需要 SharedArrayBuffer 與隔離標頭。
 
-同一 aligner 可依序對齊多首，禁止並行呼叫。AbortSignal 取消會終止計算 Worker；取消或 dispose 後需建立新實例。progress 是階段通知，不是假定準確的完成百分比。呼叫端 callback 拋錯不會中斷模型運算。
+同一 aligner 可依序對齊多首，禁止並行呼叫。AbortSignal 取消會拒絕目前工作並要求終止計算 Worker；取消或 dispose 後需建立新實例。Chrome 對同步 WASM／pthread 的實際回收可能延後至目前片段退出，並非瞬間停止全部 CPU 工作。progress 是階段通知，不是假定準確的完成百分比。呼叫端 callback 拋錯不會中斷模型運算。
 
 cues 保留原時間與 issues（例如 unmatched-text、zero-duration、out-of-bounds）。SRT 會省略無效／零長度句，不能因此把原時間估計說成已修正；需要完整覆蓋時先檢查 cues。參考字幕時間不進入推論。
 
@@ -109,6 +109,23 @@ Node.js、pnpm、Docker 只用於開發／建置與測試。模型與歌曲不�
 SDK 的 metrics.initializationSeconds 包含建立 Worker、模型／WASM／tokenizer 的載入與初始化；audioPreparationSeconds 為音訊解碼／準備，alignmentSeconds 為引擎對齊，cueMappingSeconds 為句子配對與 SRT 輸出。operationSeconds 包含此次 align 的音訊準備、Worker 往返與結果整理；totalSeconds = initializationSeconds + operationSeconds，不含兩次呼叫間使用者的閒置時間。
 
 重用實例時 initializationSeconds 仍顯示該實例原本的初始化成本；比較第二首的增量耗時請看 operationSeconds。首次網路下載可能遠超過 10 秒，不以快取／預下載冒充端到端加速。
+
+## Browser 套件完整歌曲實測
+
+2026-10-24 已另建立「模型載入後，每首完整處理 ≤3 秒」的九次基準，採用 `operationSeconds`。三首目前均未達標，完整數字與速度波動見 [三秒對齊現況報告](docs/three-second-alignment-report.md)。以下既有表格的引擎時間與 SDK 總時間，以及後方原型比較表，均不等於本次新口徑基準。
+
+以下使用本次重新編譯的固定 C++／WASM，在桌面 Chrome 各跑一次完整音檔。模型由本機靜態檔案載入；遠端首次下載可能更慢。SDK 總秒數包含初始化、音訊準備、Worker 往返與句子／SRT 整理，不與後方舊原型表格混用。
+
+| 歌曲 | 引擎對齊秒 | SDK 總秒 | 排除後句首 MAE 秒 | SDK ≤10 秒 |
+|---|---:|---:|---:|---|
+| Amazing Grace | 4.126 | 4.787 | 0.464 | 是 |
+| SUNEO-ISM | 9.709 | 10.429 | 0.225 | 否 |
+| 春泥棒 | 6.922 | 7.632 | 0.432 | 是 |
+| Green | 7.592 | 8.486 | 0.861 | 是 |
+| Boys Will Be Bugs | 10.778 | 11.664 | 0.269 | 否 |
+| Lift Every Voice and Sing | 4.409 | 5.147 | 0.664 | 是 |
+
+六首皆完成對齊並符合原句首平均品質門檻，但本次 SDK 端到端計時有兩首超過 10 秒；不宣稱已達成六首穩定的 10 秒門檻。此為單次整曲執行，並非各三次驗收。原三首提供的歌詞 token 序列與舊 fast 逐項相同；重新編譯／browser 流程仍可能造成個別邊界差異，不宣稱時間軸逐值等價。
 
 ## 效能比較怎麼看
 

@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="zh-Hant">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>lyric-align-ts browser example</title>
+<link rel="icon" href="data:,">
+<style>body{font:16px system-ui;max-width:800px;margin:3rem auto;padding:0 1rem}label{display:block;margin:1rem 0}textarea{width:100%;min-height:12rem}button,input,select{font:inherit}pre{white-space:pre-wrap}a{display:block;margin-top:1rem}</style>
+<h1>歌曲與歌詞對齊</h1>
+<p>模型在瀏覽器 CPU 中執行。第一次使用需下載 tiny 模型，字幕仍須聽校。</p>
+<label>音檔 <input id="audio" type="file" accept="audio/*"></label>
+<label>語言 <select id="language"><option value="en">English</option><option value="ja">日本語</option><option value="zh">中文</option></select></label>
+<label>歌詞（每行一句）<textarea id="lyrics"></textarea></label>
+<button id="start">開始對齊</button> <button id="cancel" disabled>取消</button>
+<pre id="status" role="status">等待音檔與歌詞</pre><div id="downloads"></div>
+<script type="module">
+import {createAligner} from '../../dist/index.js';
+const $=id=>document.getElementById(id);let controller,aligner,downloadUrl;
+$('cancel').onclick=()=>controller?.abort();
+$('start').onclick=async()=>{
+ if(!$('audio').files[0]||!$('lyrics').value.trim()){$('status').textContent='請提供音檔與歌詞';return;}
+ $('start').disabled=true;$('cancel').disabled=false;$('downloads').replaceChildren();if(downloadUrl)URL.revokeObjectURL(downloadUrl);
+ controller=new AbortController();
+ const progress=p=>{$('status').textContent=p.stage+(p.completed!==undefined?` ${p.completed}/${p.total??'?'}`:'');};
+ try{
+  aligner=await createAligner({signal:controller.signal,onProgress:progress});
+  const result=await aligner.align({audio:$('audio').files[0],lyrics:$('lyrics').value,language:$('language').value,signal:controller.signal,onProgress:progress});
+  $('status').textContent=JSON.stringify({metrics:result.metrics,issues:result.cues.filter(c=>c.issues.length),cues:result.cues},null,2);
+  downloadUrl=URL.createObjectURL(new Blob([result.srt],{type:'application/x-subrip;charset=utf-8'}));const link=document.createElement('a');link.href=downloadUrl;link.download='aligned.srt';link.textContent='下載 SRT（不含無效或零長度句，請聽校）';$('downloads').append(link);
+ }catch(error){$('status').textContent=error.name==='AbortError'?'已取消':error.message;}
+ finally{aligner?.dispose();aligner=undefined;$('start').disabled=false;$('cancel').disabled=true;}
+};
+addEventListener('pagehide',()=>{aligner?.dispose();if(downloadUrl)URL.revokeObjectURL(downloadUrl);});
+</script>
+</html>

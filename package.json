@@ -1,0 +1,36 @@
+{
+  "name": "lyric-align-ts",
+  "version": "0.1.0",
+  "description": "Browser CPU/WASM alignment of supplied lyrics to music",
+  "repository": { "type": "git", "url": "git+https://github.com/twkevinzhang/lyric-align-ts.git" },
+  "homepage": "https://github.com/twkevinzhang/lyric-align-ts#readme",
+  "bugs": { "url": "https://github.com/twkevinzhang/lyric-align-ts/issues" },
+  "keywords": ["lyrics", "alignment", "whisper", "wasm", "browser", "subtitles"],
+  "type": "module",
+  "license": "MIT",
+  "packageManager": "pnpm@11.25.0",
+  "engines": { "node": ">=22.18.0" },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js" },
+    "./worker": "./dist/worker.js",
+    "./assets/*": "./dist/assets/*",
+    "./package.json": "./package.json"
+  },
+  "files": ["dist", "README.md", "LICENSE", "THIRD_PARTY_NOTICES.md"],
+  "publishConfig": { "access": "public" },
+  "sideEffects": false,
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "build:native": "node scripts/native/build.mjs",
+    "typecheck": "tsc --noEmit && tsc -p tsconfig.worker.json",
+    "test": "node --test tests/core/*.test.mjs tests/api/*.test.mjs tests/engine/*.test.mjs tests/native/*.test.mjs",
+    "test:browser": "node scripts/test-browser.mjs",
+    "test:package": "node scripts/test-package.mjs",
+    "dev": "node scripts/serve-demo.mjs",
+    "prepack": "node scripts/check-dist.mjs"
+  },
+  "devDependencies": { "@types/node": "22.19.0", "esbuild": "0.28.2", "typescript": "5.9.3", "playwright": "1.58.2", "tiktoken": "1.0.22" }
+}
