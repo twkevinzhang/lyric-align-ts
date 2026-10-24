@@ -8,12 +8,15 @@ static whisper_context* ctx = nullptr;
 static whisper_state* state = nullptr;
 static int lastTokenCount = 0;
 static int threadCount = 1;
-static int timeScale = 1;
+static double timeScale = 1;
 #ifdef POC_TIME_SCALE
-extern "C" int whisper_poc_compress_mel_with_state(whisper_state*,int);
+extern "C" int whisper_poc_compress_mel_with_state(whisper_state*,double);
 extern "C" int whisper_poc_set_vocab_subset(const int32_t*,int);
 extern "C" int whisper_poc_set_audio_context(whisper_state*,int);
+extern "C" int poc_get_alignment_only();
 extern "C" void poc_compact_cache_clear();
+extern "C" int whisper_poc_prepack_model(whisper_context*);
+extern "C" int whisper_poc_prepack_group_model(whisper_context*);
 #endif
 static double melMs = 0, encoderMs = 0;
 #ifdef POC_TRACE
@@ -30,6 +33,20 @@ int poc_set_threads(int count) {
     return 0;
 }
 int poc_get_threads() { return threadCount; }
+int poc_prepack_model() {
+#ifdef POC_TIME_SCALE
+    return whisper_poc_prepack_model(ctx);
+#else
+    return -1;
+#endif
+}
+int poc_prepack_group_model() {
+#ifdef POC_TIME_SCALE
+    return whisper_poc_prepack_group_model(ctx);
+#else
+    return -1;
+#endif
+}
 int poc_set_audio_context(int frames) {
 #ifdef POC_TIME_SCALE
     return state?whisper_poc_set_audio_context(state,frames):-1;
@@ -50,6 +67,10 @@ int poc_set_time_scale(int factor) {
     if (factor != 1) return -1;
 #endif
     timeScale=factor;return 0;
+}
+int poc_set_time_scale_fraction(int numerator,int denominator) {
+    if(denominator<=0 || numerator<denominator || double(numerator)>4.0*denominator)return -1;
+    timeScale=double(numerator)/denominator;return 0;
 }
 double poc_mel_ms() { return melMs; }
 double poc_encoder_ms() { return encoderMs; }
@@ -120,6 +141,9 @@ int poc_vocab() { return ctx ? whisper_n_vocab(ctx) : 0; }
 // Legacy decode requests only the final token's logits, but the buffer retains
 // count * vocabulary elements. Earlier rows are not valid outputs.
 const float* poc_logits() {
+#ifdef POC_TIME_SCALE
+    if (poc_get_alignment_only()) return nullptr;
+#endif
     return state && lastTokenCount > 0 ? whisper_get_logits_from_state(state) + (lastTokenCount - 1) * poc_vocab() : nullptr;
 }
 int poc_qk_dims(int32_t* dims) {

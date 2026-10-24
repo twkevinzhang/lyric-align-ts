@@ -23,11 +23,16 @@ try{
   // Real encoder/decoder work on silence is a runtime smoke test, not accuracy evidence.
   const first=await a.align({audio:{samples:new Float32Array(16000*3),sampleRate:16000},lyrics:'hello world',language:'en',onProgress:p=>progress.push(p.stage)});
   const second=await a.align({audio:{samples:new Float32Array(16000*3),sampleRate:16000},lyrics:'hello world',language:'en'});
+  // Exceed one native text context. Every suffix token must receive actual
+  // attention; upstream's synthesized confidence-zero filler is not coverage.
+  const dense=await a.align({audio:{samples:new Float32Array(16000*3),sampleRate:16000},lyrics:Array(500).fill('hello').join(' '),language:'en'});
   a.dispose();let disposed=false;try{await a.align({audio:{samples:new Float32Array(1),sampleRate:16000},lyrics:'hello',language:'en'});}catch(e){disposed=/disposed/.test(e.message);}
   const cancel=await createAligner(options),controller=new AbortController();const pending=cancel.align({audio:{samples:new Float32Array(16000*30),sampleRate:16000},lyrics:'hello world',language:'en',signal:controller.signal});setTimeout(()=>controller.abort(),10);let aborted=false;try{await pending;}catch(e){aborted=e.name==='AbortError';}
-  return{badFetch,badHash,disposed,aborted,first,second,progress};
+  return{badFetch,badHash,disposed,aborted,first,second,dense,progress};
  });
  assert.equal(result.badFetch,true);assert.equal(result.badHash,true);assert.equal(result.disposed,true);assert.equal(result.aborted,true);assert.equal(result.first.words.length>0,true);assert.equal(result.second.words.length>0,true);assert.deepEqual(result.first.words,result.second.words);assert.deepEqual(errors,[]);
+ assert.equal(result.dense.words.length,500,'Dense final lyrics lost words');
+ assert.ok(result.dense.words.every(word=>word.confidence>0),'Dense suffix used synthesized filler');
  // Chrome propagates termination to pthread Workers after a synchronous WASM
  // kernel returns; the operation rejects immediately, teardown is eventual.
  const cleanupDeadline=Date.now()+15000;

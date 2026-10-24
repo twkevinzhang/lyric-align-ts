@@ -13,13 +13,14 @@ const root=resolve(import.meta.dirname,'..');
 const config=JSON.parse(await readFile(process.argv[2],'utf8'));
 const maximumSeconds=config.maximumSeconds??3;
 if(![3,10].includes(maximumSeconds))throw Error('maximumSeconds must be 3 or 10');
+for(const variant of config.variants??[{id:'production'}])if(!/^[a-z0-9-]+$/.test(variant.id))throw Error('Invalid variant id: '+variant.id);
 const output=resolve(root,'.local/three-second',`${Date.now()}-${config.label??'run'}`);
 await mkdir(output,{recursive:true});
 const hash=b=>createHash('sha256').update(b).digest('hex');
 const hashes={};
 async function hashTree(path){for(const entry of await readdir(resolve(root,path),{withFileTypes:true})){const child=path+'/'+entry.name;if(entry.isDirectory())await hashTree(child);else hashes[child]=hash(await readFile(resolve(root,child)));}}
 for(const dir of ['src','native','scripts','vendor'])await hashTree(dir);
-for(const file of ['dist/index.js','dist/worker.js','dist/assets/parity.wasm','dist/assets/parity.js','.local/native/ggml-tiny-q5_1.bin'])hashes[file]=hash(await readFile(resolve(root,file)));
+for(const file of ['dist/index.js','dist/worker.js','dist/assets/parity.wasm','dist/assets/parity.js','.local/native/ggml-tiny-q5_1.bin','.local/native/source-timescale/src/whisper.cpp','.local/native/source-timescale/ggml/src/ggml-cpu/ggml-cpu.c','.local/native/source-timescale/ggml/src/ggml-cpu/vec.h','.local/native/source-timescale/ggml/src/ggml-cpu/vec.cpp'])hashes[file]=hash(await readFile(resolve(root,file)));
 const model=resolve(root,config.model??'.local/native/ggml-tiny-q5_1.bin');
 const inputHashes=[];
 for(const song of config.songs){const entry={id:song.id};for(const field of ['audio','lyrics','reference'])entry[field]=hash(await readFile(song[field]));inputHashes.push(entry);}
@@ -30,12 +31,12 @@ const results=[];
 function cpuSnapshot(){return cpus().map(c=>({idle:c.times.idle,total:Object.values(c.times).reduce((s,v)=>s+v,0)}));}
 try{
  for(const variant of config.variants??[{id:'production',threads:8}]){
-  if(!/^[a-z0-9-]+$/.test(variant.id))throw Error('Invalid variant id');
   let workerPath;
   if(variant.engine){workerPath=resolve(output,variant.id+'.js');await build({entryPoints:[resolve(root,'src/worker.ts')],bundle:true,platform:'browser',target:['es2022'],format:'iife',outfile:workerPath,define:{__ALIGN_EXPERIMENT__:JSON.stringify(variant.engine)}});}
   for(let trial=1;trial<=(config.trials??1);trial++)for(const song of config.songs){
    const server=await staticServer({root,files:{'/model.bin':model,'/audio':resolve(song.audio),'/lyrics':resolve(song.lyrics),...(workerPath?{'/experiment-worker.js':workerPath}:{})}});
-   const page=await browser.newPage();let timer;const load=[];let previous=cpuSnapshot();
+   const page=await browser.newPage();let timer;const load=[],runtimeErrors=[];let previous=cpuSnapshot();
+   page.on('console',message=>{if(message.type()==='error')runtimeErrors.push(message.text());});
    try{
     await page.goto(server.url+'/examples/browser/');
     await page.evaluate(async({song,variant,experimental})=>{
@@ -57,7 +58,8 @@ try{
     const record={variant:variant.id,trial,song:song.id,server:server.url,load,...result,score,acceptance:gate,endMeanAbs};
     results.push(record);await writeFile(resolve(output,`${variant.id}-${song.id}-${trial}.json`),JSON.stringify(record,null,2));
     console.log(JSON.stringify({variant:variant.id,trial,song:song.id,seconds:result.metrics.operationSeconds,mae:gate.meanAbs,pass:gate.pass,profile:result.metrics.profile,load:load.length?load.reduce((s,x)=>s+x.busyFraction,0)/load.length:null}));
-   }finally{clearInterval(timer);await page.close();await server.close();}
+   }catch(error){const failure={variant:variant.id,trial,song:song.id,error:String(error),runtimeErrors,load};results.push(failure);await writeFile(resolve(output,`${variant.id}-${song.id}-${trial}-error.json`),JSON.stringify(failure,null,2));console.log(JSON.stringify(failure));}
+   finally{clearInterval(timer);await page.close();await server.close();}
   }
  }
 }finally{await browser.close();await writeFile(resolve(output,'summary.json'),JSON.stringify({manifest,results},null,2));console.log('OUTPUT '+output);}

@@ -33,16 +33,16 @@ test('worker crash rejects rather than leaving a hanging operation',async()=>{
  const pending=a.align({audio:{samples:new Float32Array(16000),sampleRate:16000},lyrics:'a',language:'en'});await new Promise(r=>setTimeout(r,0));worker.listeners.get('error')?.({message:'worker failed'});
  await assert.rejects(pending,/worker failed/);assert.ok(worker.terminated);
 });
-test('abort and dispose reject immediately even when file reading never completes',async()=>{
- environment();let closed=0;
- Object.defineProperty(globalThis,'AudioContext',{value:class{close(){closed++;return Promise.resolve();}},configurable:true});
+test('abort and dispose reject unfinished file reads before allocating an AudioContext',async()=>{
+ environment();let created=0,closed=0;
+ Object.defineProperty(globalThis,'AudioContext',{value:class{constructor(){created++;}close(){closed++;return Promise.resolve();}},configurable:true});
  for(const action of ['abort','dispose']){
   const a=await createAligner(),controller=new AbortController(),audio=new Blob(['never finishes']);audio.arrayBuffer=()=>new Promise(()=>{});
   const pending=a.align({audio,lyrics:'hello',language:'en',signal:controller.signal});await new Promise(r=>setTimeout(r,0));
   if(action==='abort')controller.abort();else a.dispose();
   const outcome=await Promise.race([pending.then(()=> 'resolved',()=> 'rejected'),new Promise(r=>setTimeout(()=>r('hung'),100))]);assert.equal(outcome,'rejected');
  }
- assert.equal(closed,2);
+ assert.equal(created,0);assert.equal(closed,0);
 });
 test('abort and dispose reject unresolved decoding and close its AudioContext',async()=>{
  environment();let closed=0;

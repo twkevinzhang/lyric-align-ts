@@ -1,6 +1,11 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {virtualAudio,originalSpan,scaleTimeline} from '../../src/core/audio-time-scale.mjs';
+test('fractional time scale covers all original samples without gaps at adjacent windows',()=>{
+ const pcm=Float32Array.from({length:11},(_,i)=>i),view=virtualAudio(pcm,2.5);
+ assert.equal(view.length,5);
+ assert.deepEqual([...originalSpan(pcm,view,view.subarray(0,3),2.5),...originalSpan(pcm,view,view.subarray(3),2.5)],Array.from(pcm));
+});
 test('virtual audio clock maps every sample range back to original PCM without resampling pitch',()=>{
   const pcm=Float32Array.from([0,1,2,3,4,5,6]);
   const view=virtualAudio(pcm,2);

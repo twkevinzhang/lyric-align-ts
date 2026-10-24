@@ -1,6 +1,6 @@
 # Browser session contract v1
 
-本分支以 `741458c` 的 tiny／WASM 為基底，實現 `src/contract.ts` 的消費端結構契約。`createBinding` 及預設 `binding` 從根入口與 `lyric-align-ts/binding` 匯出。套件及 capabilities 版本均為 `0.1.1`，供目前 yt-subtitle loader 的版本檢查使用；這是本機候選產物，沒有發布，也不等同其他分支的 scoped npm small.en/WebGPU 套件。
+本分支以 `741458c` 的 tiny／WASM 為基底，合併 `cpp` 的三秒歌詞引導引擎，保留 `src/contract.ts` 的消費端結構契約。`createBinding` 及預設 `binding` 從根入口與 `lyric-align-ts/binding` 匯出。套件及 capabilities 版本均為 `0.1.1`，供目前 yt-subtitle loader 的版本檢查使用；這是本機候選產物，沒有發布，也不等同其他分支的 scoped npm small.en/WebGPU 套件。
 
 ## 邊界與設定
 
@@ -32,7 +32,7 @@ abort 會終止 session Worker，拒絕目前操作為 ABORTED，該 session 不
 
 ## 已驗證範圍與限制
 
-固定 Docker／Emscripten 原生資產已重建；source digest/idempotence、mel 與 F16/Q5 矩陣驗證通過。Windows shell 檔固定 LF，避免 Docker bash 誤讀 CRLF。沿用既有 build directory 時，舊實驗的 `POC_WEIGHT_CACHE=ON` cache 必須關閉或使用乾淨 build directory；本次已排除該 cache。
+固定 Docker／Emscripten 原生資產已重建；source digest/idempotence、mel 與 F16/Q5／group quantization／SIMD 函數驗證通過。Windows shell 檔固定 LF，避免 Docker bash 誤讀 CRLF。build:native 清除自身 CMakeCache，從 pinned 上游還原受追蹤來源，再套用本版設定；原生及 dist 指紋阻止跨版混用。兩版的切換方式見 [實作相容性](implementation-compatibility.md)。
 
 真實桌面 Chrome／WASM 已驗證 JFK 語音獨立 ASR、三行完整配對、1/30 秒數位靜音、session 重用、取消及 dispose 後零 live Workers。tarball 在獨立 consumer 安裝，根入口及 `/binding` 的型別與實際 WASM 推論通過。
 
@@ -42,9 +42,9 @@ abort 會終止 session Worker，拒絕目前操作為 ABORTED，該 session 不
 
 | 歌曲 | 全曲秒數 | 處理秒數（約） | matched / 必要行 | 整首驗收 |
 |---|---:|---:|---:|---|
-| Amazing Grace | 130.30 | 4.94 | 4 / 12 | 不套用 |
-| SUNEO-ISM | 299.95 | 12.86 | 6 / 133 | 不套用 |
-| 春泥棒 | 299.24 | 10.15 | 3 / 56 | 不套用 |
+| Amazing Grace | 130.30 | 4.01 | 4 / 12 | 不套用 |
+| SUNEO-ISM | 299.95 | 13.24 | 8 / 133 | 不套用 |
+| 春泥棒 | 299.24 | 9.02 | 3 / 56 | 不套用 |
 
 tiny 的自由 ASR 對歌唱有錯字、漏字及重複幻覺。這三首都未達全行匹配，不能宣稱無時間碼歌曲流程可用，也未宣稱演唱時間精準。消費端必須保留先前成功字幕，不套用這些不完整新結果。需要另行改善 ASR／歌詞提示及配對品質，並以全行成功和人工時間對照驗證後，才能提高此項結論。
 

@@ -718,8 +718,12 @@ export class Whisper { constructor(){this.modelId='tiny';this.isMultiligualModel
         // Perform DTW to align tokens indexes to frame indexes
         const tokenIndexes = getIntegerRange(0, tokenCount);
         const frameIndexes = getIntegerRange(0, partFrameCount);
+        const positionPenalty = this.alignmentPositionPenalty ?? 0;
         let { path } = alignDTWWindowed(tokenIndexes, frameIndexes, (tokenIndex, frameIndex) => {
-            return -frameMeansForToken[tokenIndex][frameIndex];
+            const cost = -frameMeansForToken[tokenIndex][frameIndex];
+            if (!positionPenalty) return cost;
+            const distance = tokenIndex / Math.max(1,tokenCount-1) - frameIndex / Math.max(1,partFrameCount-1);
+            return cost + positionPenalty * distance * distance;
         }, partFrameCount);
         path = path.map(entry => ({ source: entry.source, dest: partStartFrameIndex + entry.dest }));
         return path;
@@ -806,7 +810,7 @@ export class Whisper { constructor(){this.modelId='tiny';this.isMultiligualModel
         }
     }
     secondsToFrame(seconds) {
-        return Math.floor(seconds / 0.02);
+        return Math.floor((seconds + 1e-9) / 0.02);
     }
     secondsRangeToFrameCount(startSeconds, endSeconds) {
         if (startSeconds > endSeconds) {

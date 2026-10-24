@@ -1,5 +1,5 @@
 export function virtualAudio(pcm,scale){
-  if(![1,2,3,4].includes(scale))throw Error('Time scale must be 1, 2, 3, or 4');
+  if(!Number.isFinite(scale)||scale<1||scale>4)throw Error('Time scale must be between 1 and 4');
   return pcm.subarray(0,Math.ceil(pcm.length/scale));
 }
 export function originalSpan(pcm,virtual,samples,scale){

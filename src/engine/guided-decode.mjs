@@ -1,5 +1,17 @@
 // Teacher forcing: supplied text is fixed; each token uses the preceding input's attention.
 // No reference times or precomputed song results enter this decoder.
+export async function decodeAllKnownTokens(context,initial,remaining,eot,limit,batchSize){
+ if(remaining.length<=limit)return decodeKnownTokens(context,initial,remaining,eot,limit,batchSize);
+ // Each chunk resets text KV positions; all chunks attend to the same encoded
+ // audio. Concatenate their actual attention for one monotonic alignment path.
+ let result;
+ for(let offset=0;offset<remaining.length;offset+=limit){
+  const part=await decodeKnownTokens(context,initial,remaining.slice(offset,offset+limit),eot,limit,batchSize);
+  if(!result)result=part;
+  else for(const field of ['decodedTokens','decodedTokensConfidence','decodedTokensCrossAttentionQKs'])result[field].push(...part[field].slice(initial.length));
+ }
+ return result;
+}
 export async function decodeKnownTokens(context,initial,remaining,eot,limit,batchSize){
  const predicted=remaining.slice(0,limit);
  if(predicted.length<limit)predicted.push(eot);
