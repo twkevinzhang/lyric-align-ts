@@ -1,4 +1,10 @@
 import {test} from 'node:test';import assert from 'node:assert/strict';import {scoreCues} from '../../src/core/cue-score.mjs';
+test('exact normalized repeated Unicode text retains each cue boundary and missing-confidence failure',()=>{
+ const run={audioSeconds:10,timeline:[{text:'春',startTime:1,endTime:2},{text:'泥棒',startTime:2,endTime:3},{text:'春泥棒',startTime:6,endTime:7,confidence:0}]};
+ const scored=scoreCues(run,[{text:'春、泥棒',start:1},{text:'春泥棒',start:6}]);
+ assert.equal(scored.characterEditDistance,0);
+ assert.deepEqual(scored.rows.map(r=>[r.start,r.end,r.usable]),[[1,3,true],[6,7,false]]);
+});
 test('a synthesized suffix nested inside a real word consumes the invalid quota',()=>{
  const run={audioSeconds:10,timeline:[{text:'amazing',confidence:0.9,startTime:2,endTime:3,timeline:[{text:'amaz',confidence:0.9},{text:'ing',confidence:0}]}]};
  assert.equal(scoreCues(run,[{text:'amazing',start:2}]).rows[0].usable,false);

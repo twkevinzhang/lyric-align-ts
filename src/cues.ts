@@ -1,20 +1,9 @@
-import { scoreCues } from './core/cue-score.mjs';
+import { mapTimelineToCues } from './core/timeline-cues.mjs';
 import type { Cue, TimelineEntry } from './types.ts';
 
 /** Map supplied lyric lines without consulting any reference timestamps. */
 export function timelineToCues(lyrics: string[], words: TimelineEntry[], audioSeconds: number): Cue[] {
-  const rows = scoreCues({ timeline: words, audioSeconds }, lyrics.map(text => ({ text, start: 0 }))).rows;
-  return rows.map((row: { line: number; text: string; start: number | null; end: number | null; usable: boolean }) => {
-    const issues: string[] = [];
-    if (!row.usable) issues.push('unmatched-text');
-    if (row.start === null || row.end === null || !Number.isFinite(row.start) || !Number.isFinite(row.end)) issues.push('invalid-time');
-    else {
-      if (row.end === row.start) issues.push('zero-duration');
-      if (row.end < row.start) issues.push('negative-duration');
-      if (row.start < 0 || row.end > audioSeconds + 1e-8) issues.push('out-of-bounds');
-    }
-    return { id: row.line, text: row.text, start: row.start, end: row.end, matched: row.usable, issues };
-  });
+  return mapTimelineToCues(lyrics, words, audioSeconds);
 }
 function timestamp(seconds: number): string {
   const total = Math.round(seconds * 1000);

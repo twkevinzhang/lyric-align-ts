@@ -6,8 +6,9 @@ import {build} from 'esbuild';
 import {chromium} from 'playwright';
 import {staticServer} from './static-server.mjs';
 import {parseSrt} from '../src/subtitles.ts';
-import {scoreCues} from '../src/core/cue-score.mjs';
+import {scoreCues,scorePublicCues} from '../src/core/cue-score.mjs';
 import {acceptance,DEFAULT_MAXIMUM_SECONDS} from '../src/core/acceptance.mjs';
+import {boundaryAcceptance,boundaryErrors} from '../src/core/boundary-acceptance.mjs';
 
 const root=resolve(import.meta.dirname,'..');
 const config=JSON.parse(await readFile(process.argv[2],'utf8'));
@@ -19,6 +20,9 @@ const output=resolve(root,'.local/three-second',`${Date.now()}-${config.label??'
 await mkdir(output,{recursive:true});
 const hash=b=>createHash('sha256').update(b).digest('hex');
 const hashes={};
+const voiceFiles=(config.variants??[]).some(v=>v.engine?.voiceModuleUrl)?{'/research/ten_vad.js':resolve(root,'.local/ten-vad/ten_vad.js'),'/research/ten_vad.wasm':resolve(root,'.local/ten-vad/ten_vad.wasm')}:{};
+if((config.variants??[]).some(v=>v.engine?.voiceModuleUrl==='/research/simd/ten_vad.js'))Object.assign(voiceFiles,{'/research/simd/ten_vad.js':resolve(root,'.local/ten-vad-simd/ten_vad.js'),'/research/simd/ten_vad.wasm':resolve(root,'.local/ten-vad-simd/ten_vad.wasm')});
+for(const file of Object.values(voiceFiles))hashes[file]=hash(await readFile(file));
 async function hashTree(path){for(const entry of await readdir(resolve(root,path),{withFileTypes:true})){const child=path+'/'+entry.name;if(entry.isDirectory())await hashTree(child);else hashes[child]=hash(await readFile(resolve(root,child)));}}
 for(const dir of ['src','native','scripts','vendor'])await hashTree(dir);
 for(const file of ['dist/index.js','dist/worker.js','dist/assets/parity.wasm','dist/assets/parity.js','.local/native/ggml-tiny-q5_1.bin','.local/native/source-timescale/src/whisper.cpp','.local/native/source-timescale/ggml/src/ggml-cpu/ggml-cpu.c','.local/native/source-timescale/ggml/src/ggml-cpu/vec.h','.local/native/source-timescale/ggml/src/ggml-cpu/vec.cpp'])hashes[file]=hash(await readFile(resolve(root,file)));
@@ -34,8 +38,10 @@ try{
  for(const variant of config.variants??[{id:'production',threads:8}]){
   let workerPath;
   if(variant.engine){workerPath=resolve(output,variant.id+'.js');await build({entryPoints:[resolve(root,'src/worker.ts')],bundle:true,platform:'browser',target:['es2022'],format:'iife',outfile:workerPath,define:{__ALIGN_EXPERIMENT__:JSON.stringify(variant.engine)}});}
+  let voiceWorkerPath;
+  if(variant.engine?.voiceWorkerUrl){voiceWorkerPath=resolve(output,variant.id+'-voice.js');await build({entryPoints:[resolve(root,'src/engine/voice-worker.mjs')],bundle:true,platform:'browser',target:['es2022'],format:'iife',outfile:voiceWorkerPath});}
   for(let trial=1;trial<=(config.trials??1);trial++)for(const song of config.songs){
-   const server=await staticServer({root,files:{'/model.bin':model,'/audio':resolve(song.audio),'/lyrics':resolve(song.lyrics),...(workerPath?{'/experiment-worker.js':workerPath}:{})}});
+   const server=await staticServer({root,files:{...voiceFiles,...(voiceWorkerPath?{[variant.engine.voiceWorkerUrl]:voiceWorkerPath}:{}),'/model.bin':model,'/audio':resolve(song.audio),'/lyrics':resolve(song.lyrics),...(workerPath?{'/experiment-worker.js':workerPath}:{})}});
    const page=await browser.newPage();let timer;const load=[],runtimeErrors=[];let previous=cpuSnapshot();
    page.on('console',message=>{if(message.type()==='error')runtimeErrors.push(message.text());});
    try{
@@ -51,17 +57,19 @@ try{
     const result=await page.evaluate(async()=>{const start=performance.now();try{const result=await globalThis.benchmarkAligner.align(globalThis.benchmarkInput);return {...result,outerOperationSeconds:(performance.now()-start)/1000};}finally{globalThis.benchmarkAligner.dispose();}});
     clearInterval(timer);
     const reference=parseSrt(await readFile(song.reference,'utf8'));
-    const score=scoreCues({timeline:result.words,audioSeconds:result.audioSeconds},reference);
+    const rawWordScore=scoreCues({timeline:result.words,audioSeconds:result.audioSeconds},reference);
+    const score=scorePublicCues(result,reference);
     const gate=acceptance(result.metrics.operationSeconds,score.rows.map(r=>({...r,startError:r.error})),maximumSeconds);
     const excluded=new Set(gate.excluded.map(r=>r.line));
     const ends=score.rows.filter(r=>!excluded.has(r.line)).map(r=>Number.isFinite(r.end)?Math.abs(r.end-reference[r.line-1].end):NaN);
     const endMeanAbs=ends.every(Number.isFinite)?ends.reduce((s,e)=>s+e,0)/ends.length:null;
-    const record={variant:variant.id,trial,song:song.id,server:server.url,load,...result,score,acceptance:gate,endMeanAbs};
+    const boundaryGate=boundaryAcceptance(result.metrics.operationSeconds,boundaryErrors(score.rows,reference,result.audioSeconds),maximumSeconds);
+    const record={variant:variant.id,trial,song:song.id,server:server.url,load,...result,score,rawWordScore,acceptance:gate,boundaryAcceptance:boundaryGate,endMeanAbs};
     results.push(record);await writeFile(resolve(output,`${variant.id}-${song.id}-${trial}.json`),JSON.stringify(record,null,2));
-    console.log(JSON.stringify({variant:variant.id,trial,song:song.id,seconds:result.metrics.operationSeconds,mae:gate.meanAbs,pass:gate.pass,profile:result.metrics.profile,load:load.length?load.reduce((s,x)=>s+x.busyFraction,0)/load.length:null}));
+    console.log(JSON.stringify({variant:variant.id,trial,song:song.id,seconds:result.metrics.operationSeconds,boundaryAcceptance:boundaryGate,pass:boundaryGate.pass,profile:result.metrics.profile,load:load.length?load.reduce((s,x)=>s+x.busyFraction,0)/load.length:null}));
    }catch(error){const failure={variant:variant.id,trial,song:song.id,error:String(error),runtimeErrors,load};results.push(failure);await writeFile(resolve(output,`${variant.id}-${song.id}-${trial}-error.json`),JSON.stringify(failure,null,2));console.log(JSON.stringify(failure));}
    finally{clearInterval(timer);await page.close();await server.close();}
   }
  }
 }finally{await browser.close();await writeFile(resolve(output,'summary.json'),JSON.stringify({manifest,results},null,2));console.log('OUTPUT '+output);}
-if(results.some(result=>!result.acceptance?.pass))process.exitCode=1;
+if(results.some(result=>!result.boundaryAcceptance?.pass))process.exitCode=1;

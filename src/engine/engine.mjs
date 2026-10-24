@@ -8,9 +8,13 @@ import {lookaheadBudget,trimAttentionPrefix} from '../core/attention-trim.mjs';
 import {transcribeAudio} from './transcribe.mjs';
 import {decodeKnownTokens,decodeAllKnownTokens} from './guided-decode.mjs';
 import {coarseAttentionPath} from './attention-resolution.mjs';
+import {attentionGapBounds} from './gap-alignment.mjs';
+import {introBoundaryFrame} from './attention-boundaries.mjs';
+import {noSpeechProbability} from './no-speech-probe.mjs';
+import {lyricPauseMask} from './lyric-pauses.mjs';
 export function validatePcm(audio){if(!(audio instanceof Float32Array)||!audio.length)throw Error('PCM must be a nonempty Float32Array');for(const sample of audio)if(!Number.isFinite(sample))throw Error('PCM samples must be finite');}
 export class BrowserEngine{
-  constructor(config={}){this.config={timeScale:3.25,batchSize:440,audioContext:960,guided:true,alignmentOnly:true,prepack:'group',attentionQuant:2,vectorActivations:true,attentionStride:4,attentionPositionPenalty:10,trimFinalContext:true,profile:false,...config};if((!Number.isFinite(this.config.timeScale)||this.config.timeScale<1||this.config.timeScale>4||!Number.isInteger(this.config.timeScale*4))||(!Number.isInteger(this.config.audioContext)||this.config.audioContext<32||this.config.audioContext>1500)||!Number.isInteger(this.config.batchSize)||this.config.batchSize<1||this.config.batchSize>440)throw Error('Invalid engine configuration');}
+  constructor(config={}){this.config={timeScale:3.25,batchSize:440,audioContext:960,guided:true,alignmentOnly:true,prepack:'group',attentionQuant:2,vectorActivations:true,attentionStride:4,attentionPositionPenalty:10,trimFinalContext:true,introBoundary:true,profile:false,...config};if((!Number.isFinite(this.config.timeScale)||this.config.timeScale<1||this.config.timeScale>4||!Number.isInteger(this.config.timeScale*4))||(!Number.isInteger(this.config.audioContext)||this.config.audioContext<32||this.config.audioContext>1500)||!Number.isInteger(this.config.batchSize)||this.config.batchSize<1||this.config.batchSize>440)throw Error('Invalid engine configuration');}
   async initialize(options,progress){
     this.start=performance.now();this.progress=progress;
     if(!globalThis.crossOriginIsolated||typeof SharedArrayBuffer==='undefined')throw Error('Cross-origin isolation (COOP/COEP) and SharedArrayBuffer are required');
@@ -27,9 +31,10 @@ export class BrowserEngine{
     if(m._poc_set_threads(this.threads)||m._poc_get_threads()!==this.threads)throw Error('Native thread setting failed');
     if(Number.isInteger(this.config.timeScale)){if(!m._poc_set_time_scale||m._poc_set_time_scale(this.config.timeScale))throw Error('Time-scale native build required');}else if(!m._poc_set_time_scale_fraction||m._poc_set_time_scale_fraction(Math.round(this.config.timeScale*1000),1000))throw Error('Fractional time-scale build required');
     if(m._poc_set_audio_context(this.config.audioContext))throw Error('Audio context rejected');
+    if(this.config.encoderBlocks&&(!m._poc_set_encoder_blocks||m._poc_set_encoder_blocks(this.config.encoderBlocks)))throw Error('Encoder attention blocks rejected');
     if(this.config.attentionQuant && (!m._poc_set_attention_quant || m._poc_set_attention_quant(this.config.attentionQuant===true?2:this.config.attentionQuant)))throw Error('Attention quantization rejected');
     if(this.config.vectorActivations && (!m._poc_set_vector_activations || m._poc_set_vector_activations(1)))throw Error('Vector activations rejected');
-    if(this.config.alignmentOnly && (!this.config.guided || !m._poc_set_alignment_only || m._poc_set_alignment_only(1)))throw Error('Alignment-only mode rejected');
+    if(this.config.alignmentOnly && !this.config.tokenEvidence && (!this.config.guided || !m._poc_set_alignment_only || m._poc_set_alignment_only(1)))throw Error('Alignment-only mode rejected');
     this.whisper=new Whisper();this.whisper.tiktoken=await createTokenizer(this.base,this.whisper.specialTokens);
     this.whisper.audioWindowSeconds=this.config.audioContext*.02;
     this.whisper.alignmentPositionPenalty=this.config.attentionPositionPenalty;
@@ -38,27 +43,62 @@ export class BrowserEngine{
   async align(audio,lyrics,language){
     validatePcm(audio);if(typeof lyrics!=='string'||!lyrics.trim())throw Error('Lyrics must not be empty');
     const w=this.whisper,m=this.module;if(!w||!m)throw Error('Engine is not initialized');
+    const alignmentOnly=this.config.alignmentOnly&&!this.config.tokenEvidence;
     w.getTextStartTokens(language,'transcribe',true); // validates supported language before inference
     const profile=this.config.profile?{melMs:0,encoderMs:0,decodeMs:0,pathMs:0,windows:0,batches:0,tokens:0}:undefined;
     const alignStart=performance.now(),virtual=virtualAudio(audio,this.config.timeScale),originalContext=nativeContext(m,audio,virtual,this.progress,this.config.timeScale,profile,this.config.trimFinalContext?this.config.audioContext:undefined);
-    w.context=originalContext;let lyricTokens,consumed=0,workerPath;
+    w.context=originalContext;let lyricTokens,consumed=0,workerPath,introStartFrame,prefixBounds,pauseMask,prefixAudit;
+    w.getTokenTimelineFromAlignmentPath=async(...args)=>{
+      const timeline=await Whisper.prototype.getTokenTimelineFromAlignmentPath.apply(w,args);
+      if(introStartFrame!==undefined&&timeline.length){
+        const first=timeline[0];
+        first.startTime=Math.max(first.startTime,Math.min(first.endTime,args[2]+introStartFrame*.02));
+      }
+      if(prefixBounds){for(let i=0;i<prefixBounds.length&&i<timeline.length;i++){timeline[i].startTime=args[2]+prefixBounds[i].start*.02;timeline[i].endTime=Math.max(timeline[i].startTime,Math.min(args[3],args[2]+prefixBounds[i].end*.02));}prefixBounds=undefined;}
+      introStartFrame=undefined;return timeline;
+    };
     const tokenize=Whisper.prototype.textToTokens.bind(w),decode=Whisper.prototype.decodeTokens.bind(w);
     const findPath=async(...args)=>{const start=profile?performance.now():0;try{return await Whisper.prototype.findAlignmentPathFromCrossAttentionQKs.apply(w,args);}finally{if(profile)profile.pathMs+=performance.now()-start;}};
     w.textToTokens=text=>{const tokens=tokenize(language==='ja'?naturalJapaneseSpacing(text):text);if(!lyricTokens&&text!==' ')lyricTokens=tokens;return tokens;};
     w.recognize=(audio,task,language,options,...rest)=>Whisper.prototype.recognize.call(w,audio,task,language,{...options,decodeTimestampTokens:false},...rest);
     w.decodeTokens=async(initialTokens,duration,isFirst,isFinal,options,filter,callbacks)=>{
       if(!filter||!lyricTokens)throw Error('Only guided lyric alignment is supported');const remaining=lyricTokens.slice(consumed),eot=w.specialTokens.endOfTextToken;
+      const prompt=this.config.carryContext&&consumed>0?[w.specialTokens.startOfPromptToken,...lyricTokens.slice(Math.max(0,consumed-32),consumed)]:[];
       if(profile){profile.lyricTokens=lyricTokens.length;if(isFinal)profile.finalRemaining=remaining.length;}
-      options={...options,maxTokensPerPart:lookaheadBudget(lyricTokens.length,virtual.length,duration,remaining.length,isFinal,Math.min(440,448-initialTokens.length),this.config.lookaheadRatio??1.15)};
-      subset(m,remaining,eot,this.config.alignmentOnly);w.context=speculativeNativeContext(m,originalContext,remaining,eot,options.maxTokensPerPart,this.config.batchSize);
+      options={...options,maxTokensPerPart:lookaheadBudget(lyricTokens.length,virtual.length,duration,remaining.length,isFinal,Math.min(440,448-initialTokens.length-prompt.length),this.config.lookaheadRatio??1.15)};
+      if(this.config.noSpeechProbe){
+        const start=performance.now();let probability;
+        try{probability=await noSpeechProbability(m,originalContext,w.specialTokens,alignmentOnly);}
+        finally{subset(m,remaining,eot,alignmentOnly);}
+        if(profile)(profile.noSpeech??=[]).push({offsetSeconds:originalContext.audioOffset/16000*this.config.timeScale,probability,probeMs:performance.now()-start});
+      }
+      if(!this.config.noSpeechProbe)subset(m,remaining,eot,alignmentOnly);
+      w.context=speculativeNativeContext(m,originalContext,remaining,eot,options.maxTokensPerPart,this.config.batchSize);
       const guidedFilter=(logits,tokens)=>{const next=remaining[tokens.filter(t=>t<eot).length]??eot;return logits.map((value,index)=>index===next||(!isFinal&&index===eot)?value:-Infinity);};
-      let decoded;try{decoded=this.config.guided?await (isFinal?decodeAllKnownTokens:decodeKnownTokens)(originalContext,initialTokens,remaining,eot,options.maxTokensPerPart,this.config.batchSize):await decode(initialTokens,duration,isFirst,isFinal,options,guidedFilter,callbacks);}finally{w.context=originalContext;}
+      let decoded;try{decoded=this.config.guided?await (isFinal?decodeAllKnownTokens:decodeKnownTokens)(originalContext,initialTokens,remaining,eot,options.maxTokensPerPart,this.config.batchSize,this.config.currentTokenAttention,prompt,this.config.tokenEvidence):await decode(initialTokens,duration,isFirst,isFinal,options,guidedFilter,callbacks);}finally{w.context=originalContext;}
       const offset=originalContext.audioOffset,last=decoded.decodedTokens.at(-1),timestampStart=w.specialTokens.timestampTokensStart;
       const end=!isFinal&&last>=timestampStart?offset+(last-timestampStart)*320:Math.min(offset+this.config.audioContext*320,virtual.length),frames=Math.floor((end-offset)/320),count=initialTokens.length;
-      decoded.alignmentPath=await coarseAttentionPath(findPath,decoded.decodedTokensCrossAttentionQKs.slice(count),decoded.decodedTokens.slice(count),frames,this.config.attentionStride??1);decoded.alignmentFrames=frames;
-      if(!isFinal)decoded=trimAttentionPrefix(decoded,decoded.alignmentPath,count,frames-(this.config.overlapFrames??Math.round(this.config.audioContext/6)),timestampStart,eot);
+      decoded.alignmentFrames=frames;
+      if(profile&&this.config.tokenEvidence)(profile.tokenEvidence??=[]).push({offsetSeconds:offset/16000*this.config.timeScale,consumed,logOdds:decoded.decodedTokenLogOdds.slice(count),tokens:decoded.decodedTokens.slice(count)});
+      if(this.config.openPrefix){
+        const n=decoded.decodedTokens.slice(count).filter(t=>t<eot).length;
+        // Pairwise continuation probability is charged once per consumed token,
+        // not once per frame. Stable log(sigmoid(logit(token)-logit(EOT))).
+        const entryScores=this.config.tokenEvidence==='entry'?decoded.decodedTokenLogOdds.slice(count,count+n).map(x=>-Math.max(0,-x)-Math.log1p(Math.exp(-Math.abs(x)))):undefined;
+        if((this.config.lyricPauses||this.config.sentenceCommit)&&pauseMask===undefined)pauseMask=lyricPauseMask(lyricTokens,t=>w.tokensToText(t),lyrics)??null;
+        prefixAudit=undefined;
+        prefixBounds=attentionGapBounds(decoded.decodedTokensCrossAttentionQKs.slice(count,count+n),frames,2,{openEnd:!isFinal,meanPrefixEvidence:this.config.meanPrefixEvidence,entryScores,removeBackground:this.config.removeAttentionBackground,geometricHeads:this.config.geometricHeads,blankAfter:this.config.lyricPauses?pauseMask?.slice(consumed,consumed+n):undefined,headConsensus:this.config.headConsensus,posterior:this.config.posteriorBoundaries,onPrefix:profile&&this.config.prefixAudit?audit=>{prefixAudit=audit;}:undefined});
+        if(prefixBounds!==undefined)decoded.alignmentPath=prefixBounds.map((b,i)=>({source:i,dest:b.start}));
+      }
+      if(!decoded.alignmentPath)decoded.alignmentPath=await coarseAttentionPath(findPath,decoded.decodedTokensCrossAttentionQKs.slice(count),decoded.decodedTokens.slice(count),frames,this.config.attentionStride??1);
+      if(isFirst&&this.config.introBoundary){
+        const tokenEnd=decoded.alignmentPath.find(p=>p.source>0)?.dest??frames;
+        introStartFrame=introBoundaryFrame(decoded.decodedTokensCrossAttentionQKs[count],tokenEnd,frames,{minFrames:Math.ceil(1.5/(.02*this.config.timeScale))});
+      }
+      if(!isFinal)decoded=trimAttentionPrefix(decoded,decoded.alignmentPath,count,frames-(this.config.overlapFrames??Math.round(this.config.audioContext/6)),timestampStart,eot,prefixBounds,this.config.sentenceCommit?pauseMask?.slice(consumed):undefined);
+      if(prefixBounds){const n=decoded.decodedTokens.slice(count).filter(t=>t<eot).length;prefixBounds=prefixBounds.slice(0,n);if(this.config.openPrefix==='allocation')prefixBounds=undefined;}
       workerPath={path:decoded.alignmentPath,frames:decoded.alignmentFrames,tokens:decoded.decodedTokens.slice(count)};
-      if(profile)(profile.parts??=[]).push({offsetSeconds:offset/16000*this.config.timeScale,remaining:remaining.length,budget:options.maxTokensPerPart,kept:decoded.decodedTokens.slice(count).filter(t=>t<eot).length,isFinal});
+      if(profile)(profile.parts??=[]).push({offsetSeconds:offset/16000*this.config.timeScale,remaining:remaining.length,budget:options.maxTokensPerPart,kept:decoded.decodedTokens.slice(count).filter(t=>t<eot).length,isFinal,...(prefixAudit?{prefixAudit,coreSeconds:decoded.alignmentFrames*.02*this.config.timeScale}:{} )});
       consumed+=decoded.decodedTokens.slice(count).filter(t=>t<eot).length;decoded.decodedTokensCrossAttentionQKs=decoded.decodedTokens.map(()=>undefined);
       return decoded;
     };

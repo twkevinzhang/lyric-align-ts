@@ -40,6 +40,16 @@ const cacheEnabled=true;
 await writeChanged(cpuFile,cpu);
 let code=(await readFile(resolve(local,'source-compact/src/whisper.cpp'),'utf8')).replaceAll('\r\n','\n');
 function replaceOnce(a,b){if(code.split(a).length!==2)throw Error('Ambiguous source anchor: '+a);code=code.replace(a,b);}
+replaceOnce('static struct ggml_cgraph * whisper_build_graph_encoder(',`#include "local-attention.h"
+static int poc_encoder_blocks=1;
+extern "C" int poc_set_encoder_blocks(int blocks){if(blocks!=1&&blocks!=2&&blocks!=4)return -1;poc_encoder_blocks=blocks;return 0;}
+static struct ggml_cgraph * whisper_build_graph_encoder(`);
+const encoderStart=code.indexOf('static struct ggml_cgraph * whisper_build_graph_encoder('),encoderEnd=code.indexOf('// projection',encoderStart);
+const encoderAttention=code.slice(encoderStart,encoderEnd);
+if(encoderAttention.split('if (wctx.params.flash_attn) {').length!==2)throw Error('Local attention encoder anchor');
+code=code.slice(0,encoderStart)+encoderAttention.replace('if (wctx.params.flash_attn) {',`if (poc_encoder_blocks>1 && !wctx.params.flash_attn) {
+                cur=poc_local_attention(ctx0,Qcur,Kcur,Vcur,n_head,n_ctx,poc_encoder_blocks,wctx.itype,KQscale);
+            } else if (wctx.params.flash_attn) {`)+code.slice(encoderEnd);
 const fft25=(await readFile(resolve(import.meta.dirname,'../../native/fft25.h'),'utf8')).replaceAll('\r\n','\n').replace('#pragma once','');
 replaceOnce('static void fft(float* in, int N, float* out) {',fft25+'\nstatic void fft(float* in, int N, float* out) {\n    if(N==25 && SIN_COS_N_COUNT==400){poc_fft25(in,out,global_cache.cos_vals,global_cache.sin_vals);return;}');
 replaceOnce('static void log_mel_spectrogram_worker_thread(', '#include "sparse-mel.h"\nstatic void log_mel_spectrogram_worker_thread(');

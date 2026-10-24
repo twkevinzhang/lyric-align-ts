@@ -14,6 +14,14 @@ export function nativeContext(module,pcm,virtual,progress,scale=2,profile,contex
     async decodeTokens(tokens,past){const values=Int32Array.from(tokens),ptr=module._malloc(values.byteLength),dp=module._malloc(12);let qp;try{if(!ptr||!dp)throw Error('Decode allocation failed');module.HEAPU8.set(new Uint8Array(values.buffer),ptr);if(profile)module._poc_kernel_profile_reset?.();if(module._poc_decode(ptr,tokens.length,past>0?past-1:0))throw Error('Token decoding failed');collectKernels(module,profile,'decoderKernels');const count=module._poc_qk_dims(dp),dims=new Int32Array(module.HEAPU8.buffer,dp,3).slice();qp=module._malloc(count*4);if(count<=0||!qp||module._poc_qk_copy(qp,count))throw Error('Attention copy failed');latest={dimensions:Array.from(dims,BigInt),data:new Float32Array(module.HEAPU8.buffer,qp,count).slice()};}finally{if(qp)module._free(qp);module._free(dp);module._free(ptr);}},
     getLogits:()=>{const pointer=module._poc_logits();if(!pointer)throw Error('Logits unavailable in alignment-only mode');return new Float32Array(module.HEAPU8.buffer,pointer,module._poc_vocab()).slice();},
     getCrossAttentionQKs:async()=>latest,
+    getTokenLogOdds:(row,total,target,eot)=>{
+      const pointer=module._poc_logits(),vocab=module._poc_vocab();
+      if(!pointer||row<0||row>=total||target<0||target>=vocab||eot<0||eot>=vocab)throw Error('Invalid token evidence request');
+      const base=pointer-(total-1-row)*vocab*4;
+      const view=new Float32Array(module.HEAPU8.buffer,base,vocab);
+      const score=view[target]-view[eot];if(!Number.isFinite(score))throw Error('Missing token evidence logits');
+      return score;
+    },
   };
   if(profile){const decode=context.decodeTokens;context.decodeTokens=async(...args)=>{const start=performance.now();try{return await decode(...args);}finally{profile.decodeMs+=performance.now()-start;profile.batches++;profile.tokens+=args[0].length;}};}
   return context;

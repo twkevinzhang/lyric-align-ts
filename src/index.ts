@@ -1,6 +1,6 @@
 import { prepareAudio } from './audio.ts';
 import { timelineToCues, toSrt } from './cues.ts';
-import type { Aligner, AlignerOptions, AlignmentMetrics, AlignmentResult, Progress, TimelineEntry } from './types.ts';
+import type { Aligner, AlignerOptions, AlignmentMetrics, AlignmentResult, Progress, TimelineEntry, Cue } from './types.ts';
 export { timelineToCues, toSrt } from './cues.ts';
 export { parseSrt } from './subtitles.ts';
 export type { SourceCue } from './subtitles.ts';
@@ -78,9 +78,9 @@ export async function createAligner(options: AlignerOptions = {}): Promise<Align
         const audioPreparationSeconds = (performance.now() - operationStart) / 1000;
         if (disposed || input.signal?.aborted) throw abortError();
         const audioSeconds = samples.length / 16000;
-        const result = await request<{ words: TimelineEntry[]; metrics: AlignmentMetrics }>({ type: 'align', audio: samples, lyrics: lines.join('\n'), language: input.language }, input.onProgress, [samples.buffer]);
+        const result = await request<{ words: TimelineEntry[]; metrics: AlignmentMetrics; cues?: Cue[] }>({ type: 'align', audio: samples, lyrics: lines.join('\n'), language: input.language }, input.onProgress, [samples.buffer]);
         const cueStart = performance.now();
-        const cues = timelineToCues(lines, result.words, audioSeconds);
+        const cues = result.cues ?? timelineToCues(lines, result.words, audioSeconds);
         const srt = toSrt(cues);
         const cueMappingSeconds = (performance.now() - cueStart) / 1000;
         const operationSeconds = (performance.now() - operationStart) / 1000;

@@ -100,7 +100,11 @@ static bool poc_group_matmul(const struct ggml_compute_params *p,struct ggml_ten
     ggml_barrier(p->threadpool);
     const int tilecols=4;
     const int64_t mt=(m+3)/4,nt=(n+tilecols-1)/tilecols,r2=b->ne[2]/a->ne[2],r3=b->ne[3]/a->ne[3];
-    for(int64_t tile=p->ith;tile<mt*nt*b->ne[2]*b->ne[3];tile+=p->nth){const int64_t row=tile%mt*4,col=tile/mt%nt*tilecols,i2=tile/(mt*nt)%b->ne[2],i3=tile/(mt*nt*b->ne[2]);
+    // Four adjacent row tiles occupy a 64-byte output cache line. Assign
+    // them together instead of making four workers repeatedly write it.
+    const int64_t tileCount=mt*nt*b->ne[2]*b->ne[3];
+    for(int64_t block=p->ith*4;block<tileCount;block+=p->nth*4)
+    for(int64_t tile=block;tile<MIN(block+4,tileCount);tile++){const int64_t row=tile%mt*4,col=tile/mt%nt*tilecols,i2=tile/(mt*nt)%b->ne[2],i3=tile/(mt*nt*b->ne[2]);
         const struct poc_group_block *ar=pa+((i3/r3*a->ne[2]+i2/r2)*m+row)*groups,*br=pb+((i3*b->ne[2]+i2)*n+col)*groups;
         float values[16];const int rows=MIN(4,m-row),cols=MIN(tilecols,n-col);
         if(rows==4 && cols==4){if(width==64)poc_group_tile44_64(groups,ar,br,values);else poc_group_tile44(groups,ar,br,values);}

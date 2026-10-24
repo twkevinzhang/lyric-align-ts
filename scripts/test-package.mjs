@@ -14,6 +14,9 @@ for(let offset=0;offset+512<=tar.length;){const header=tar.subarray(offset,offse
 assert.ok(files.includes('package/dist/assets/parity.wasm'));assert.ok(files.includes('package/dist/worker.js'));assert.ok(files.includes('package/dist/index.d.ts'));
 for(const name of files)assert.ok(/^package\/(?:dist\/|README\.md$|LICENSE$|THIRD_PARTY_NOTICES\.md$|package\.json$)/.test(name),`Unexpected packed file ${name}`);
 assert.ok(!files.some(f=>/ggml-.*\.bin$|\.wav$|\/node_modules\/|\/(?:spike|poc|native|scripts)\//.test(f)));
+assert.ok(!files.some(f=>/ten[_-]vad|voice-worker/i.test(f)),'TEN-VAD assets must not be redistributed');
+const packedWorker=await readFile(resolve(root,'dist/worker.js'),'utf8');
+assert.doesNotMatch(packedWorker,/ten_vad|voiceModuleUrl|voiceProbabilities|\/research\//,'Release Worker must not load TEN-VAD');
 const consumer=resolve(out,'consumer-'+Date.now());await mkdir(consumer);
 await writeFile(resolve(consumer,'package.json'),JSON.stringify({name:'lyric-align-consumer-check',private:true,type:'module',dependencies:{'lyric-align-ts':'file:'+tgz.replaceAll('\\','/')}},null,2));
 execFileSync(process.execPath,[cli,'install','--ignore-scripts','--offline',...(basename(cli).includes('pnpm')?['--ignore-workspace']:[])],{cwd:consumer,stdio:'inherit'});

@@ -27,6 +27,7 @@ export async function transcribeAudio(engine, audio, language) {
     });
     set('_poc_set_alignment_only',0,engine.config.alignmentOnly?1:0);
     set('_poc_set_audio_context',1500,engine.config.audioContext??1500);
+    set('_poc_set_encoder_blocks',1,engine.config.encoderBlocks??1);
     set('_poc_set_attention_quant',0,engine.config.attentionQuant===true?2:engine.config.attentionQuant||0);
     set('_poc_set_vector_activations',0,engine.config.vectorActivations?1:0);
     if(m._poc_set_vocab_subset(0,0))throw Error('Could not enable unrestricted vocabulary');

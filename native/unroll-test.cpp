@@ -9,6 +9,28 @@
 #include <initializer_list>
 #include <cmath>
 #include <vector>
+#include "local-attention.h"
+static bool testLocalAttention(){
+ for(int blocks:{1,2,4}){
+  ggml_init_params ip={2*1024*1024,nullptr,false};auto *ctx=ggml_init(ip);
+  const int state=4,heads=2,frames=8,dim=2,width=frames/blocks;
+  auto *q=ggml_new_tensor_2d(ctx,GGML_TYPE_F32,state,frames),*k=ggml_new_tensor_2d(ctx,GGML_TYPE_F32,state,frames),*v=ggml_new_tensor_2d(ctx,GGML_TYPE_F32,state,frames);
+  for(int i=0;i<state*frames;i++){((float*)q->data)[i]=(i%7-3)*.2f;((float*)k->data)[i]=(i%11-5)*.1f;((float*)v->data)[i]=i*.03f;}
+  auto *out=poc_local_attention(ctx,q,k,v,heads,frames,blocks,GGML_TYPE_F32,.7f);
+  auto *gf=ggml_new_graph(ctx);ggml_build_forward_expand(gf,out);
+  if(ggml_graph_compute_with_ctx(ctx,gf,1)!=GGML_STATUS_SUCCESS)return false;
+  for(int t=0;t<frames;t++)for(int h=0;h<heads;h++)for(int d=0;d<dim;d++){
+   double sum=0,z=0;
+   for(int j=t/width*width;j<(t/width+1)*width;j++){
+    double dot=0;for(int a=0;a<dim;a++)dot+=((float*)q->data)[t*state+h*dim+a]*((float*)k->data)[j*state+h*dim+a];
+    double p=exp(dot*.7f);sum+=p*((float*)v->data)[j*state+h*dim+d];z+=p;
+   }
+   if(std::fabs(((float*)out->data)[t*state+h*dim+d]-sum/z)>1e-5)return false;
+  }
+  ggml_free(ctx);
+ }
+ return true;
+}
 #ifdef POC_WEIGHT_CACHE_TEST
 #include "ggml-backend.h"
 extern "C" void poc_compact_cache_clear();
@@ -76,7 +98,7 @@ static bool testWeightCache(int mode=0,int n=64){
   size_t cacheBytes=0;
   for(int pass=0;pass<3;pass++){
    for(int j=0;j<n*65;j++)((float*)b->data)[j]=((j*13+pass*7)%53-26)*0.071f;
-   if(ggml_graph_compute_with_ctx(ctx,gf,6)!=GGML_STATUS_SUCCESS)return false;
+   if(ggml_graph_compute_with_ctx(ctx,gf,pass==0?1:pass==1?6:8)!=GGML_STATUS_SUCCESS)return false;
    for(int col=0;col<65;col++){
     quantize_row_q8_1((float*)b->data+col*n,quantized.data(),n);
     for(int row=0;row<rows;row++){
@@ -124,6 +146,8 @@ static bool f16Matches(float expected,float actual) {
 }
 int main(){
  ggml_cpu_init();
+ if(!testLocalAttention()){puts("FAIL local attention head/block/time layout");return 21;}
+ puts("PASS local attention versus independent per-head scalar softmax for 1/2/4 blocks");
 #ifdef POC_WEIGHT_CACHE_TEST
  if(!testWeightCache()){puts("FAIL immutable weight cache reuse/reset");return 12;}
  puts("PASS immutable weight cache reuse, changing activations and model reset");

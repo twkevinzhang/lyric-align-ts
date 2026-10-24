@@ -22,7 +22,7 @@ function normalizeError(value: unknown, fallback: ErrorCode) {
   return libraryError(code, message);
 }
 const capabilities: Capabilities = Object.freeze({
-  contractVersion: 1, libraryVersion: '1.0.0',
+  contractVersion: 1, libraryVersion: '1.0.1',
   supportedLanguages: Object.freeze(['en', 'ja', 'zh']),
   model: Object.freeze({ id: 'ggerganov/whisper.cpp/ggml-tiny-q5_1.bin', revision: '5359861c739e955e79d9a303bcbc70fb988958b1', device: 'wasm' as const, dtype: 'q5_1' }),
   alignmentOptions: Object.freeze(['threshold', 'karaoke'] as const), lyricsContext: false,

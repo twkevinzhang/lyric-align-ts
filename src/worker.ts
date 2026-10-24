@@ -3,7 +3,9 @@ import { BrowserEngine } from './engine/engine.mjs';
 import { alignSegments } from './engine/align-segments.ts';
 // Replaced only by the experimental benchmark bundler; absent in release builds.
 declare const __ALIGN_EXPERIMENT__: Record<string, unknown>;
-const engineConfig = typeof __ALIGN_EXPERIMENT__ === 'undefined' ? {} : __ALIGN_EXPERIMENT__;
+const engineConfig = typeof __ALIGN_EXPERIMENT__ === 'undefined'
+  ? {timeScale:1.5,audioContext:640,encoderBlocks:4,openPrefix:'joint',posteriorBoundaries:'ends',lyricPauses:true}
+  : __ALIGN_EXPERIMENT__;
 const scope = self as unknown as DedicatedWorkerGlobalScope;
 let engine: BrowserEngine | undefined;
 let busy = false;
@@ -15,7 +17,9 @@ scope.onmessage = async ({ data }) => {
   try {
     let result;
     if (type === 'initialize') { if (engine) throw new Error('Engine is already initialized'); engine = new BrowserEngine(engineConfig); result = await engine.initialize(data.options, (stage: string, completed?: number, total?: number) => scope.postMessage({id,type:'progress',stage,completed,total})); }
-    else if (type === 'align') { if (!engine) throw new Error('Engine is not initialized'); engine.progress = (stage: string, completed?: number, total?: number) => scope.postMessage({id,type:'progress',stage,completed,total}); result = await engine.align(data.audio,data.lyrics,data.language); }
+    else if (type === 'align') { if (!engine) throw new Error('Engine is not initialized'); engine.progress = (stage: string, completed?: number, total?: number) => scope.postMessage({id,type:'progress',stage,completed,total});
+      result=await engine.align(data.audio,data.lyrics,data.language);
+    }
     else if (type === 'transcribe') { if (!engine) throw new Error('Engine is not initialized'); engine.progress = (stage: string) => scope.postMessage({id,type:'progress',stage}); result = await engine.transcribe(data.audio,data.language); }
     else if (type === 'align-segments') { if (!engine) throw new Error('Engine is not initialized'); result = alignSegments(data.segments,data.lyrics,data.options); }
     else if (type === 'dispose') { engine?.dispose(); engine = undefined; result = { disposed: true }; }
