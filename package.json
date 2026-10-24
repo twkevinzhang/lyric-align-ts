@@ -1,6 +1,6 @@
 {
   "name": "lyric-align-ts",
-  "version": "0.1.1",
+  "version": "1.0.0",
   "description": "Browser CPU/WASM alignment of supplied lyrics to music",
   "repository": { "type": "git", "url": "git+https://github.com/twkevinzhang/lyric-align-ts.git" },
   "homepage": "https://github.com/twkevinzhang/lyric-align-ts#readme",

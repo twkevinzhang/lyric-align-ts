@@ -1,6 +1,6 @@
 # Browser session contract v1
 
-本分支以 `741458c` 的 tiny／WASM 為基底，合併 `cpp` 的三秒歌詞引導引擎，保留 `src/contract.ts` 的消費端結構契約。`createBinding` 及預設 `binding` 從根入口與 `lyric-align-ts/binding` 匯出。套件及 capabilities 版本均為 `0.1.1`，供目前 yt-subtitle loader 的版本檢查使用；這是本機候選產物，沒有發布，也不等同其他分支的 scoped npm small.en/WebGPU 套件。
+本分支以 `741458c` 的 tiny／WASM 為基底，合併 `cpp` 的三秒歌詞引導引擎，保留 `src/contract.ts` 的消費端結構契約。`createBinding` 及預設 `binding` 從根入口與 `lyric-align-ts/binding` 匯出。套件及 capabilities 版本均為 `1.0.0`，消費端若鎖定舊版 libraryVersion，須同步更新版本檢查；此套件與其他分支的 scoped npm small.en/WebGPU 套件不同。
 
 ## 邊界與設定
 

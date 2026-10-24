@@ -2,7 +2,7 @@
 
 把歌曲音檔與已知歌詞對齊，回傳逐詞／逐句時間軸與 SRT。模型、tokenizer、解碼控制與 DTW 都在瀏覽器 Worker 中執行，網站只需要提供靜態資產，沒有 Node.js 推論伺服器。
 
-目前分支產出實驗性 `lyric-align-ts@0.1.1` 本機套件，尚未發布。保留 fast 的 tiny Q5_1／CPU WASM 歌詞引導對齊，並提供 contract v1 的獨立 ASR／文字配對 session。句首提前、句尾偏差與零長度時間軸仍須聽校；session 的三首全曲驗證尚未達全行匹配，不能宣稱無時間碼歌曲流程可用。
+`lyric-align-ts@1.0.0` 提供實驗性瀏覽器歌詞對齊 API。保留 fast 的 tiny Q5_1／CPU WASM 歌詞引導對齊，並提供 contract v1 的獨立 ASR／文字配對 session。句首提前、句尾偏差與零長度時間軸仍須聽校；session 的三首全曲驗證尚未達全行匹配，不能宣稱無時間碼歌曲流程可用。
 
 ## 與 yt-subtitle 整合
 
@@ -26,14 +26,16 @@ try {
 
 本版宣告 `en/ja/zh`、`wasm`、固定 tiny Q5_1 模型、`threshold` 與 `karaoke=false`；`lyricsContext=false`，不支援 `pairing/window`。未指定語言時使用 prepare 的語言，否則預設英文。模型可搬至自架 URL，但 SHA256 固定，不因此更換模型。
 
+本版 `capabilities.libraryVersion` 為 `1.0.0`；yt-subtitle 若仍限定 `0.1.1`，須更新版本檢查才能載入。
+
 根入口仍保留既有 `AudioInput`／`Progress` 型別；session 同名契約型別從 `lyric-align-ts/binding` 匯入，或在根入口使用 `ContractAudioInput`／`ContractProgress`。完整規格、消費端接線證據、歌曲限制見 [session 契約](docs/session-contract.md)。這個 tiny/WASM 分支不是其他分支的 small.en/WebGPU 發布物。
 
 ## 快速開始
 
-先依 [開發文件](docs/development.md) 建置並產生 tarball，再於使用端安裝：
+於使用端安裝此版本：
 
 ```sh
-npm install ./lyric-align-ts-0.1.1.tgz
+npm install lyric-align-ts@1.0.0
 ```
 
 將安裝後的 `node_modules/lyric-align-ts/dist/` 複製到網站的 `public/lyric-align-ts/`，讓 Worker 和 WASM／tokenizer 資產有固定 URL。模型權重另外取得，預設從固定 Hugging Face revision 下載 tiny Q5_1 並驗證 SHA256；也可以設定自架的 modelUrl。

@@ -13,6 +13,6 @@
 pnpm pack --pack-destination .local/package
 ```
 
-產物可用 npm install ./lyric-align-ts-0.1.0.tgz 安裝。模型由模型 URL 另行取得，預設使用固定 tiny Q5_1 與 SHA256。prepack 只檢查已建置產物，不會在消費者安裝時執行原生編譯。
+產物可用 npm install ./lyric-align-ts-1.0.0.tgz 安裝。模型由模型 URL 另行取得，預設使用固定 tiny Q5_1 與 SHA256。prepack 只檢查已建置產物，不會在消費者安裝時執行原生編譯。
 
 尚未修正的句首提前、句尾偏差與零長度時間軸都必須保留在發布說明。SRT exporter 省略無效／零長度句，完整診斷仍在 result.cues[].issues；這是匯出格式防護，不是時間估計已修正。
