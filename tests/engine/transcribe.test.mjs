@@ -28,3 +28,13 @@ test('digital silence supplies no ASR evidence or invented words',async()=>{
  assert.deepEqual(await transcribeAudio(engine,new Float32Array(16000),'en'),[]);
  assert.deepEqual(await transcribeAudio(engine,new Float32Array(16000*30),'en'),[]);
 });
+test('free ASR disables optimized alignment mode and restores fractional config',async()=>{
+ const original=Whisper.prototype.recognize,calls=[];
+ const module={_poc_set_time_scale:n=>(calls.push(['scale',n]),0),_poc_set_time_scale_fraction:(n,d)=>(calls.push(['fraction',n,d]),0),_poc_set_vocab_subset:()=>0,_poc_set_alignment_only:n=>(calls.push(['alignmentOnly',n]),0),_poc_set_audio_context:n=>(calls.push(['context',n]),0),_poc_set_attention_quant:n=>(calls.push(['attention',n]),0),_poc_set_vector_activations:n=>(calls.push(['vectors',n]),0)};
+ Whisper.prototype.recognize=async()=>{assert.ok(calls.some(c=>c[0]==='alignmentOnly'&&c[1]===0));assert.ok(calls.some(c=>c[0]==='context'&&c[1]===1500));throw Error('decode failed');};
+ try{
+  await assert.rejects(transcribeAudio({config:{timeScale:3.25,audioContext:960,alignmentOnly:true,attentionQuant:2,vectorActivations:true},threads:8,module,whisper:{tiktoken:{}}},new Float32Array(16000).fill(.1),'en'),/decode failed/);
+  assert.ok(calls.some(c=>c[0]==='fraction'&&c[1]===3250&&c[2]===1000));
+  for(const expected of [['alignmentOnly',1],['context',960],['attention',2],['vectors',1]])assert.ok(calls.some(c=>JSON.stringify(c)===JSON.stringify(expected)),'restore '+expected);
+ }finally{Whisper.prototype.recognize=original;}
+});

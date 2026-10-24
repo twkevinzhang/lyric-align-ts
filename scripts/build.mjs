@@ -3,6 +3,7 @@ import {execFileSync} from 'node:child_process';
 import {readFile,writeFile,mkdir,rm,readdir} from 'node:fs/promises';
 import {resolve} from 'node:path';
 import {root,prepareAssets} from './assets.mjs';
+import {recordDistribution} from './build-proof.mjs';
 const output=resolve(root,'dist');
 if(!output.startsWith(root+'/')&&!output.startsWith(root+'\\'))throw Error('Build output must stay inside project');
 await rm(output,{recursive:true,force:true});
@@ -18,4 +19,5 @@ async function fixTypes(dir){for(const file of await readdir(dir,{withFileTypes:
 await fixTypes(resolve(root,'dist'));
 await mkdir(resolve(root,'.local/package'),{recursive:true});
 await writeFile(resolve(root,'.local/package/metafile.json'),JSON.stringify({main,worker},null,2));
+await recordDistribution(root);
 console.log('Built browser ESM, classic Worker, declarations and static WASM/tokenizer assets.');

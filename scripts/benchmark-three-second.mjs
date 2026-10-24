@@ -11,6 +11,8 @@ import {acceptance} from '../src/core/acceptance.mjs';
 
 const root=resolve(import.meta.dirname,'..');
 const config=JSON.parse(await readFile(process.argv[2],'utf8'));
+const maximumSeconds=config.maximumSeconds??3;
+if(![3,10].includes(maximumSeconds))throw Error('maximumSeconds must be 3 or 10');
 const output=resolve(root,'.local/three-second',`${Date.now()}-${config.label??'run'}`);
 await mkdir(output,{recursive:true});
 const hash=b=>createHash('sha256').update(b).digest('hex');
@@ -48,7 +50,7 @@ try{
     clearInterval(timer);
     const reference=parseSrt(await readFile(song.reference,'utf8'));
     const score=scoreCues({timeline:result.words,audioSeconds:result.audioSeconds},reference);
-    const gate=acceptance(result.metrics.operationSeconds,score.rows.map(r=>({...r,startError:r.error})));
+    const gate=acceptance(result.metrics.operationSeconds,score.rows.map(r=>({...r,startError:r.error})),maximumSeconds);
     const excluded=new Set(gate.excluded.map(r=>r.line));
     const ends=score.rows.filter(r=>!excluded.has(r.line)).map(r=>Number.isFinite(r.end)?Math.abs(r.end-reference[r.line-1].end):NaN);
     const endMeanAbs=ends.every(Number.isFinite)?ends.reduce((s,e)=>s+e,0)/ends.length:null;
@@ -59,3 +61,4 @@ try{
   }
  }
 }finally{await browser.close();await writeFile(resolve(output,'summary.json'),JSON.stringify({manifest,results},null,2));console.log('OUTPUT '+output);}
+if(results.some(result=>!result.acceptance?.pass))process.exitCode=1;

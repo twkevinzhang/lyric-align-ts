@@ -12,9 +12,24 @@ export async function transcribeAudio(engine, audio, language) {
   w.tiktoken = engine.whisper.tiktoken;
   w.audioWindowSeconds = 30;
   w.getTextStartTokens(language, 'transcribe', false);
-  if (m._poc_set_time_scale(1) || m._poc_set_vocab_subset(0, 0)) throw Error('Could not enable unrestricted ASR');
-  const segments = [];
+  const segments = [],restore=[];
+  function set(name,value,previous){
+    if(typeof m[name]!=='function')return; // Original ten-second ABI lacks fast flags.
+    if(m[name](value))throw Error(`ASR configuration failed: ${name}`);
+    restore.push(()=>{if(m[name](previous))throw Error(`ASR configuration restore failed: ${name}`);});
+  }
   try {
+    if(m._poc_set_time_scale(1))throw Error('Could not enable unrestricted ASR');
+    restore.push(()=>{
+      const scale=engine.config.timeScale;
+      const result=Number.isInteger(scale)?m._poc_set_time_scale(scale):m._poc_set_time_scale_fraction?.(Math.round(scale*1000),1000);
+      if(result!==0)throw Error('Could not restore native time scale');
+    });
+    set('_poc_set_alignment_only',0,engine.config.alignmentOnly?1:0);
+    set('_poc_set_audio_context',1500,engine.config.audioContext??1500);
+    set('_poc_set_attention_quant',0,engine.config.attentionQuant===true?2:engine.config.attentionQuant||0);
+    set('_poc_set_vector_activations',0,engine.config.vectorActivations?1:0);
+    if(m._poc_set_vocab_subset(0,0))throw Error('Could not enable unrestricted vocabulary');
     w.context = nativeContext(m, audio, audio, undefined, 1);
     await w.recognize({audioChannels:[audio], sampleRate:16000}, 'transcribe', language, {
       model:'tiny', threadCount:engine.threads, timestampAccuracy:'medium',
@@ -32,6 +47,8 @@ export async function transcribeAudio(engine, audio, language) {
     });
     return segments;
   } finally {
-    if (m._poc_set_time_scale(engine.config.timeScale)) throw Error('Could not restore native time scale');
+    let failure;
+    for(const reset of restore.reverse())try{reset();}catch(error){failure??=error;}
+    if(failure)throw failure;
   }
 }
