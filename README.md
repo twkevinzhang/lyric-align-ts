@@ -149,7 +149,7 @@ SDK 的 metrics.initializationSeconds 包含建立 Worker、模型／WASM／toke
 | SUNEO-ISM | 3.150／2.688／2.691 | 3.150 | 12/125 | 0.970 | 1.218 |
 | 春泥棒 | 2.218／2.205／2.304 | 2.304 | 5/56 | 0.277 | 1.517 |
 
-最新逐次數字、來源／模型雜湊及重現資訊見 [效能報告](docs/three-second-alignment-report.md)。十秒基準此次為 8/9 通過，最慢 12.617 秒；兩個保留相同 API 的切換點與重建防護見 [實作相容性](docs/implementation-compatibility.md)。
+最新逐次數字、來源／模型雜湊及重現資訊見 [效能報告](docs/three-second-alignment-report.md)。十秒切換點來回重建後為 9/9 通過，最慢 9.491 秒；兩個保留相同 API 的切換點與重建防護見 [實作相容性](docs/implementation-compatibility.md)。
 
 句尾可能提早或延伸進停頓，開場句與零長度 cues 仍須檢查；通過平均句首門檻不能取代完整字幕聽校。三秒聲明只適用這個已知歌詞引導路徑，session 自由 ASR 的三首全曲仍未全行匹配。其他曲目、硬體與瀏覽器不宣稱同樣速度或品質。
 

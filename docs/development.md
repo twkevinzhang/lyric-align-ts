@@ -30,7 +30,7 @@ session 入口另外產出 dist/binding.js 與契約型別；真實 ASR、整首
 
 Git 不會切換被忽略的 dist/ 與 .local/。切換 commit 後執行 `pnpm install --frozen-lockfile`、`pnpm run build:native`、`pnpm run build`，再執行相同的 typecheck／test／test:contract／test:package。原生來源及 parity.js／parity.wasm 有 build-proof 指紋，build 拒絕另一版的殘留原生資產；pack 也會拒絕與目前來源不同或混用的 dist。NATIVE_BUILD_DIR 僅接受來源及二進位指紋均相符的建置。
 
-build:native 會清除自身 CMakeCache.txt，避免前一個 commit 的實驗選項殘留；不刪除其他檔案。自由 ASR 進入時關閉 alignment-only 與快速近似、使用完整 1500-frame context，退出時還原整數／小數時間尺度及原本的快速設定。這些防護不表示任意歷史 commit 都已具有 session API。
+build:native 會清除自身 CMakeCache.txt，並在 .local/native 的依賴 repo 從 pinned commit 還原受追蹤來源，再生成本版 patch；保留未追蹤檔案。自由 ASR 進入時關閉 alignment-only、attention quantization 與 vector activations，使用完整 1500-frame context，退出時還原整數／小數時間尺度及原本設定。group 預打包權重保留。這些防護不表示任意歷史 commit 都已具有 session API；已完成的兩版切換驗證見 [實作相容性](implementation-compatibility.md)。
 
 本機已有可信的 WASM 建置時，可明示設定 NATIVE_BUILD_DIR 供 build 使用；不能以此宣稱重新編譯已通過。build 會清理專案內的 dist/，不修改模型或測試輸入。
 

@@ -7,11 +7,11 @@ import {chromium} from 'playwright';
 import {staticServer} from './static-server.mjs';
 import {parseSrt} from '../src/subtitles.ts';
 import {scoreCues} from '../src/core/cue-score.mjs';
-import {acceptance} from '../src/core/acceptance.mjs';
+import {acceptance,DEFAULT_MAXIMUM_SECONDS} from '../src/core/acceptance.mjs';
 
 const root=resolve(import.meta.dirname,'..');
 const config=JSON.parse(await readFile(process.argv[2],'utf8'));
-const maximumSeconds=config.maximumSeconds??3;
+const maximumSeconds=config.maximumSeconds??DEFAULT_MAXIMUM_SECONDS;
 if(![3,10].includes(maximumSeconds))throw Error('maximumSeconds must be 3 or 10');
 for(const variant of config.variants??[{id:'production'}])if(!/^[a-z0-9-]+$/.test(variant.id))throw Error('Invalid variant id: '+variant.id);
 const output=resolve(root,'.local/three-second',`${Date.now()}-${config.label??'run'}`);

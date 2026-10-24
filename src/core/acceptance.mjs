@@ -1,4 +1,5 @@
-export function acceptance(seconds, rows, maximumSeconds=3) {
+export const DEFAULT_MAXIMUM_SECONDS=3;
+export function acceptance(seconds, rows, maximumSeconds=DEFAULT_MAXIMUM_SECONDS) {
   const timePass=Number.isFinite(seconds)&&seconds>=0&&Number.isFinite(maximumSeconds)&&maximumSeconds>=0&&seconds<=maximumSeconds;
   const sorted=rows.map((r,index)=>({line:r.line??index+1,
     error:r.usable&&Number.isFinite(r.startError)?Math.abs(r.startError):null,

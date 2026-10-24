@@ -65,3 +65,5 @@ node scripts/test-consumer-contract.mjs /path/to/yt-subtitle
 ```
 
 fixtures.json 接受 `{ "songs": [{ "id": "song", "audio": "/absolute/song.wav", "lyrics": "/absolute/lyrics.txt", "language": "en" }] }`；lyrics 亦可為 SRT，原時間不作推論輸入。harness 的全曲斷言只證明契約／範圍安全，逐首 matched 數需另判定可用性。測試 server 由 finally 關閉；詳細 JSON 放於忽略的 `.local/contract/`。consumer harness 僅讀取外部 checkout，使用本機固定模型回應其模型下載。
+
+兩版完整歌曲的保留輸出分別為 `.local/compatibility/ten-second/browser.json`、`.local/compatibility/three-second/browser.json`；之後單獨執行 smoke test 可能更新 `.local/contract/browser.json`，不將 smoke 空清單當成全曲結果。
