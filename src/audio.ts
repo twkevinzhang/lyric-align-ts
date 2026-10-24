@@ -35,7 +35,31 @@ async function fromBuffer(buffer: AudioBuffer, signal?: AbortSignal): Promise<Fl
   const rendered = await abortable(context.startRendering(), signal);
   return validate(rendered.getChannelData(0));
 }
-/** File/Blob decoding uses the browser codecs; PCM input is copied, never detached. */
+function pcmWav16000(bytes: ArrayBuffer): Float32Array | undefined {
+  if(bytes.byteLength<12)return;
+  const v=new DataView(bytes),tag=(at:number,s:string)=>[...s].every((c,i)=>v.getUint8(at+i)===c.charCodeAt(0));
+  if(!tag(0,'RIFF')||!tag(8,'WAVE'))return;
+  const end=v.getUint32(4,true)+8;if(end>bytes.byteLength||end<12)return;
+  let format=false,data=-1,length=0;
+  for(let at=12;at<end;){
+    if(at+8>end)return;
+    const size=v.getUint32(at+4,true),start=at+8,next=start+size+(size%2);
+    if(next>end)return;
+    if(tag(at,'fmt ')){
+      if(size<16)return;
+      format=v.getUint16(start,true)===1&&v.getUint16(start+2,true)===1&&v.getUint32(start+4,true)===16000&&v.getUint32(start+8,true)===32000&&v.getUint16(start+12,true)===2&&v.getUint16(start+14,true)===16;
+      if(!format)return;
+    }else if(tag(at,'data')){if(data>=0)return;data=start;length=size;}
+    at=next;
+  }
+  if(!format||data<0||!length||length%2)return;
+  const pcm=new Float32Array(length/2);
+  // Match the browser's asymmetric signed-PCM normalization, including both full-scale endpoints.
+  const positiveScale=Math.fround(1/32767);
+  for(let i=0;i<pcm.length;i++){const sample=v.getInt16(data+i*2,true);pcm[i]=sample*(sample<0?1/32768:positiveScale);}
+  return pcm;
+}
+/** Known PCM WAV is decoded directly; other files use browser codecs. Caller PCM is copied. */
 export async function prepareAudio(audio: AudioInput, signal?: AbortSignal): Promise<Float32Array> {
   signal?.throwIfAborted();
   if (audio && typeof audio === 'object' && 'samples' in audio) {
@@ -44,6 +68,9 @@ export async function prepareAudio(audio: AudioInput, signal?: AbortSignal): Pro
   }
   if (audio && typeof audio === 'object' && 'getChannelData' in audio) return fromBuffer(audio as AudioBuffer, signal);
   if (typeof Blob !== 'undefined' && audio instanceof Blob) {
+    const bytes = await abortable(audio.arrayBuffer(), signal);
+    signal?.throwIfAborted();
+    const pcm=pcmWav16000(bytes);if(pcm)return pcm;
     if (typeof AudioContext === 'undefined') throw new Error('Decoding files requires Web Audio AudioContext');
     const context = new AudioContext({ sampleRate: 16000 });
     let closing: Promise<void> | undefined;
@@ -51,7 +78,6 @@ export async function prepareAudio(audio: AudioInput, signal?: AbortSignal): Pro
     const abort = () => { void close(); };
     signal?.addEventListener('abort', abort, { once: true });
     try {
-      const bytes = await abortable(audio.arrayBuffer(), signal);
       const buffer = await abortable(context.decodeAudioData(bytes), signal);
       return await fromBuffer(buffer, signal);
     } finally { signal?.removeEventListener('abort', abort); await close(); }

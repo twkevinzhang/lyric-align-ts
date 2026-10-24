@@ -3,39 +3,93 @@
 #endif
 #include "vec.h"
 #include "quants.h"
+#include "ggml-quants.h"
 #include <cstdio>
 #include <cstring>
 #include <initializer_list>
 #include <cmath>
+#include <vector>
 #ifdef POC_WEIGHT_CACHE_TEST
 #include "ggml-backend.h"
 extern "C" void poc_compact_cache_clear();
 extern "C" size_t poc_compact_cache_size();
-static bool testWeightCache(){
- const int n=64,rows=17;
+extern "C" int poc_compact_cache_add(const struct ggml_tensor*);
+extern "C" int poc_group_cache_add(const struct ggml_tensor*);
+extern "C" int poc_set_attention_quant(int);
+static bool testVectorActivations(){
+ if(poc_set_vector_activations(1))return false;
+ for(int base=0;base<82000;base+=4){float x[4],out[4];for(int j=0;j<4;j++)x[j]=-(base+j)*.001f;wasm_v128_store(out,poc_exp_negative(wasm_v128_load(x)));for(int j=0;j<4;j++){const float expected=expf(x[j]);if(std::fabs(out[j]-expected)>2e-6f*expected+2e-35f)return false;}}
+ for(int n:{1,3,4,65,1537}){
+  std::vector<float>x(n),y(n);for(int i=0;i<n;i++)x[i]=sinf(i*.13f)*12;
+  ggml_vec_gelu_f32(n,y.data(),x.data());for(int i=0;i<n;i++){const float expected=ggml_gelu_f32(x[i]);if(std::fabs(expected-y[i])>2e-6f*(1+std::fabs(expected)))return false;}
+  for(int i=1;i<n;i++)if(i%17==0)x[i]=-INFINITY;
+  float max=-INFINITY;for(float v:x)max=std::fmax(max,v);
+  const double sum=ggml_vec_soft_max_f32(n,y.data(),x.data(),max);double expectedSum=0;
+  for(int i=0;i<n;i++){const float expected=expf(x[i]-max);expectedSum+=expected;if(std::fabs(expected-y[i])>2e-6f*expected+2e-35f)return false;}
+  if(std::fabs(sum-expectedSum)>1e-5*expectedSum)return false;
+ }
+ return poc_set_vector_activations(0)==0;
+}
+static bool testQuantAttention(int mode=2){
+ if(poc_set_attention_quant(mode))return false;
+ for(const int k:{64,65,1500})for(const int cols:{7,65}){
+  const int rows=5,batches=2;
+  ggml_init_params ip={4*1024*1024,nullptr,false};auto *ctx=ggml_init(ip);
+  auto *a=ggml_new_tensor_3d(ctx,GGML_TYPE_F16,k,rows,1),*b=ggml_new_tensor_3d(ctx,GGML_TYPE_F32,k,cols,batches);
+  for(int i=0;i<k*rows;i++)((ggml_fp16_t*)a->data)[i]=ggml_fp32_to_fp16(((i*17)%107-53)*.013f);
+  for(int i=0;i<k*cols*batches;i++)((float*)b->data)[i]=((i*23)%113-56)*.017f;
+  const int width=k;
+  auto quant=[width](std::vector<float> x,float limit){for(size_t block=0;block<x.size();block+=width){float peak=0;for(size_t i=block;i<x.size()&&i<block+width;i++)peak=std::fmax(peak,std::fabs(x[i]));float d=peak/limit;for(size_t i=block;i<x.size()&&i<block+width;i++)x[i]=d?std::round(x[i]*(1/d))*d:0;}return x;};
+  auto *c=ggml_mul_mat(ctx,a,b);auto *gf=ggml_new_graph(ctx);ggml_build_forward_expand(gf,c);
+  for(const int threads:{1,6}){
+   if(ggml_graph_compute_with_ctx(ctx,gf,threads)!=GGML_STATUS_SUCCESS)return false;
+   for(int col=0;col<cols*batches;col++)for(int row=0;row<rows;row++){
+    std::vector<float>x(k),y(k);for(int j=0;j<k;j++){x[j]=ggml_fp16_to_fp32(((ggml_fp16_t*)a->data)[row*k+j]);y[j]=((float*)b->data)[col*k+j];}
+    const auto qx=quant(x,63),qy=quant(y,127);double expected=0,original=0,bound=0;
+    for(int j=0;j<k;j++){expected+=double(qx[j])*qy[j];original+=double(x[j])*y[j];bound+=std::fabs(double(x[j]-qx[j])*y[j])+std::fabs(double(qx[j])*(y[j]-qy[j]));}
+    const float actual=((float*)c->data)[col*rows+row];const double tolerance=.001+.001*std::fabs(expected);
+    if(!std::isfinite(actual)||std::fabs(actual-expected)>tolerance||std::fabs(actual-original)>bound+tolerance){printf("quant attention mismatch k%d col%d row%d: %.8f vs %.8f\n",k,col,row,actual,expected);return false;}
+   }
+  }
+  ggml_free(ctx);
+ }
+ return poc_set_attention_quant(0)==0;
+}
+static bool testWeightCache(int mode=0,int n=64){
+ const int rows=17;
  ggml_init_params ip={4*1024*1024,nullptr,false};auto *ctx=ggml_init(ip);
  auto *a=ggml_new_tensor_2d(ctx,GGML_TYPE_Q5_1,n,rows);
- auto *b=ggml_new_tensor_2d(ctx,GGML_TYPE_F32,n,1);
+ auto *b=ggml_new_tensor_2d(ctx,GGML_TYPE_F32,n,65);
  auto buffer=ggml_backend_buft_alloc_buffer(ggml_backend_cpu_buffer_type(),ggml_nbytes(a));
  a->data=nullptr; // Replace the unused arena allocation with a marked weight buffer.
  ggml_backend_tensor_alloc(buffer,a,ggml_backend_buffer_get_base(buffer));
  ggml_backend_buffer_set_usage(buffer,GGML_BACKEND_BUFFER_USAGE_WEIGHTS);
  auto *c=ggml_mul_mat(ctx,a,b);auto *gf=ggml_new_graph(ctx);ggml_build_forward_expand(gf,c);
- float values[n];block_q8_1 quantized[n/32];
+ std::vector<float> values(n);std::vector<block_q8_1> quantized(n/32);
  for(int generation=0;generation<2;generation++){
   poc_compact_cache_clear();if(poc_compact_cache_size()!=0)return false;
   for(int row=0;row<rows;row++){
    for(int j=0;j<n;j++)values[j]=((row*19+j*7+generation*31)%101-50)*0.0317f;
-   quantize_row_q5_1(values,(char*)a->data+row*a->nb[1],n);
+   quantize_row_q5_1(values.data(),(char*)a->data+row*a->nb[1],n);
   }
+  if((mode==2?poc_group_cache_add(a):poc_compact_cache_add(a))!=1)return false;
   size_t cacheBytes=0;
   for(int pass=0;pass<3;pass++){
-   for(int j=0;j<n;j++)((float*)b->data)[j]=((j*13+pass*7)%53-26)*0.071f;
+   for(int j=0;j<n*65;j++)((float*)b->data)[j]=((j*13+pass*7)%53-26)*0.071f;
    if(ggml_graph_compute_with_ctx(ctx,gf,6)!=GGML_STATUS_SUCCESS)return false;
-   quantize_row_q8_1((float*)b->data,quantized,n);
-   for(int row=0;row<rows;row++){
-    float expected;ggml_vec_dot_q5_1_q8_1(n,&expected,0,(char*)a->data+row*a->nb[1],0,quantized,0,1);
-    if(std::fabs(expected-((float*)c->data)[row])>0.001+0.001*std::fabs(expected))return false;
+   for(int col=0;col<65;col++){
+    quantize_row_q8_1((float*)b->data+col*n,quantized.data(),n);
+    for(int row=0;row<rows;row++){
+     float expected;
+     if(mode==2){
+      dequantize_row_q5_1((block_q5_1*)((char*)a->data+row*a->nb[1]),values.data(),n);double sum=0;
+      for(int block=0;block<n;block+=n){float peakA=0,peakB=0;for(int j=block;j<n&&j<block+n;j++){peakA=std::fmax(peakA,std::fabs(values[j]));peakB=std::fmax(peakB,std::fabs(((float*)b->data)[col*n+j]));}const float da=peakA/63,db=peakB/127;
+       for(int j=block;j<n&&j<block+n;j++){float x=values[j],y=((float*)b->data)[col*n+j];if(mode==2){x=da?std::round(x*(1/da))*da:0;y=db?std::round(y*(1/db))*db:0;}sum+=double(x)*y;}
+      }expected=sum;
+     }
+     else ggml_vec_dot_q5_1_q8_1(n,&expected,0,(char*)a->data+row*a->nb[1],0,quantized.data(),0,1);
+     if(std::fabs(expected-((float*)c->data)[col*rows+row])>0.001+0.001*std::fabs(expected))return false;
+    }
    }
    if(!poc_compact_cache_size()||(pass&&cacheBytes!=poc_compact_cache_size()))return false;
    cacheBytes=poc_compact_cache_size();
@@ -73,6 +127,12 @@ int main(){
 #ifdef POC_WEIGHT_CACHE_TEST
  if(!testWeightCache()){puts("FAIL immutable weight cache reuse/reset");return 12;}
  puts("PASS immutable weight cache reuse, changing activations and model reset");
+ for(int k:{64,384,1536})if(!testWeightCache(2,k)){puts("FAIL grouped integer model cache reference");return 15;}
+ puts("PASS grouped Q7/Q8 model cache versus scalar reference, multiple groups and changing activations");
+ if(!testQuantAttention()){puts("FAIL quantized attention reference/bound");return 13;}
+ puts("PASS rowwise attention versus scalar Q7/Q8, bounded float error, partial blocks, odd edges and broadcast");
+ if(!testVectorActivations()){puts("FAIL SIMD activation accuracy");return 17;}
+ puts("PASS SIMD exp/GELU/softmax accuracy, masked infinities and odd tails");
 #endif
 #ifdef POC_QTILE_BYTE
  for(int q=0;q<32;q++)for(int v=-128;v<128;v++) {

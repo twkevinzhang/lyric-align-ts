@@ -21,11 +21,15 @@ test('source preparation reproduces the verified fast kernel and is idempotent',
  const prepare=()=>execFileSync(process.execPath,['scripts/native/prepare.mjs'],{cwd:root,stdio:'pipe'});
  const hash=s=>createHash('sha256').update(s).digest('hex');
  prepare();
- const cpu=await read('.local/native/source-timescale/ggml/src/ggml-cpu/ggml-cpu.c');
- assert.equal(hash(cpu),'9776e3eb13dcd2a0cbf95d5ae14d7649622f78354159d7de8ca62b32eabc76c0');
- const whisper=await read('.local/native/source-timescale/src/whisper.cpp');
- assert.equal(hash(whisper),'aeaba06e0f84a6c7115d7c0459b373ff0f877a8f3c764fa0c25324608acc3f6d');
+ const expected={
+  "src/whisper.cpp": "ada92e7bd80eb89f189812662cdf4ed75891451e17147493f827a48cc245471d",
+  "ggml/src/ggml-cpu/ggml-cpu.c": "a4ac998a4a4fe18535c02cea8554638b1213e14e17ffdbc7f0b01a682f244271",
+  "ggml/src/ggml-cpu/vec.h": "9eafbc6f8a34ba59cbcd51ec84151c2f09c7a3ef90ebd20e3284f65fc98f4481",
+  "ggml/src/ggml-cpu/vec.cpp": "a3cdfc079f6e1bf2fe341e494697d8f2eae42c187dee05e0ba85f597cfa7bdc1"
+};
+ const snapshots={};
+ for(const [file,digest] of Object.entries(expected)){const content=await read('.local/native/source-timescale/'+file);assert.equal(hash(content),digest,file);snapshots[file]=content;}
  prepare();
- assert.equal(await read('.local/native/source-timescale/src/whisper.cpp'),whisper);
- assert.equal(await read('.local/native/source-timescale/ggml/src/ggml-cpu/ggml-cpu.c'),cpu);
+ for(const [file,content] of Object.entries(snapshots))assert.equal(await read('.local/native/source-timescale/'+file),content,file);
+
 });

@@ -1,5 +1,6 @@
 // 4x4 outer-product experiment. F16 rounding is preserved; summation order changes.
 #if defined(__wasm_simd128__)
+#define POC_TILE_FMA(a,b,c) wasm_f32x4_relaxed_madd(b,c,a)
 static size_t poc_pack_size(const struct ggml_tensor *a,const struct ggml_tensor *b) {
     if(a->type!=GGML_TYPE_F16 || (b->type!=GGML_TYPE_F16 && b->type!=GGML_TYPE_F32) || b->ne[1]<64)return 0;
     int64_t count=((a->ne[1]+3)/4)*4*a->ne[0]*a->ne[2]*a->ne[3]+ggml_nelements(b);
@@ -39,12 +40,12 @@ static bool poc_packed_matmul(const struct ggml_compute_params *p,struct ggml_te
         int64_t j=0;
         for(;j+1<k;j+=2) {
             v128_t v=wasm_v128_load(x+j*4),w=wasm_v128_load(x+(j+1)*4);
-            s0=GGML_F32_VEC_FMA(s0,v,wasm_f32x4_splat(y0[j]));t0=GGML_F32_VEC_FMA(t0,w,wasm_f32x4_splat(y0[j+1]));
-            s1=GGML_F32_VEC_FMA(s1,v,wasm_f32x4_splat(y1[j]));t1=GGML_F32_VEC_FMA(t1,w,wasm_f32x4_splat(y1[j+1]));
-            s2=GGML_F32_VEC_FMA(s2,v,wasm_f32x4_splat(y2[j]));t2=GGML_F32_VEC_FMA(t2,w,wasm_f32x4_splat(y2[j+1]));
-            s3=GGML_F32_VEC_FMA(s3,v,wasm_f32x4_splat(y3[j]));t3=GGML_F32_VEC_FMA(t3,w,wasm_f32x4_splat(y3[j+1]));
+            s0=POC_TILE_FMA(s0,v,wasm_f32x4_splat(y0[j]));t0=POC_TILE_FMA(t0,w,wasm_f32x4_splat(y0[j+1]));
+            s1=POC_TILE_FMA(s1,v,wasm_f32x4_splat(y1[j]));t1=POC_TILE_FMA(t1,w,wasm_f32x4_splat(y1[j+1]));
+            s2=POC_TILE_FMA(s2,v,wasm_f32x4_splat(y2[j]));t2=POC_TILE_FMA(t2,w,wasm_f32x4_splat(y2[j+1]));
+            s3=POC_TILE_FMA(s3,v,wasm_f32x4_splat(y3[j]));t3=POC_TILE_FMA(t3,w,wasm_f32x4_splat(y3[j+1]));
         }
-        if(j<k){v128_t v=wasm_v128_load(x+j*4);s0=GGML_F32_VEC_FMA(s0,v,wasm_f32x4_splat(y0[j]));s1=GGML_F32_VEC_FMA(s1,v,wasm_f32x4_splat(y1[j]));s2=GGML_F32_VEC_FMA(s2,v,wasm_f32x4_splat(y2[j]));s3=GGML_F32_VEC_FMA(s3,v,wasm_f32x4_splat(y3[j]));}
+        if(j<k){v128_t v=wasm_v128_load(x+j*4);s0=POC_TILE_FMA(s0,v,wasm_f32x4_splat(y0[j]));s1=POC_TILE_FMA(s1,v,wasm_f32x4_splat(y1[j]));s2=POC_TILE_FMA(s2,v,wasm_f32x4_splat(y2[j]));s3=POC_TILE_FMA(s3,v,wasm_f32x4_splat(y3[j]));}
         float values[16];wasm_v128_store(values,wasm_f32x4_add(s0,t0));wasm_v128_store(values+4,wasm_f32x4_add(s1,t1));wasm_v128_store(values+8,wasm_f32x4_add(s2,t2));wasm_v128_store(values+12,wasm_f32x4_add(s3,t3));
         for(int col=0;col<4 && tj*4+col<n;col++) {
             float *out=(float *)((char *)dst->data+i3*dst->nb[3]+i2*dst->nb[2]+(tj*4+col)*dst->nb[1]);
