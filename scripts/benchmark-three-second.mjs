@@ -13,6 +13,7 @@ const root=resolve(import.meta.dirname,'..');
 const config=JSON.parse(await readFile(process.argv[2],'utf8'));
 const maximumSeconds=config.maximumSeconds??DEFAULT_MAXIMUM_SECONDS;
 if(![3,10].includes(maximumSeconds))throw Error('maximumSeconds must be 3 or 10');
+config.maximumSeconds=maximumSeconds;
 for(const variant of config.variants??[{id:'production'}])if(!/^[a-z0-9-]+$/.test(variant.id))throw Error('Invalid variant id: '+variant.id);
 const output=resolve(root,'.local/three-second',`${Date.now()}-${config.label??'run'}`);
 await mkdir(output,{recursive:true});

@@ -4,12 +4,14 @@
 
 | 切換點 | 實作來源 | 完整單元／來源測試 | 歌詞引導效能驗收 |
 |---|---|---:|---|
-| codex/yt-subtitle-ten-second | 2f55135 | 72/72 | 9/9 ≤10 秒，最慢 9.491210 秒 |
-| codex/yt-subtitle-three-second | 06e4fae 合併 cpp，後續僅更新文件 | 83/83 | 8/9 ≤3 秒，最慢 3.149730 秒 |
+| codex/yt-subtitle-ten-second | 0a44473，驗收預設 10 秒 | 72/72 | 9/9 ≤10 秒，最慢 9.491210 秒 |
+| codex/yt-subtitle-three-second | 保留 06e4fae 合併 cpp 的推論產物，驗收預設 3 秒 | 83/83 | 8/9 ≤3 秒，最慢 3.149730 秒 |
 
 兩版的 src/contract.ts、src/binding.ts、src/types.ts、src/index.ts、src/model.ts、package.json 與 lockfile 保持一致；固定相同 tiny Q5_1、語言能力、session API、選項、秒數、取消／錯誤與原文保留契約。三秒版只改內部歌詞引導引擎與相關原生 ABI，不把自由 ASR 改成強制歌詞解碼。
 
 十秒／三秒指已知歌詞的 createAligner 路徑及對應效能驗收門檻，不表示每次實測必定達標，也不表示 session 自由 ASR 全曲能在三秒內完成。session 全曲驗收仍要求所有必要行匹配，不能套用歌詞引導測試的10%排除額度。
+
+驗收 helper 與 benchmark 預設門檻隨分支切換：十秒版 10 秒、三秒版 3 秒。maximumSeconds 可顯式覆寫為 3 或 10，manifest 會記錄實際門檻。這個 helper 不屬於 npm 公開 API；相同呼叫端不需要改碼，亦不改變已量測的 JS／WASM。新的預設門檻對既有九次各版本測量與顯式指定門檻等值。
 
 ## 切換流程
 
