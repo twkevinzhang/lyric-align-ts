@@ -7,3 +7,4 @@
 /.superpowers/
 *.tgz
 /coverage/
+outputs
