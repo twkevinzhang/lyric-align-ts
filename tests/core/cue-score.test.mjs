@@ -1,4 +1,4 @@
-import {test} from 'node:test';import assert from 'node:assert/strict';import {scoreCues} from '../../src/core/cue-score.mjs';
+import {test} from 'node:test';import assert from 'node:assert/strict';import {scoreCues,scorePublicCues} from '../../src/core/cue-score.mjs';
 test('exact normalized repeated Unicode text retains each cue boundary and missing-confidence failure',()=>{
  const run={audioSeconds:10,timeline:[{text:'春',startTime:1,endTime:2},{text:'泥棒',startTime:2,endTime:3},{text:'春泥棒',startTime:6,endTime:7,confidence:0}]};
  const scored=scoreCues(run,[{text:'春、泥棒',start:1},{text:'春泥棒',start:6}]);
@@ -22,4 +22,9 @@ test('reference timestamps do not influence text pairing',()=>{
  const a=scoreCues(run,[{text:'aa',start:1},{text:'bb',start:4},{text:'cc',start:6}]);
  const b=scoreCues(run,[{text:'aa',start:8},{text:'bb',start:2},{text:'cc',start:0}]);
  assert.deepEqual(a.rows.map(r=>[r.start,r.usable]),b.rows.map(r=>[r.start,r.usable]));
+});
+test('public cue scoring follows returned sentence endpoints and preserves missing text failures',()=>{
+ const result={audioSeconds:4,cues:[{text:'hello',start:1,end:2,matched:true},{text:'world',start:3,end:4,matched:false}]};
+ const score=scorePublicCues(result,[{text:'hello',start:1,end:2},{text:'world',start:3,end:4}]);
+ assert.equal(score.rows[0].end,2);assert.equal(score.rows[0].usable,true);assert.equal(score.rows[1].usable,false);
 });

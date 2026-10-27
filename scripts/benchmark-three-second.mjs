@@ -20,9 +20,6 @@ const output=resolve(root,'.local/three-second',`${Date.now()}-${config.label??'
 await mkdir(output,{recursive:true});
 const hash=b=>createHash('sha256').update(b).digest('hex');
 const hashes={};
-const voiceFiles=(config.variants??[]).some(v=>v.engine?.voiceModuleUrl)?{'/research/ten_vad.js':resolve(root,'.local/ten-vad/ten_vad.js'),'/research/ten_vad.wasm':resolve(root,'.local/ten-vad/ten_vad.wasm')}:{};
-if((config.variants??[]).some(v=>v.engine?.voiceModuleUrl==='/research/simd/ten_vad.js'))Object.assign(voiceFiles,{'/research/simd/ten_vad.js':resolve(root,'.local/ten-vad-simd/ten_vad.js'),'/research/simd/ten_vad.wasm':resolve(root,'.local/ten-vad-simd/ten_vad.wasm')});
-for(const file of Object.values(voiceFiles))hashes[file]=hash(await readFile(file));
 async function hashTree(path){for(const entry of await readdir(resolve(root,path),{withFileTypes:true})){const child=path+'/'+entry.name;if(entry.isDirectory())await hashTree(child);else hashes[child]=hash(await readFile(resolve(root,child)));}}
 for(const dir of ['src','native','scripts','vendor'])await hashTree(dir);
 for(const file of ['dist/index.js','dist/worker.js','dist/assets/parity.wasm','dist/assets/parity.js','.local/native/ggml-tiny-q5_1.bin','.local/native/source-timescale/src/whisper.cpp','.local/native/source-timescale/ggml/src/ggml-cpu/ggml-cpu.c','.local/native/source-timescale/ggml/src/ggml-cpu/vec.h','.local/native/source-timescale/ggml/src/ggml-cpu/vec.cpp'])hashes[file]=hash(await readFile(resolve(root,file)));
@@ -38,10 +35,8 @@ try{
  for(const variant of config.variants??[{id:'production',threads:8}]){
   let workerPath;
   if(variant.engine){workerPath=resolve(output,variant.id+'.js');await build({entryPoints:[resolve(root,'src/worker.ts')],bundle:true,platform:'browser',target:['es2022'],format:'iife',outfile:workerPath,define:{__ALIGN_EXPERIMENT__:JSON.stringify(variant.engine)}});}
-  let voiceWorkerPath;
-  if(variant.engine?.voiceWorkerUrl){voiceWorkerPath=resolve(output,variant.id+'-voice.js');await build({entryPoints:[resolve(root,'src/engine/voice-worker.mjs')],bundle:true,platform:'browser',target:['es2022'],format:'iife',outfile:voiceWorkerPath});}
   for(let trial=1;trial<=(config.trials??1);trial++)for(const song of config.songs){
-   const server=await staticServer({root,files:{...voiceFiles,...(voiceWorkerPath?{[variant.engine.voiceWorkerUrl]:voiceWorkerPath}:{}),'/model.bin':model,'/audio':resolve(song.audio),'/lyrics':resolve(song.lyrics),...(workerPath?{'/experiment-worker.js':workerPath}:{})}});
+   const server=await staticServer({root,files:{'/model.bin':model,'/audio':resolve(song.audio),'/lyrics':resolve(song.lyrics),...(workerPath?{'/experiment-worker.js':workerPath}:{})}});
    const page=await browser.newPage();let timer;const load=[],runtimeErrors=[];let previous=cpuSnapshot();
    page.on('console',message=>{if(message.type()==='error')runtimeErrors.push(message.text());});
    try{

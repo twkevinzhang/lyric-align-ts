@@ -95,5 +95,6 @@ pnpm run test:package
 - 更動 C++／JS bridge 時同步檢查 `_poc_*` ABI、native exports 與 `src/engine/native-context.mjs` 等呼叫端。
 - 上游依賴、模型與 tokenizer 使用固定版本及 SHA-256。修改時同步更新相關來源與驗證，勿繞過 `build-proof`、asset manifest 或 `prepack` 檢查。
 - 修改 vendor 前先閱讀 `vendor/echogarden/PROVENANCE.md`；保留授權與本地差異紀錄，需要時更新 `THIRD_PARTY_NOTICES.md`。
-- 發布範圍由 `package.json` 的 `files` 與 `scripts/test-package.mjs` 驗證。模型權重、測試音訊、快取、研究用 TEN-VAD assets／voice worker 不得混入發布包。
+- VAD 研究路線已退役；相關 runtime、Worker、離線分析與專用測試已移除，benchmark 不再建置或提供其資產。正式 Whisper／attention／DTW 對齊路徑維持不變。
+- 發布範圍由 `package.json` 的 `files` 與 `scripts/test-package.mjs` 驗證。模型權重、測試音訊、快取、研究用資產不得混入發布包。
 - `prepack` 只檢查既有產物，不會自動建置。來源變更後重新建置，以確保來源指紋、bundle、宣告檔與靜態資產一致。
