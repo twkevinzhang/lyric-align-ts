@@ -41,12 +41,12 @@ try{
    page.on('console',message=>{if(message.type()==='error')runtimeErrors.push(message.text());});
    try{
     await page.goto(server.url+'/examples/browser/');
-    await page.evaluate(async({song,variant,experimental})=>{
+    await page.evaluate(async({song,variant,experimental,modelSha256})=>{
      const {createAligner,parseSrt}=await import('/dist/index.js');
      const text=await(await fetch('/lyrics')).text();
      globalThis.benchmarkInput={audio:await(await fetch('/audio')).blob(),lyrics:song.lyrics.endsWith('.srt')?parseSrt(text).map(c=>c.text):text,language:song.language};
-     globalThis.benchmarkAligner=await createAligner({modelUrl:location.origin+'/model.bin',threads:variant.threads??8,...(experimental?{workerUrl:location.origin+'/experiment-worker.js'}:{})});
-    },{song,variant,experimental:!!workerPath});
+     globalThis.benchmarkAligner=await createAligner({modelUrl:location.origin+'/model.bin',threads:variant.threads??8,...(modelSha256?{modelSha256}:{}),...(experimental?{workerUrl:location.origin+'/experiment-worker.js'}:{})});
+    },{song,variant,experimental:!!workerPath,modelSha256:config.model?hash(await readFile(model)):undefined});
     previous=cpuSnapshot();const start=Date.now();
     timer=setInterval(()=>{const current=cpuSnapshot();let idle=0,total=0;for(let i=0;i<current.length;i++){idle+=current[i].idle-previous[i].idle;total+=current[i].total-previous[i].total;}load.push({elapsedMs:Date.now()-start,busyFraction:total?1-idle/total:null});previous=current;},500);
     const result=await page.evaluate(async()=>{const start=performance.now();try{const result=await globalThis.benchmarkAligner.align(globalThis.benchmarkInput);return {...result,outerOperationSeconds:(performance.now()-start)/1000};}finally{globalThis.benchmarkAligner.dispose();}});
