@@ -19,7 +19,7 @@ if(EMSCRIPTEN AND POC_WASM_ARCH)
 endif()
 add_subdirectory(${WHISPER_SOURCE} whisper)
 target_include_directories(whisper PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
-add_executable(parity bridge.cpp runner.cpp)
+add_executable(parity bridge.cpp)
 target_link_libraries(parity PRIVATE whisper)
 if(POC_TIME_SCALE)
   target_compile_definitions(parity PRIVATE POC_TIME_SCALE=1)
@@ -52,10 +52,6 @@ if(POC_UNROLL_TEST)
   target_link_options(unroll_test PRIVATE -pthread "-sENVIRONMENT=node" "-sPTHREAD_POOL_SIZE=${POC_TEST_POOL}" "-sEXIT_RUNTIME=1")
   set_target_properties(unroll_test PROPERTIES SUFFIX ".cjs")
 endif()
-if(POC_TRACE)
-  target_compile_definitions(parity PRIVATE POC_TRACE)
-  target_include_directories(whisper PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
-endif()
 if(EMSCRIPTEN)
   target_compile_definitions(parity PRIVATE POC_MAX_THREADS=${POC_PTHREAD_POOL_SIZE})
   target_compile_options(parity PRIVATE -pthread -msimd128)
@@ -63,7 +59,7 @@ if(EMSCRIPTEN)
     -pthread "-sPTHREAD_POOL_SIZE=${POC_PTHREAD_POOL_SIZE}" "-sPTHREAD_POOL_SIZE_STRICT=2" "-sALLOW_BLOCKING_ON_MAIN_THREAD=0" "-sSTACK_SIZE=5242880"
     "-sMODULARIZE=1" "-sEXPORT_NAME=createWhisperParity" "-sENVIRONMENT=web,worker"
     "-sALLOW_MEMORY_GROWTH=1" "-sINITIAL_MEMORY=536870912" "-sMAXIMUM_MEMORY=2147483648"
-    "-sFORCE_FILESYSTEM=1" "-sINVOKE_RUN=0"
-    "-sEXPORTED_RUNTIME_METHODS=['FS','callMain','ccall','HEAPU8']"
-    "-sEXPORTED_FUNCTIONS=['_main','_malloc','_free','_poc_open','_poc_open_model','_poc_prepack_model','_poc_prepack_group_model','_poc_set_vector_activations','_poc_kernel_profile_reset','_poc_kernel_profile_ms','_poc_set_attention_quant','_poc_close','_poc_encode','_poc_encode_samples','_poc_decode','_poc_set_threads','_poc_get_threads','_poc_set_time_scale','_poc_set_time_scale_fraction','_poc_set_audio_context','_poc_set_encoder_blocks','_poc_set_alignment_only','_poc_set_vocab_subset','_poc_mel_ms','_poc_encoder_ms','_poc_vocab','_poc_logits','_poc_qk_dims','_poc_qk_copy','_poc_trace_begin','_poc_trace_end']")
+    "-sFORCE_FILESYSTEM=1" 
+    "-sEXPORTED_RUNTIME_METHODS=['FS','ccall','HEAPU8']" "--no-entry"
+    "-sEXPORTED_FUNCTIONS=['_malloc','_free','_poc_open_model','_poc_prepack_model','_poc_prepack_group_model','_poc_set_vector_activations','_poc_kernel_profile_reset','_poc_kernel_profile_ms','_poc_set_attention_quant','_poc_close','_poc_encode_samples','_poc_decode','_poc_set_threads','_poc_get_threads','_poc_set_time_scale','_poc_set_time_scale_fraction','_poc_set_audio_context','_poc_set_encoder_blocks','_poc_set_vocab_subset','_poc_mel_ms','_poc_encoder_ms','_poc_vocab','_poc_logits','_poc_qk_dims','_poc_qk_copy']")
 endif()

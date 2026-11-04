@@ -56,12 +56,6 @@ replaceOnce('static void log_mel_spectrogram_worker_thread(', '#include "sparse-
 replaceOnce('    int n_fft = filters.n_fft;', '    int n_fft = filters.n_fft;\n    std::vector<PocMelRange> melRanges(mel.n_mel);\n    for(int j=0;j<mel.n_mel;j++)melRanges[j]=poc_mel_range(filters.data.data()+j*n_fft,n_fft);');
 replaceOnce("            double sum = 0.0;\n            // unroll loop (suggested by GH user @lunixbochs)\n            int k = 0;\n            for (k = 0; k < n_fft - 3; k += 4) {\n                sum +=\n                        fft_out[k + 0] * filters.data[j * n_fft + k + 0] +\n                        fft_out[k + 1] * filters.data[j * n_fft + k + 1] +\n                        fft_out[k + 2] * filters.data[j * n_fft + k + 2] +\n                        fft_out[k + 3] * filters.data[j * n_fft + k + 3];\n            }\n            // handle n_fft remainder\n            for (; k < n_fft; k++) {\n                sum += fft_out[k] * filters.data[j * n_fft + k];\n            }\n",'            double sum = poc_mel_dot(fft_out.data(),filters.data.data()+j*n_fft,n_fft,melRanges[j]);\n');
 replaceOnce('static struct ggml_cgraph * whisper_build_graph_decoder(',`static std::vector<int32_t> poc_vocab_subset;
-static bool poc_alignment_only = false;
-extern "C" int poc_get_alignment_only() { return poc_alignment_only ? 1 : 0; }
-extern "C" int poc_set_alignment_only(int enabled) {
-  if(enabled!=0 && enabled!=1)return -1;
-  poc_alignment_only=enabled!=0;return 0;
-}
 extern "C" int whisper_poc_set_vocab_subset(const int32_t* ids,int count) {
   if(count<0 || count>51865)return -1;
   if(count==0){poc_vocab_subset.clear();return 0;}
@@ -75,9 +69,7 @@ replaceOnce('struct ggml_tensor * logits = ggml_mul_mat(ctx0, model.d_te, cur);'
         ggml_set_name(ids,"poc_vocab_ids");ggml_set_input(ids);
         output_weights=ggml_get_rows(ctx0,model.d_te,ids);
     }
-    struct ggml_tensor * logits = poc_alignment_only && poc_vocab_subset.size()==1 && aheads_cross_QKs != nullptr
-        ? ggml_scale(ctx0, ggml_cont(ctx0, ggml_view_2d(ctx0, aheads_cross_QKs, 1, n_tokens, sizeof(float), 0)), 0.0f)
-        : ggml_mul_mat(ctx0, output_weights, cur);`);
+    struct ggml_tensor * logits = ggml_mul_mat(ctx0, output_weights, cur);`);
 replaceOnce('logits = ggml_graph_node(gf, -1);',`if(!poc_vocab_subset.empty()) {
             auto ids=ggml_graph_get_tensor(gf,"poc_vocab_ids");
             if(ids)ggml_backend_tensor_set(ids,poc_vocab_subset.data(),0,poc_vocab_subset.size()*sizeof(int32_t));
@@ -92,8 +84,6 @@ replaceOnce('ggml_backend_tensor_get(logits, logits_out.data() + (n_vocab*i), si
             for(size_t j=0;j<selected.size();j++)logits_out[n_vocab*i+poc_vocab_subset[j]]=selected[j];
         }`);
 const batchAnchor='whisper_batch_prep_legacy(state->batch, tokens, n_tokens, n_past, 0);';
-replaceOnce('    logits_out.resize(n_tokens*n_vocab);','    if(poc_alignment_only) { logits_out.clear(); } else {\n    logits_out.resize(n_tokens*n_vocab);');
-replaceOnce('    if (batch.n_tokens > 1) {','    } // Optional alignment-only mode has no vocabulary output.\n    if (batch.n_tokens > 1) {');
 if(code.split(batchAnchor).length!==2)throw Error('Ambiguous batch anchor');
 code=code.replace(batchAnchor,batchAnchor+'\n    for (int i=0; i<n_tokens; ++i) state->batch.logits[i]=1;');
 const anchor='int whisper_pcm_to_mel_with_state(';
@@ -118,4 +108,4 @@ extern "C" int whisper_poc_compress_mel_with_state(whisper_state* state,double f
 }
 `+anchor);
 await writeChanged(resolve(src,'src/whisper.cpp'),code);
-await writeFile(resolve(local,'timescale-source.json'),JSON.stringify({commit:lock.commit,cacheEnabled,change:'Fractional mel averaging, exact sparse mel and radix-five FFT, dynamic context, alignment-only graph and no unused vocabulary output',sourceSha256:createHash('sha256').update(code).digest('hex'),cpuSha256:createHash('sha256').update(cpu).digest('hex')},null,2));
+await writeFile(resolve(local,'timescale-source.json'),JSON.stringify({commit:lock.commit,cacheEnabled,change:'Fractional mel averaging, exact sparse mel and radix-five FFT, dynamic context and vocabulary subset output',sourceSha256:createHash('sha256').update(code).digest('hex'),cpuSha256:createHash('sha256').update(cpu).digest('hex')},null,2));

@@ -13,16 +13,11 @@ static double timeScale = 1;
 extern "C" int whisper_poc_compress_mel_with_state(whisper_state*,double);
 extern "C" int whisper_poc_set_vocab_subset(const int32_t*,int);
 extern "C" int whisper_poc_set_audio_context(whisper_state*,int);
-extern "C" int poc_get_alignment_only();
 extern "C" void poc_compact_cache_clear();
 extern "C" int whisper_poc_prepack_model(whisper_context*);
 extern "C" int whisper_poc_prepack_group_model(whisper_context*);
 #endif
 static double melMs = 0, encoderMs = 0;
-#ifdef POC_TRACE
-extern "C" int whisper_poc_trace_begin(const char* directory);
-extern "C" int whisper_poc_trace_end();
-#endif
 extern "C" {
 #ifndef POC_MAX_THREADS
 #define POC_MAX_THREADS 6
@@ -74,20 +69,6 @@ int poc_set_time_scale_fraction(int numerator,int denominator) {
 }
 double poc_mel_ms() { return melMs; }
 double poc_encoder_ms() { return encoderMs; }
-int poc_trace_begin(const char* directory) {
-#ifdef POC_TRACE
-    return whisper_poc_trace_begin(directory);
-#else
-    (void)directory; return -1;
-#endif
-}
-int poc_trace_end() {
-#ifdef POC_TRACE
-    return whisper_poc_trace_end();
-#else
-    return -1;
-#endif
-}
 void poc_close() {
 #ifdef POC_TIME_SCALE
     poc_compact_cache_clear();
@@ -109,12 +90,6 @@ int poc_open_model(const char* model, int modelSize) {
     if (ctx) state = whisper_init_state(ctx);
     if (!state) { poc_close(); return -1; }
     return 0;
-}
-int poc_open(const char* model) { return poc_open_model(model, 2); }
-int poc_encode(const float* mel, int frames, int bins) {
-    if (!state || !mel || frames != 3000 || bins != 80) return -1;
-    int rc = whisper_set_mel_with_state(ctx, state, mel, frames, bins);
-    return rc ? rc : whisper_encode_with_state(ctx, state, 0, threadCount);
 }
 int poc_decode(const int32_t* tokens, int count, int past) {
     if (!state || !tokens || count <= 0 || past < 0 || past + count > whisper_n_text_ctx(ctx)) return -1;
@@ -141,9 +116,6 @@ int poc_vocab() { return ctx ? whisper_n_vocab(ctx) : 0; }
 // Legacy decode requests only the final token's logits, but the buffer retains
 // count * vocabulary elements. Earlier rows are not valid outputs.
 const float* poc_logits() {
-#ifdef POC_TIME_SCALE
-    if (poc_get_alignment_only()) return nullptr;
-#endif
     return state && lastTokenCount > 0 ? whisper_get_logits_from_state(state) + (lastTokenCount - 1) * poc_vocab() : nullptr;
 }
 int poc_qk_dims(int32_t* dims) {

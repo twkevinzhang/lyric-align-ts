@@ -22,7 +22,7 @@ test('source preparation reproduces the verified fast kernel and is idempotent',
  const hash=s=>createHash('sha256').update(s).digest('hex');
  prepare();
  const expected={
-  "src/whisper.cpp": "4555630b7aa1b160ac46ad1272a24b1805aa6f0dcee233ed748dd584da04bc1a",
+  "src/whisper.cpp": "a239ee7338725eee20b1fcb2aca678c0364506652e8464d9cb1f6fd1aa70b46a",
   "ggml/src/ggml-cpu/ggml-cpu.c": "ab0ea6a0c60297880d995284c63cfeb233f207368a5e6595a79ac01d1c0e4b0d",
   "ggml/src/ggml-cpu/vec.h": "9eafbc6f8a34ba59cbcd51ec84151c2f09c7a3ef90ebd20e3284f65fc98f4481",
   "ggml/src/ggml-cpu/vec.cpp": "a3cdfc079f6e1bf2fe341e494697d8f2eae42c187dee05e0ba85f597cfa7bdc1"
