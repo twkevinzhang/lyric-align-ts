@@ -23,7 +23,7 @@
 | `src/audio.ts`、`src/cues.ts`、`src/subtitles.ts` | PCM 準備、時間軸映射、SRT 解析與輸出 |
 | `src/worker.ts` | 正式 Worker 入口、正式引擎設定、訊息分派 |
 | `src/engine/` | WASM adapter、引導解碼、轉錄、注意力與邊界演算法 |
-| `src/core/` | 歌詞／token、時間縮放、評分與驗收工具 |
+| `src/core/` | 歌詞／token、時間縮放、評分與驗收工具；`refine.mjs` 為大偏差修補階段 |
 | `native/` | C++ bridge、SIMD kernels、CMake 與版本鎖定；另見 `native/README.md` |
 | `vendor/echogarden/` | 有本地修改的上游子集；來源說明在 `PROVENANCE.md` |
 | `scripts/` | 建置、來源與產物驗證、靜態伺服器、瀏覽器測試及基準分析 |
@@ -82,6 +82,7 @@ pnpm run test:package
 - 瀏覽器推論需要 HTTPS 或 localhost、Worker、WebAssembly、SharedArrayBuffer 與 cross-origin isolation。伺服器需提供 `Cross-Origin-Opener-Policy: same-origin` 及 `Cross-Origin-Embedder-Policy: require-corp`；參考 `scripts/static-server.mjs`。
 - `src/worker.ts` 必須維持 classic Worker／IIFE 建置，因 Emscripten 載入使用 `importScripts()`。公開入口維持 browser ESM，避免 Node API 或開發機路徑進入發布 bundle。
 - 正式引擎設定以 `src/worker.ts` 傳入值與 `BrowserEngine` 預設值合併後為準。不要只看 engine constructor 或上游來源說明就推斷正式參數；`__ALIGN_EXPERIMENT__` 是 benchmark bundler 的實驗覆寫點。逐 token 進入證據（entry）是無條件的正式路徑，不再有旗標：在 17 首日文歌中修復了 Koi wo Shita no wa、Freesia 等整首偏移，但 Survivor、Sora ni Utaeba 仍有後段偏移，個別歌曲（Curtain Call）略有退步。已用 17 首歌逐詞比對確認，移除未使用的實驗旋鈕（no-speech 探針、attention 背景扣除、mean prefix evidence、head consensus、拍數時長先驗、sentence commit、intro 邊界等）前後輸出完全相同；`lyricPauses` 與 `posteriorBoundaries:'ends'` 經移除實驗確認有效，需保留。native 的 alignment-only 模式（`_poc_set_alignment_only`）已移除：它只在 vocab subset 大小為 1 時生效，引導解碼從未滿足，開關對輸出與速度皆無差異，且與 entry 所需的 logits 不相容。
+- 大偏差修補（`src/core/refine.mjs`，由 `src/index.ts` 的 `align()` 在第一輪整首對齊後執行）是正式路徑，沒有關閉開關：僅對 `language === 'ja'` 啟用（門檻以日文校準，其他語言維持單輪）。流程：用輸出本身的特徵標記可疑行（每 token 均長 <0.1 秒、單一 token >3 秒、每字時長偏離全曲中位數 >e¹）→ 可疑行超過 25% 則整首跳過 → 每段可疑行以前後各一行為錨點，切出原始音訊片段重跑 worker → 錨點位置與原結果差在 0.5 秒內、內部行皆匹配、且匹配行數不減少才採用；最多向外擴展一行再試。修補前會 `slice()` 一份原始 PCM（第一輪會轉移並 detach 傳入的 buffer）。`metrics` 新增 `refinementSeconds`、`refinedLines`。常數與依據見 `REFINE`：17 首日文歌交叉驗證加春泥棒、SUNEO-ISM 留出測試，起頭誤差 ≤1 秒 516→531／587 與 105→107／181，無改壞，額外對齊時間約 +9%；SUNEO-ISM 整首漂移（被標記行 >25%）會被跳過，修補不解決整首失敗。
 - 音訊輸入為 16 kHz 單聲道、有限數值的 Float32 PCM。直接 API 使用 `samples`，session contract 使用 `pcm`；不要混淆兩種輸入型別，也不要意外轉移並 detach 呼叫端的 buffer。
 - 公開時間單位為秒；注意原曲時間、虛擬音訊時間與 attention frame 的轉換，避免重複縮放。
 - 同一 aligner／session 不接受並行作業。保留 abort、busy、Worker 錯誤傳遞與冪等 dispose 行為；取消後不得意外復活已終止實例。進度 observer 拋錯不應破壞推論。

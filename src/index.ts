@@ -1,5 +1,6 @@
 import { prepareAudio } from './audio.ts';
 import { timelineToCues, toSrt } from './cues.ts';
+import { refineTimeline } from './core/refine.mjs';
 import type { Aligner, AlignerOptions, AlignmentMetrics, AlignmentResult, Progress, TimelineEntry, Cue } from './types.ts';
 export { timelineToCues, toSrt } from './cues.ts';
 export { parseSrt } from './subtitles.ts';
@@ -78,13 +79,31 @@ export async function createAligner(options: AlignerOptions = {}): Promise<Align
         const audioPreparationSeconds = (performance.now() - operationStart) / 1000;
         if (disposed || input.signal?.aborted) throw abortError();
         const audioSeconds = samples.length / 16000;
+        // The first pass transfers `samples` to the Worker; refinement re-aligns slices of this copy.
+        const original = input.language === 'ja' ? samples.slice() : undefined;
         const result = await request<{ words: TimelineEntry[]; metrics: AlignmentMetrics; cues?: Cue[] }>({ type: 'align', audio: samples, lyrics: lines.join('\n'), language: input.language }, input.onProgress, [samples.buffer]);
         const cueStart = performance.now();
-        const cues = result.cues ?? timelineToCues(lines, result.words, audioSeconds);
+        let words = result.words, cues = result.cues ?? timelineToCues(lines, words, audioSeconds);
+        let refinementSeconds = 0, refinedLines = 0;
+        if (original) {
+          // Calibrated on Japanese only; other languages keep the single pass.
+          const refineStart = performance.now();
+          const refined = await refineTimeline({
+            lines, words, audioSeconds,
+            onStep: (completed: number, total: number) => { try { input.onProgress?.({ stage: 'refine', completed, total }); } catch { /* Observer failures cannot corrupt inference. */ } },
+            alignClip: async (from: number, to: number, clipLines: string[]) => {
+              const clip = original.slice(Math.floor(from * 16000), Math.ceil(to * 16000));
+              try { return (await request<{ words: TimelineEntry[] }>({ type: 'align', audio: clip, lyrics: clipLines.join('\n'), language: input.language }, undefined, [clip.buffer])).words; }
+              catch (error) { if (disposed || input.signal?.aborted) throw error; return undefined; }
+            },
+          });
+          words = refined.words; cues = refined.cues; refinedLines = refined.refinedLines;
+          refinementSeconds = (performance.now() - refineStart) / 1000;
+        }
         const srt = toSrt(cues);
-        const cueMappingSeconds = (performance.now() - cueStart) / 1000;
+        const cueMappingSeconds = (performance.now() - cueStart) / 1000 - refinementSeconds;
         const operationSeconds = (performance.now() - operationStart) / 1000;
-        return { ...result, cues, srt, audioSeconds, metrics: { ...result.metrics, engineTotalSeconds: result.metrics.totalSeconds, initializationSeconds, audioPreparationSeconds, cueMappingSeconds, operationSeconds, totalSeconds: initializationSeconds + operationSeconds } };
+        return { ...result, words, cues, srt, audioSeconds, metrics: { ...result.metrics, engineTotalSeconds: result.metrics.totalSeconds, initializationSeconds, audioPreparationSeconds, cueMappingSeconds, refinementSeconds, refinedLines, operationSeconds, totalSeconds: initializationSeconds + operationSeconds } };
       } finally { busy = false; input.signal?.removeEventListener('abort', onAbort); }
     },
     dispose() { stop(); },
