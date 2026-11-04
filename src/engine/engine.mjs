@@ -12,6 +12,7 @@ import {attentionGapBounds} from './gap-alignment.mjs';
 import {introBoundaryFrame} from './attention-boundaries.mjs';
 import {noSpeechProbability} from './no-speech-probe.mjs';
 import {lyricPauseMask} from './lyric-pauses.mjs';
+import {tokenMoraWeights} from '../core/mora-weight.mjs';
 export function validatePcm(audio){if(!(audio instanceof Float32Array)||!audio.length)throw Error('PCM must be a nonempty Float32Array');for(const sample of audio)if(!Number.isFinite(sample))throw Error('PCM samples must be finite');}
 export class BrowserEngine{
   constructor(config={}){this.config={timeScale:3.25,batchSize:440,audioContext:960,guided:true,alignmentOnly:true,prepack:'group',attentionQuant:2,vectorActivations:true,attentionStride:4,attentionPositionPenalty:10,trimFinalContext:true,introBoundary:true,profile:false,...config};if((!Number.isFinite(this.config.timeScale)||this.config.timeScale<1||this.config.timeScale>4||!Number.isInteger(this.config.timeScale*4))||(!Number.isInteger(this.config.audioContext)||this.config.audioContext<32||this.config.audioContext>1500)||!Number.isInteger(this.config.batchSize)||this.config.batchSize<1||this.config.batchSize>440)throw Error('Invalid engine configuration');}
@@ -47,7 +48,7 @@ export class BrowserEngine{
     w.getTextStartTokens(language,'transcribe',true); // validates supported language before inference
     const profile=this.config.profile?{melMs:0,encoderMs:0,decodeMs:0,pathMs:0,windows:0,batches:0,tokens:0}:undefined;
     const alignStart=performance.now(),virtual=virtualAudio(audio,this.config.timeScale),originalContext=nativeContext(m,audio,virtual,this.progress,this.config.timeScale,profile,this.config.trimFinalContext?this.config.audioContext:undefined);
-    w.context=originalContext;let lyricTokens,consumed=0,workerPath,introStartFrame,prefixBounds,pauseMask,prefixAudit;
+    w.context=originalContext;let lyricTokens,consumed=0,workerPath,introStartFrame,prefixBounds,pauseMask,moraWeights,prefixAudit;
     w.getTokenTimelineFromAlignmentPath=async(...args)=>{
       const timeline=await Whisper.prototype.getTokenTimelineFromAlignmentPath.apply(w,args);
       if(introStartFrame!==undefined&&timeline.length){
@@ -86,8 +87,9 @@ export class BrowserEngine{
         // not once per frame. Stable log(sigmoid(logit(token)-logit(EOT))).
         const entryScores=this.config.tokenEvidence==='entry'?decoded.decodedTokenLogOdds.slice(count,count+n).map(x=>-Math.max(0,-x)-Math.log1p(Math.exp(-Math.abs(x)))):undefined;
         if((this.config.lyricPauses||this.config.sentenceCommit)&&pauseMask===undefined)pauseMask=lyricPauseMask(lyricTokens,t=>w.tokensToText(t),lyrics)??null;
+        if(this.config.durationStrength>0&&!moraWeights)moraWeights=tokenMoraWeights(lyricTokens,t=>w.tokensToText(t));
         prefixAudit=undefined;
-        prefixBounds=attentionGapBounds(decoded.decodedTokensCrossAttentionQKs.slice(count,count+n),frames,2,{openEnd:!isFinal,meanPrefixEvidence:this.config.meanPrefixEvidence,entryScores,removeBackground:this.config.removeAttentionBackground,geometricHeads:this.config.geometricHeads,blankAfter:this.config.lyricPauses?pauseMask?.slice(consumed,consumed+n):undefined,headConsensus:this.config.headConsensus,posterior:this.config.posteriorBoundaries,onPrefix:profile&&this.config.prefixAudit?audit=>{prefixAudit=audit;}:undefined});
+        prefixBounds=attentionGapBounds(decoded.decodedTokensCrossAttentionQKs.slice(count,count+n),frames,2,{openEnd:!isFinal,meanPrefixEvidence:this.config.meanPrefixEvidence,entryScores,removeBackground:this.config.removeAttentionBackground,geometricHeads:this.config.geometricHeads,blankAfter:this.config.lyricPauses?pauseMask?.slice(consumed,consumed+n):undefined,durationWeights:moraWeights?.slice(consumed,consumed+n),durationStrength:this.config.durationStrength,headConsensus:this.config.headConsensus,posterior:this.config.posteriorBoundaries,onPrefix:profile&&this.config.prefixAudit?audit=>{prefixAudit=audit;}:undefined});
         if(prefixBounds!==undefined)decoded.alignmentPath=prefixBounds.map((b,i)=>({source:i,dest:b.start}));
       }
       if(!decoded.alignmentPath)decoded.alignmentPath=await coarseAttentionPath(findPath,decoded.decodedTokensCrossAttentionQKs.slice(count),decoded.decodedTokens.slice(count),frames,this.config.attentionStride??1);

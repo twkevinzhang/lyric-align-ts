@@ -56,6 +56,68 @@ export function gapAlignment(scores,{openEnd=false,blankAfter,onPrefix,entryScor
  return bounds;
 }
 
+// Same token/blank topology as gapAlignment, but token dwell time d is charged
+// strength*ln(d/(rate*weight))^2 (semi-Markov), so a token cannot be squeezed
+// to one frame or stretched over a pause. A token still holding the last frame
+// of an open window may be truncated and is not charged. Returns undefined when
+// no path exists; callers keep the plain alignment.
+export function durationAlignment(scores,weights,{rate,strength,openEnd=false,blankAfter,entryScores}={}){
+ const tokens=scores.length,frames=scores[0]?.length??0,states=2*tokens+1;
+ if(!tokens||!frames||weights.length!==tokens||!(rate>0)||!(strength>0)||(!openEnd&&tokens>frames))return;
+ const cumulative=scores.map(row=>{const sums=new Float64Array(frames+1);for(let t=0;t<frames;t++)sums[t+1]=sums[t]+row[t];return sums;});
+ const value=new Float64Array((frames+1)*states).fill(-Infinity),start=new Int32Array((frames+1)*states),from=new Int32Array((frames+1)*states);
+ value[0]=0;
+ for(let b=1;b<=frames;b++){
+  value[b*states]=0;
+  for(let state=1;state<states;state++){
+   const at=b*states+state;
+   if(state%2===0){
+    if(blankAfter?.[state/2-1]===false)continue;
+    const stay=value[(b-1)*states+state],enter=value[(b-1)*states+state-1];
+    if(enter>stay){value[at]=enter;start[at]=b-1;from[at]=state-1;}
+    else if(stay>-Infinity){value[at]=stay;start[at]=start[(b-1)*states+state];from[at]=from[(b-1)*states+state];}
+    continue;
+   }
+   const token=(state-1)/2,entry=entryScores?.[token]??0,expected=Math.max(1,rate*weights[token]);
+   const longest=Math.min(b,Math.ceil(6*expected)+8);
+   let best=-Infinity,bestStart=0,bestFrom=0;
+   for(let d=1;d<=longest;d++){
+    const a=b-d;
+    let previous=value[a*states+state-1],source=state-1;
+    if(state>1&&value[a*states+state-2]>previous){previous=value[a*states+state-2];source=state-2;}
+    if(previous===-Infinity)continue;
+    const deviation=Math.log(d/expected);
+    const penalty=openEnd&&b===frames?0:strength*deviation*deviation;
+    const candidate=previous+entry+cumulative[token][b]-cumulative[token][a]-penalty;
+    if(candidate>best){best=candidate;bestStart=a;bestFrom=source;}
+   }
+   value[at]=best;start[at]=bestStart;from[at]=bestFrom;
+  }
+ }
+ const last=frames*states;
+ let state=openEnd?0:(value[last+states-1]>=value[last+states-2]?states-1:states-2);
+ if(openEnd){
+  for(let i=1;i<states;i++)if(value[last+i]>value[last+state]||(value[last+i]===value[last+state]&&i%2===0&&Math.ceil(i/2)===Math.ceil(state/2)))state=i;
+ }
+ if(!Number.isFinite(value[last+state]))return;
+ const bounds=Array.from({length:openEnd?Math.ceil(state/2):tokens},()=>({start:frames,end:0}));
+ let b=frames;
+ while(state>0){
+  const at=b*states+state,a=start[at];
+  if(state%2){const bound=bounds[(state-1)/2];bound.start=a;bound.end=b;}
+  state=from[at];b=a;
+ }
+ return bounds;
+}
+// Frames per weight unit, from an existing plain alignment.
+export function durationRate(bounds,weights,minimumTokens=3){
+ const rates=[];
+ for(let i=0;i<bounds.length;i++)if(weights[i]>=1&&bounds[i].end>bounds[i].start)rates.push((bounds[i].end-bounds[i].start)/weights[i]);
+ if(rates.length<minimumTokens)return;
+ rates.sort((a,b)=>a-b);
+ return Math.max(.5,rates[Math.floor((rates.length-1)/2)]);
+}
+
 // Evidence relative to uniform temporal attention and frame-wide common sinks.
 // Existing QKs only: no additional encoder or decoder inference.
 export function attentionGapBounds(qks,frames,stride=2,options={}){
@@ -95,6 +157,11 @@ export function attentionGapBounds(qks,frames,stride=2,options={}){
   return Math.abs(score)<1e-12?0:score;
  }));
  let bounds=gapAlignment(scores,options);
+ if(options.durationStrength>0&&options.durationWeights&&bounds?.length){
+  const weights=options.durationWeights.slice(0,bounds.length),rate=weights.length===bounds.length?durationRate(bounds,weights):undefined;
+  const refined=rate&&durationAlignment(scores.slice(0,bounds.length),weights,{...options,rate,strength:options.durationStrength});
+  if(refined?.length===bounds.length)bounds=refined;
+ }
  const allocation=bounds;
  if(options.posterior&&bounds?.length){
   const expected=posteriorBoundaries(scores.slice(0,bounds.length),options)?.map(b=>({start:Math.round(b.start),end:Math.round(b.end)}));

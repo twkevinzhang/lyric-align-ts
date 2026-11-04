@@ -58,3 +58,24 @@ test('open endpoint can consume no lyrics during an instrumental window',()=>{
 test('open endpoint prefers trailing blank over unsupported token duration on ties',()=>{
  assert.deepEqual(gapAlignment([Float32Array.of(-2,3,3,0,0,0),new Float32Array(6)],{openEnd:true}),[{start:1,end:3}]);
 });
+import {durationAlignment,durationRate} from '../../src/engine/gap-alignment.mjs';
+test('duration prior resolves an evidence tie toward proportional dwell',()=>{
+ const scores=[Float32Array.from([1,1,1,1,1,1,0,0]),Float32Array.from([0,0,0,1,1,1,1,1])];
+ assert.deepEqual(durationAlignment(scores,[1,1],{rate:4,strength:1}),[{start:0,end:4},{start:4,end:8}]);
+ assert.deepEqual(durationAlignment(scores,[3,1],{rate:2,strength:1}),[{start:0,end:6},{start:6,end:8}]);
+});
+test('duration prior does not charge a token truncated by an open window',()=>{
+ const scores=[Float32Array.from([-1,-1,-1,-1,-1,3,3,3,3,3])];
+ assert.deepEqual(durationAlignment(scores,[1],{rate:1,strength:100,openEnd:true}),[{start:5,end:10}]);
+ const closed=durationAlignment(scores,[1],{rate:1,strength:100});
+ assert.equal(closed[0].end-closed[0].start,1);
+});
+test('duration rate is the median frames per weight and needs enough tokens',()=>{
+ assert.equal(durationRate([{start:0,end:4},{start:4,end:10},{start:10,end:12}],[1,2,1]),3);
+ assert.equal(durationRate([{start:0,end:4}],[1]),undefined);
+});
+test('duration prior is inert without strength or weights',()=>{
+ const q={dimensions:[1,1,8],data:Float32Array.of(-4,-4,4,4,-4,-4,-4,-4)};
+ assert.deepEqual(attentionGapBounds([q],8,1,{openEnd:true,durationWeights:[2]}),attentionGapBounds([q],8,1,{openEnd:true}));
+ assert.deepEqual(attentionGapBounds([q],8,1,{openEnd:true,durationStrength:1}),attentionGapBounds([q],8,1,{openEnd:true}));
+});
