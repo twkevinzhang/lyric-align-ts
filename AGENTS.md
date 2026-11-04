@@ -81,7 +81,7 @@ pnpm run test:package
 
 - 瀏覽器推論需要 HTTPS 或 localhost、Worker、WebAssembly、SharedArrayBuffer 與 cross-origin isolation。伺服器需提供 `Cross-Origin-Opener-Policy: same-origin` 及 `Cross-Origin-Embedder-Policy: require-corp`；參考 `scripts/static-server.mjs`。
 - `src/worker.ts` 必須維持 classic Worker／IIFE 建置，因 Emscripten 載入使用 `importScripts()`。公開入口維持 browser ESM，避免 Node API 或開發機路徑進入發布 bundle。
-- 正式引擎設定以 `src/worker.ts` 傳入值與 `BrowserEngine` 預設值合併後為準。不要只看 engine constructor 或上游來源說明就推斷正式參數；`__ALIGN_EXPERIMENT__` 是 benchmark bundler 的實驗覆寫點。
+- 正式引擎設定以 `src/worker.ts` 傳入值與 `BrowserEngine` 預設值合併後為準。不要只看 engine constructor 或上游來源說明就推斷正式參數；`__ALIGN_EXPERIMENT__` 是 benchmark bundler 的實驗覆寫點。正式設定包含 `tokenEvidence:'entry'`（逐 token 進入證據，會停用 native 的 alignment-only 捷徑）：在 17 首日文歌中修復了 Koi wo Shita no wa、Freesia 等整首偏移，但 Survivor、Sora ni Utaeba 仍有後段偏移，個別歌曲（Curtain Call）略有退步。`durationStrength`（拍數時長先驗，`src/core/mora-weight.mjs` 與 `gap-alignment.mjs` 的 `durationAlignment`）是預設關閉的實驗選項；效果不一致，未納入正式設定。
 - 音訊輸入為 16 kHz 單聲道、有限數值的 Float32 PCM。直接 API 使用 `samples`，session contract 使用 `pcm`；不要混淆兩種輸入型別，也不要意外轉移並 detach 呼叫端的 buffer。
 - 公開時間單位為秒；注意原曲時間、虛擬音訊時間與 attention frame 的轉換，避免重複縮放。
 - 同一 aligner／session 不接受並行作業。保留 abort、busy、Worker 錯誤傳遞與冪等 dispose 行為；取消後不得意外復活已終止實例。進度 observer 拋錯不應破壞推論。
