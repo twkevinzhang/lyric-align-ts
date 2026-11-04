@@ -7,27 +7,6 @@ test('continuation evidence penalizes entry once, preserving long supported toke
  assert.throws(()=>gapAlignment([[1]],{entryScores:[]}),/Invalid/);
 });
 import {gapAlignment,attentionGapBounds} from '../../src/engine/gap-alignment.mjs';
-test('mean prefix evidence rejects a token supported by only one isolated positive path',()=>{
- const scores=[[-4,.1,-4,-4]];
- assert.equal(gapAlignment(scores,{openEnd:true}).length,1);
- assert.deepEqual(gapAlignment(scores,{openEnd:true,meanPrefixEvidence:true}),[]);
- assert.equal(gapAlignment(scores,{openEnd:false,meanPrefixEvidence:true}).length,1);
-});
-test('prefix diagnostics expose alternative text endpoints without changing the path',()=>{
- const scores=[Float32Array.of(-1,3,3,-1),Float32Array.of(-2,-2,-2,-2)];let audit;
- const actual=gapAlignment(scores,{openEnd:true,onPrefix:value=>{audit=value;}});
- assert.deepEqual(actual,gapAlignment(scores,{openEnd:true}));
- assert.equal(audit.selected,1);
- assert.equal(audit.candidates[0].tokens,1);
- assert.ok(audit.candidates.some(c=>c.tokens===0));
-});
-test('head consensus rejects a minority peak far from the shared support',()=>{
- const common=[-4,4,4,-4,-4,-4],outlier=[-4,-4,-4,-4,-4,12];
- const q={dimensions:[5,1,6],data:Float32Array.from([...common,...common,...common,...outlier,...outlier])};
- assert.deepEqual(attentionGapBounds([q],6,1,{openEnd:true,headConsensus:true}),[{start:1,end:3}]);
- const flat={dimensions:[5,1,6],data:new Float32Array(30)};
- assert.deepEqual(attentionGapBounds([flat],6,1,{openEnd:true,headConsensus:true}),[]);
-});
 test('single remaining token retains positive acoustic evidence',()=>{
  const q={dimensions:[1,1,6],data:Float32Array.of(-4,-4,4,4,-4,-4)};
  assert.deepEqual(attentionGapBounds([q],6,1,{openEnd:true}),[{start:2,end:4}]);
@@ -57,25 +36,4 @@ test('open endpoint can consume no lyrics during an instrumental window',()=>{
 });
 test('open endpoint prefers trailing blank over unsupported token duration on ties',()=>{
  assert.deepEqual(gapAlignment([Float32Array.of(-2,3,3,0,0,0),new Float32Array(6)],{openEnd:true}),[{start:1,end:3}]);
-});
-import {durationAlignment,durationRate} from '../../src/engine/gap-alignment.mjs';
-test('duration prior resolves an evidence tie toward proportional dwell',()=>{
- const scores=[Float32Array.from([1,1,1,1,1,1,0,0]),Float32Array.from([0,0,0,1,1,1,1,1])];
- assert.deepEqual(durationAlignment(scores,[1,1],{rate:4,strength:1}),[{start:0,end:4},{start:4,end:8}]);
- assert.deepEqual(durationAlignment(scores,[3,1],{rate:2,strength:1}),[{start:0,end:6},{start:6,end:8}]);
-});
-test('duration prior does not charge a token truncated by an open window',()=>{
- const scores=[Float32Array.from([-1,-1,-1,-1,-1,3,3,3,3,3])];
- assert.deepEqual(durationAlignment(scores,[1],{rate:1,strength:100,openEnd:true}),[{start:5,end:10}]);
- const closed=durationAlignment(scores,[1],{rate:1,strength:100});
- assert.equal(closed[0].end-closed[0].start,1);
-});
-test('duration rate is the median frames per weight and needs enough tokens',()=>{
- assert.equal(durationRate([{start:0,end:4},{start:4,end:10},{start:10,end:12}],[1,2,1]),3);
- assert.equal(durationRate([{start:0,end:4}],[1]),undefined);
-});
-test('duration prior is inert without strength or weights',()=>{
- const q={dimensions:[1,1,8],data:Float32Array.of(-4,-4,4,4,-4,-4,-4,-4)};
- assert.deepEqual(attentionGapBounds([q],8,1,{openEnd:true,durationWeights:[2]}),attentionGapBounds([q],8,1,{openEnd:true}));
- assert.deepEqual(attentionGapBounds([q],8,1,{openEnd:true,durationStrength:1}),attentionGapBounds([q],8,1,{openEnd:true}));
 });

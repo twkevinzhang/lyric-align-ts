@@ -4,7 +4,7 @@ import { alignSegments } from './engine/align-segments.ts';
 // Replaced only by the experimental benchmark bundler; absent in release builds.
 declare const __ALIGN_EXPERIMENT__: Record<string, unknown>;
 const engineConfig = typeof __ALIGN_EXPERIMENT__ === 'undefined'
-  ? {timeScale:1.5,audioContext:640,encoderBlocks:4,openPrefix:'joint',posteriorBoundaries:'ends',lyricPauses:true,tokenEvidence:'entry'}
+  ? {timeScale:1.5,audioContext:640,encoderBlocks:4,posteriorBoundaries:'ends',lyricPauses:true}
   : __ALIGN_EXPERIMENT__;
 const scope = self as unknown as DedicatedWorkerGlobalScope;
 let engine: BrowserEngine | undefined;

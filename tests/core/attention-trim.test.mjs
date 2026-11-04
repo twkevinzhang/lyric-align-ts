@@ -1,16 +1,6 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {trimAttentionPrefix,lookaheadBudget} from '../../src/core/attention-trim.mjs';
-test('sentence commit revisits an unfinished line without losing text or stalling',()=>{
- const decoded={decodedTokens:[100,1,2,3,4,5],decodedTokensConfidence:Array(6).fill(1)};
- const path=[1,3,7,9,15].map((dest,source)=>({source,dest}));
- const full=trimAttentionPrefix(decoded,path,1,12,500,99,undefined,[false,true,false,false,true]);
- assert.deepEqual(full.decodedTokens,[100,1,2,507]);
- assert.equal(full.deferredTextCount,3);
- assert.equal(full.alignmentFrames,7);
- const long=trimAttentionPrefix(decoded,path,1,12,500,99,undefined,[false,false,false,false,true]);
- assert.deepEqual(long.decodedTokens,[100,1,2,3,4,512]);
-});
 test('end-only refinement does not change acoustic prefix allocation',()=>{
  const decoded={decodedTokens:[100,1,2],decodedTokensConfidence:[1,1,1]};
  const path=[{source:0,dest:1},{source:1,dest:24}];

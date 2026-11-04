@@ -25,7 +25,6 @@ export async function transcribeAudio(engine, audio, language) {
       const result=Number.isInteger(scale)?m._poc_set_time_scale(scale):m._poc_set_time_scale_fraction?.(Math.round(scale*1000),1000);
       if(result!==0)throw Error('Could not restore native time scale');
     });
-    set('_poc_set_alignment_only',0,engine.config.alignmentOnly?1:0);
     set('_poc_set_audio_context',1500,engine.config.audioContext??1500);
     set('_poc_set_encoder_blocks',1,engine.config.encoderBlocks??1);
     set('_poc_set_attention_quant',0,engine.config.attentionQuant===true?2:engine.config.attentionQuant||0);
