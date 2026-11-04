@@ -6,7 +6,7 @@ import {gunzipSync} from 'node:zlib';
 import {chromium} from 'playwright';
 import {staticServer} from './static-server.mjs';
 const root=resolve(import.meta.dirname,'..'),out=resolve(root,'.local/package');await mkdir(out,{recursive:true});
-const cli=process.env.npm_execpath;if(!cli)throw Error('Run this check with npm run test:package or pnpm run test:package');
+const cli=process.env.npm_execpath;if(!cli)throw Error('Run this check with pnpm run test:package');
 execFileSync(process.execPath,[cli,'pack','--pack-destination',out],{cwd:root,stdio:'inherit'});
 const tgz=resolve(out,`lyric-align-ts-${JSON.parse(await readFile(resolve(root,'package.json'))).version}.tgz`);
 const tar=gunzipSync(await readFile(tgz)),files=[];

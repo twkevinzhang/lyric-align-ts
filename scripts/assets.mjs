@@ -11,7 +11,7 @@ export async function prepareAssets(){
  const native=resolve(root,process.env.NATIVE_BUILD_DIR??'.local/native/build');
  const proof=await verifyBuild(root,native);
  for(const file of ['parity.js','parity.wasm']){
-  try{await copyFile(join(native,file),join(target,file));}catch(e){throw Error(`Missing native build ${file}. Run npm run build:native first, or set NATIVE_BUILD_DIR to an existing verified build.`,{cause:e});}
+  try{await copyFile(join(native,file),join(target,file));}catch(e){throw Error(`Missing native build ${file}. Run pnpm run build:native first, or set NATIVE_BUILD_DIR to an existing verified build.`,{cause:e});}
  }
  const ranksPath=join(cache,'multilingual.tiktoken');let ranks;
  try{ranks=await readFile(ranksPath);}catch(e){if(e.code!=='ENOENT')throw e;const response=await fetch(ranksUrl);if(!response.ok)throw Error(`Tokenizer download HTTP ${response.status}`);const original=Buffer.from(await response.arrayBuffer());if(hash(original)!=='b34b360dbb493e781e479794586d661700670d65564001f23024971d1f2fa126')throw Error('Tokenizer source integrity mismatch');
