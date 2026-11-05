@@ -65,15 +65,14 @@ test('abort rejects unresolved OfflineAudioContext rendering',async()=>{
  const pending=a.align({audio,lyrics:'hello',language:'en',signal:controller.signal});await new Promise(r=>setTimeout(r,0));controller.abort();
  const outcome=await Promise.race([pending.then(()=> 'resolved',e=>e.name),new Promise(r=>setTimeout(()=>r('hung'),100))]);assert.equal(outcome,'AbortError');
 });
-test('Japanese alignment re-aligns a suspect run from a slice of the original audio; other languages do not',async()=>{
+for(const [language,lines] of [['ja',['あいうえ','かきくけ','さしすせ','たちつて','なにぬね','はひふへ','まみむめ','やゆよわ']],['en',['abcd','efgh','ijkl','mnop','qrst','uvwx','yzab','cdef']]])test(`${language==='ja'?'Japanese':'English'} alignment re-aligns a suspect run from a slice of the original audio`,async()=>{
  environment();
- const lines=['あいうえ','かきくけ','さしすせ','たちつて','なにぬね','はひふへ','まみむめ','やゆよわ'];
  const line=(text,start,length)=>[...text].map((c,i,all)=>({text:c,startTime:start+i*length/all.length,endTime:start+(i+1)*length/all.length,confidence:1,timeline:[{text:c,startTime:start+i*length/all.length,endTime:start+(i+1)*length/all.length}]}));
  const healthy=lines.flatMap((text,i)=>line(text,i*5,4.5));
  const squeezed=[...healthy.slice(0,12),...line(lines[3],24,.2),...line(lines[4],24.2,.2),...healthy.slice(20)];
  const sliceOf=(from,to)=>healthy.filter(w=>w.startTime>=from-.01&&w.endTime<=to+.01).map(w=>({...w,startTime:w.startTime-from,endTime:w.endTime-from,timeline:w.timeline.map(t=>({...t,startTime:t.startTime-from,endTime:t.endTime-from}))}));
  const a=await createAligner(),worker=FakeWorker.instances.at(-1),samples=new Float32Array(45*16000).map((_,i)=>i);
- const pending=a.align({audio:{samples,sampleRate:16000},lyrics:lines.join('\n'),language:'ja'});
+ const pending=a.align({audio:{samples,sampleRate:16000},lyrics:lines.join('\n'),language});
  await new Promise(r=>setTimeout(r,0));
  const first=worker.requests.at(-1);assert.equal(first.audio.length,45*16000);
  worker.reply(first.id,{words:squeezed,metrics:{alignmentSeconds:1,totalSeconds:1}});
@@ -86,10 +85,13 @@ test('Japanese alignment re-aligns a suspect run from a slice of the original au
  assert.ok(Math.abs(result.cues[3].start-15)<1e-6&&Math.abs(result.cues[4].start-20)<1e-6);
  assert.equal(result.metrics.refinedLines,2);assert.ok(result.metrics.refinementSeconds>=0);assert.equal(samples.length,45*16000);
  a.dispose();
- const e=await createAligner(),english=FakeWorker.instances.at(-1);
- const waiting=e.align({audio:{samples:new Float32Array(16000),sampleRate:16000},lyrics:'a',language:'en'});await new Promise(r=>setTimeout(r,0));
- english.reply(english.requests.at(-1).id,{words:[{text:'a',startTime:0,endTime:.5,confidence:1}],metrics:{alignmentSeconds:1,totalSeconds:1}});
- const plain=await waiting;assert.equal(english.requests.length,2);assert.equal(plain.metrics.refinedLines,0);e.dispose();
+});
+test('other languages keep the single pass',async()=>{
+ environment();
+ const e=await createAligner(),chinese=FakeWorker.instances.at(-1);
+ const waiting=e.align({audio:{samples:new Float32Array(16000),sampleRate:16000},lyrics:'a',language:'zh'});await new Promise(r=>setTimeout(r,0));
+ chinese.reply(chinese.requests.at(-1).id,{words:[{text:'a',startTime:0,endTime:.5,confidence:1}],metrics:{alignmentSeconds:1,totalSeconds:1}});
+ const plain=await waiting;assert.equal(chinese.requests.length,2);assert.equal(plain.metrics.refinedLines,0);e.dispose();
 });
 test('aborting during refinement terminates the worker and rejects with AbortError',async()=>{
  environment();

@@ -45,7 +45,7 @@ export interface AlignmentMetrics {
   audioPreparationSeconds: number;
   alignmentSeconds: number;
   cueMappingSeconds: number;
-  /** Time spent re-aligning suspect lines (Japanese only); 0 when nothing was flagged. */
+  /** Time spent re-aligning suspect lines (Japanese and English only); 0 when nothing was flagged. */
   refinementSeconds: number;
   refinedLines: number;
   operationSeconds: number;

@@ -80,13 +80,13 @@ export async function createAligner(options: AlignerOptions = {}): Promise<Align
         if (disposed || input.signal?.aborted) throw abortError();
         const audioSeconds = samples.length / 16000;
         // The first pass transfers `samples` to the Worker; refinement re-aligns slices of this copy.
-        const original = input.language === 'ja' ? samples.slice() : undefined;
+        const original = input.language === 'ja' || input.language === 'en' ? samples.slice() : undefined;
         const result = await request<{ words: TimelineEntry[]; metrics: AlignmentMetrics; cues?: Cue[] }>({ type: 'align', audio: samples, lyrics: lines.join('\n'), language: input.language }, input.onProgress, [samples.buffer]);
         const cueStart = performance.now();
         let words = result.words, cues = result.cues ?? timelineToCues(lines, words, audioSeconds);
         let refinementSeconds = 0, refinedLines = 0;
         if (original) {
-          // Calibrated on Japanese only; other languages keep the single pass.
+          // Calibrated on Japanese and checked on English; other languages keep the single pass.
           const refineStart = performance.now();
           const refined = await refineTimeline({
             lines, words, audioSeconds,
