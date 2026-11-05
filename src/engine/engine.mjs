@@ -43,7 +43,7 @@ export class BrowserEngine{
     w.getTextStartTokens(language,'transcribe',true); // validates supported language before inference
     const profile=this.config.profile?{melMs:0,encoderMs:0,decodeMs:0,pathMs:0,windows:0,batches:0,tokens:0}:undefined;
     const alignStart=performance.now(),virtual=virtualAudio(audio,this.config.timeScale),originalContext=nativeContext(m,audio,virtual,this.progress,this.config.timeScale,profile,this.config.trimFinalContext?this.config.audioContext:undefined);
-    w.context=originalContext;let lyricTokens,consumed=0,workerPath,prefixBounds,pauseMask;
+    w.context=originalContext;let lyricTokens,consumed=0,workerPath,prefixBounds,pauseMask;const rateHistory=[];
     w.getTokenTimelineFromAlignmentPath=async(...args)=>{
       const timeline=await Whisper.prototype.getTokenTimelineFromAlignmentPath.apply(w,args);
       if(prefixBounds){for(let i=0;i<prefixBounds.length&&i<timeline.length;i++){timeline[i].startTime=args[2]+prefixBounds[i].start*.02;timeline[i].endTime=Math.max(timeline[i].startTime,Math.min(args[3],args[2]+prefixBounds[i].end*.02));}prefixBounds=undefined;}
@@ -58,27 +58,53 @@ export class BrowserEngine{
             if(profile){profile.lyricTokens=lyricTokens.length;if(isFinal)profile.finalRemaining=remaining.length;}
       options={...options,maxTokensPerPart:lookaheadBudget(lyricTokens.length,virtual.length,duration,remaining.length,isFinal,Math.min(440,448-initialTokens.length),1.15)};
       subset(m,remaining,eot);
-      w.context=speculativeNativeContext(m,originalContext,remaining,eot,options.maxTokensPerPart,this.config.batchSize);
-      let decoded;try{decoded=await (isFinal?decodeAllKnownTokens:decodeKnownTokens)(originalContext,initialTokens,remaining,eot,options.maxTokensPerPart,this.config.batchSize,true);}finally{w.context=originalContext;}
-      const offset=originalContext.audioOffset,last=decoded.decodedTokens.at(-1),timestampStart=w.specialTokens.timestampTokensStart;
-      const end=!isFinal&&last>=timestampStart?offset+(last-timestampStart)*320:Math.min(offset+this.config.audioContext*320,virtual.length),frames=Math.floor((end-offset)/320),count=initialTokens.length;
-      decoded.alignmentFrames=frames;
-      if(profile)(profile.tokenEvidence??=[]).push({offsetSeconds:offset/16000*this.config.timeScale,consumed,logOdds:decoded.decodedTokenLogOdds.slice(count),tokens:decoded.decodedTokens.slice(count)});
-      {
+      const baseOffset=originalContext.audioOffset,windowSamples=Math.round(w.audioWindowSeconds*16000),timeScale=this.config.timeScale;
+      if(this.config.lyricPauses&&pauseMask===undefined)pauseMask=lyricPauseMask(lyricTokens,t=>w.tokensToText(t),lyrics)??null;
+      // One window: decode the known lyric tokens, bound each token, keep the acoustic prefix. A later start
+      // (shiftFrames) re-encodes the window and moves the result back onto the caller's window.
+      const attempt=async shiftFrames=>{
+        if(shiftFrames){const from=baseOffset+shiftFrames*320;await originalContext.encodeSamples(virtual.subarray(from,Math.min(virtual.length,from+windowSamples)));}
+        w.context=speculativeNativeContext(m,originalContext,remaining,eot,options.maxTokensPerPart,this.config.batchSize);
+        let decoded;try{decoded=await (isFinal?decodeAllKnownTokens:decodeKnownTokens)(originalContext,initialTokens,remaining,eot,options.maxTokensPerPart,this.config.batchSize,true);}finally{w.context=originalContext;}
+        const offset=originalContext.audioOffset,last=decoded.decodedTokens.at(-1),timestampStart=w.specialTokens.timestampTokensStart;
+        const end=!isFinal&&last>=timestampStart?offset+(last-timestampStart)*320:Math.min(offset+this.config.audioContext*320,virtual.length),frames=Math.floor((end-offset)/320),count=initialTokens.length;
+        decoded.alignmentFrames=frames;
+        const evidence={offsetSeconds:offset/16000*timeScale,consumed,logOdds:decoded.decodedTokenLogOdds.slice(count),tokens:decoded.decodedTokens.slice(count)};
         const n=decoded.decodedTokens.slice(count).filter(t=>t<eot).length;
         // Pairwise continuation probability is charged once per consumed token,
         // not once per frame. Stable log(sigmoid(logit(token)-logit(EOT))).
         const entryScores=decoded.decodedTokenLogOdds.slice(count,count+n).map(x=>-Math.max(0,-x)-Math.log1p(Math.exp(-Math.abs(x))));
-        if(this.config.lyricPauses&&pauseMask===undefined)pauseMask=lyricPauseMask(lyricTokens,t=>w.tokensToText(t),lyrics)??null;
-        prefixBounds=attentionGapBounds(decoded.decodedTokensCrossAttentionQKs.slice(count,count+n),frames,2,{openEnd:!isFinal,entryScores,blankAfter:this.config.lyricPauses?pauseMask?.slice(consumed,consumed+n):undefined,posterior:this.config.posteriorBoundaries});
-        if(prefixBounds!==undefined)decoded.alignmentPath=prefixBounds.map((b,i)=>({source:i,dest:b.start}));
+        let bounds=attentionGapBounds(decoded.decodedTokensCrossAttentionQKs.slice(count,count+n),frames,2,{openEnd:!isFinal,entryScores,blankAfter:this.config.lyricPauses?pauseMask?.slice(consumed,consumed+n):undefined,posterior:this.config.posteriorBoundaries});
+        if(bounds!==undefined)decoded.alignmentPath=bounds.map((b,i)=>({source:i,dest:b.start}));
+        if(!decoded.alignmentPath)decoded.alignmentPath=await coarseAttentionPath(findPath,decoded.decodedTokensCrossAttentionQKs.slice(count),decoded.decodedTokens.slice(count),frames,this.config.attentionStride??1);
+        if(!isFinal)decoded=trimAttentionPrefix(decoded,decoded.alignmentPath,count,frames-Math.round(this.config.audioContext/6),timestampStart,eot,bounds);
+        const kept=decoded.decodedTokens.slice(count).filter(t=>t<eot).length;
+        if(bounds)bounds=bounds.slice(0,kept);
+        if(shiftFrames){
+          decoded.decodedTokens[decoded.decodedTokens.length-1]+=shiftFrames;decoded.alignmentFrames+=shiftFrames;
+          decoded.alignmentPath=decoded.alignmentPath.map(point=>({...point,dest:point.dest+shiftFrames}));
+          if(bounds)bounds=bounds.map(b=>({...b,start:b.start+shiftFrames,end:b.end+shiftFrames,...(b.allocationEnd===undefined?{}:{allocationEnd:b.allocationEnd+shiftFrames})}));
+        }
+        return{decoded,bounds,evidence,kept,coreSeconds:decoded.alignmentFrames*.02*timeScale,score:kept?entryScores.slice(0,kept).reduce((x,y)=>x+y,0)/kept:-Infinity,offset};
+      };
+      let chosen=await attempt(0);
+      const retry=this.config.windowRetry;
+      if(retry&&!isFinal&&chosen.kept>0&&rateHistory.length>=retry.minHistory){
+        const sorted=[...rateHistory].sort((x,y)=>x-y),typical=sorted[sorted.length>>1],inBand=c=>{const r=c.kept/c.coreSeconds;return r>=retry.low*typical&&r<=retry.high*typical;};
+        // Only a window with both an unusual lyric rate and poor evidence is retried from a later start.
+        if(!inBand(chosen)&&chosen.score<retry.maxScore){
+          let best;
+          for(const shift of retry.shifts){const candidate=await attempt(shift);if(inBand(candidate)&&candidate.score>=chosen.score-retry.tolerance&&(!best||candidate.score>best.score))best=candidate;}
+          if(profile)profile.retries=[...(profile.retries??[]),{offsetSeconds:chosen.offset/16000*timeScale,adopted:Boolean(best)}];
+          if(best)chosen=best;
+        }
       }
-      if(!decoded.alignmentPath)decoded.alignmentPath=await coarseAttentionPath(findPath,decoded.decodedTokensCrossAttentionQKs.slice(count),decoded.decodedTokens.slice(count),frames,this.config.attentionStride??1);
-      if(!isFinal)decoded=trimAttentionPrefix(decoded,decoded.alignmentPath,count,frames-Math.round(this.config.audioContext/6),timestampStart,eot,prefixBounds);
-      if(prefixBounds){const n=decoded.decodedTokens.slice(count).filter(t=>t<eot).length;prefixBounds=prefixBounds.slice(0,n)}
-      workerPath={path:decoded.alignmentPath,frames:decoded.alignmentFrames,tokens:decoded.decodedTokens.slice(count)};
-      if(profile)(profile.parts??=[]).push({offsetSeconds:offset/16000*this.config.timeScale,remaining:remaining.length,budget:options.maxTokensPerPart,kept:decoded.decodedTokens.slice(count).filter(t=>t<eot).length,isFinal,coreSeconds:decoded.alignmentFrames*.02*this.config.timeScale});
-      consumed+=decoded.decodedTokens.slice(count).filter(t=>t<eot).length;decoded.decodedTokensCrossAttentionQKs=decoded.decodedTokens.map(()=>undefined);
+      let {decoded}=chosen;prefixBounds=chosen.bounds;
+      if(chosen.kept>0)rateHistory.push(chosen.kept/chosen.coreSeconds);
+      if(profile)(profile.tokenEvidence??=[]).push(chosen.evidence);
+      workerPath={path:decoded.alignmentPath,frames:decoded.alignmentFrames,tokens:decoded.decodedTokens.slice(initialTokens.length)};
+      if(profile)(profile.parts??=[]).push({offsetSeconds:chosen.offset/16000*timeScale,remaining:remaining.length,budget:options.maxTokensPerPart,kept:chosen.kept,isFinal,coreSeconds:chosen.coreSeconds});
+      consumed+=chosen.kept;decoded.decodedTokensCrossAttentionQKs=decoded.decodedTokens.map(()=>undefined);
       return decoded;
     };
     w.findAlignmentPathFromCrossAttentionQKs=async(qks,tokens,start,end)=>{if(!workerPath||start!==0||end!==workerPath.frames||JSON.stringify(tokens)!==JSON.stringify(workerPath.tokens))throw Error('Alignment boundary mismatch');const path=workerPath.path;workerPath=undefined;return path;};

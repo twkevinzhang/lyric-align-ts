@@ -4,7 +4,9 @@ import { alignSegments } from './engine/align-segments.ts';
 // Replaced only by the experimental benchmark bundler; absent in release builds.
 declare const __ALIGN_EXPERIMENT__: Record<string, unknown>;
 const engineConfig = typeof __ALIGN_EXPERIMENT__ === 'undefined'
-  ? {timeScale:1.5,audioContext:640,encoderBlocks:4,posteriorBoundaries:'ends',lyricPauses:true}
+  ? {timeScale:1.5,audioContext:640,encoderBlocks:4,posteriorBoundaries:'ends',lyricPauses:true,
+      // Retry a window whose lyric consumption rate is off and whose evidence is poor (mean pairwise p<.25) from a later start.
+      windowRetry:{shifts:[80,160],low:.65,high:1.5,minHistory:3,tolerance:0,maxScore:Math.log(.25)}}
   : __ALIGN_EXPERIMENT__;
 const scope = self as unknown as DedicatedWorkerGlobalScope;
 let engine: BrowserEngine | undefined;
