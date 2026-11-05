@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { Whisper } from '../../vendor/echogarden/Whisper.mjs';
+import { Whisper } from '../../src/engine/whisper.mjs';
 import { BrowserEngine, validatePcm } from '../../src/engine/engine.mjs';
 
 test('intermediate acoustic windows accept explicit validated sizes',()=>{

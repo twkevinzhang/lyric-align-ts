@@ -21,7 +21,7 @@ await mkdir(output,{recursive:true});
 const hash=b=>createHash('sha256').update(b).digest('hex');
 const hashes={};
 async function hashTree(path){for(const entry of await readdir(resolve(root,path),{withFileTypes:true})){const child=path+'/'+entry.name;if(entry.isDirectory())await hashTree(child);else hashes[child]=hash(await readFile(resolve(root,child)));}}
-for(const dir of ['src','native','scripts','vendor'])await hashTree(dir);
+for(const dir of ['src','native','scripts'])await hashTree(dir);
 for(const file of ['dist/index.js','dist/worker.js','dist/assets/parity.wasm','dist/assets/parity.js','.local/native/ggml-tiny-q5_1.bin','.local/native/source-timescale/src/whisper.cpp','.local/native/source-timescale/ggml/src/ggml-cpu/ggml-cpu.c','.local/native/source-timescale/ggml/src/ggml-cpu/vec.h','.local/native/source-timescale/ggml/src/ggml-cpu/vec.cpp'])hashes[file]=hash(await readFile(resolve(root,file)));
 const model=resolve(root,config.model??'.local/native/ggml-tiny-q5_1.bin');
 const inputHashes=[];

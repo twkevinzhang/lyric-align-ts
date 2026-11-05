@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {nativeContext} from '../../src/engine/native-context.mjs';
 import {virtualAudio} from '../../src/core/audio-time-scale.mjs';
-import {Whisper} from '../../vendor/echogarden/Whisper.mjs';
+import {Whisper} from '../../src/engine/whisper.mjs';
 test('fractional window boundaries preserve exact frame count after seconds conversion',()=>{
  const w=new Whisper();
  for(let i=0;i<12;i++)assert.equal(w.secondsRangeToFrameCount(i*6.24,(i+1)*6.24),312);

@@ -22,10 +22,9 @@
 | `src/binding.ts`、`src/contract.ts` | Session API、能力宣告、輸入驗證與結構化錯誤 |
 | `src/audio.ts`、`src/cues.ts`、`src/subtitles.ts` | PCM 準備、時間軸映射、SRT 解析與輸出 |
 | `src/worker.ts` | 正式 Worker 入口、正式引擎設定、訊息分派 |
-| `src/engine/` | WASM adapter、引導解碼、轉錄、注意力與邊界演算法 |
+| `src/engine/` | WASM adapter、引導解碼、轉錄、注意力與邊界演算法，含併入的 Echogarden Whisper 對齊程式 |
 | `src/core/` | 歌詞／token、時間縮放、評分與驗收工具；`refine.mjs` 為大偏差修補階段 |
 | `native/` | C++ bridge、SIMD kernels、CMake 與版本鎖定；另見 `native/README.md` |
-| `vendor/echogarden/` | 有本地修改的上游子集；來源說明在 `PROVENANCE.md` |
 | `scripts/` | 建置、來源與產物驗證、靜態伺服器、瀏覽器測試及基準分析 |
 | `tests/{core,api,engine,native}/` | Node 內建 test runner 測試 |
 | `examples/browser/index.html` | 純靜態瀏覽器範例 |
@@ -95,7 +94,7 @@ pnpm run test:package
 - 更動公開 API 時，同步檢查 root exports、`./binding` exports、型別、相關測試及 consumer package check。調整版本時確認 `package.json` 與 binding 的 `libraryVersion` 一致。
 - 更動 C++／JS bridge 時同步檢查 `_poc_*` ABI、native exports 與 `src/engine/native-context.mjs` 等呼叫端。
 - 上游依賴、模型與 tokenizer 使用固定版本及 SHA-256。修改時同步更新相關來源與驗證，勿繞過 `build-proof`、asset manifest 或 `prepack` 檢查。
-- 修改 vendor 前先閱讀 `vendor/echogarden/PROVENANCE.md`；保留授權與本地差異紀錄，需要時更新 `THIRD_PARTY_NOTICES.md`。
+- 已不再有 vendor 目錄：源自 Echogarden 3.4.0（MIT）的程式已併入 `src/engine/`（`whisper.mjs`、`dtw.mjs`、`vector-math.mjs`、`word-patterns.json`），不再從上游更新。保留檔頭的授權聲明；本地差異與來源雜湊記在 `THIRD_PARTY_NOTICES.md`，修改這些檔案時一併更新。
 - VAD 研究路線已退役；相關 runtime、Worker、離線分析與專用測試已移除，benchmark 不再建置或提供其資產。正式 Whisper／attention／DTW 對齊路徑維持不變。
 - 發布範圍由 `package.json` 的 `files` 與 `scripts/test-package.mjs` 驗證。模型權重、測試音訊、快取、研究用資產不得混入發布包。
 - `prepack` 只檢查既有產物，不會自動建置。來源變更後重新建置，以確保來源指紋、bundle、宣告檔與靜態資產一致。

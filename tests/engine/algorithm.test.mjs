@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {Whisper} from '../../vendor/echogarden/Whisper.mjs';
+import {Whisper} from '../../src/engine/whisper.mjs';
 import {splitToWords} from '../../src/engine/helpers.mjs';
 import {naturalJapaneseSpacing} from '../../src/core/lyrics.mjs';
 test('cross-attention DTW matches independently captured pinned upstream path',async()=>{const w=new Whisper();const qks=[0,1,2].map(t=>({dimensions:[2n,1n,12n],data:Float32Array.from({length:24},(_,i)=>-Math.abs(i%12-(t*4+1)))}));assert.deepEqual(await w.findAlignmentPathFromCrossAttentionQKs(qks,[10,11,12],0,12),Array.from({length:12},(_,dest)=>({source:dest<4?0:dest<7?1:2,dest})));});

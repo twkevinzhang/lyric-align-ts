@@ -39,6 +39,14 @@ The above copyright notice and this permission notice shall be included in all c
 THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 
+### Local changes (formerly vendor/echogarden/PROVENANCE.md)
+
+Source: Echogarden 3.4.0, https://github.com/echogarden-project/echogarden . Original WhisperSTT.js SHA256 6930b7301ec7253f73437471088994e6b60b21eb8a1e4f28156208a30d3ad9b3. The code now lives directly in this repository and is no longer refreshed from upstream: `src/engine/whisper.mjs` (WhisperSTT recognize, align, decodeTokens, token timeline and cross-attention path), `src/engine/dtw.mjs` (windowed DTW), `src/engine/vector-math.mjs` (only the VectorMath and MedianFilter functions the aligner calls), `src/engine/word-patterns.json`.
+
+Native context, filesystem tokenizer loading, language detection and mel conversion were removed; browser helpers in `src/engine/helpers.mjs` replace logging, segmentation, compression, deterministic top-1 sampling and yields. Unreachable definitions (mel filterbank tables, language-detection helpers, unused VectorMath functions) were deleted. Decoder ceiling is 448, matching the old generated Worker decoder. Japanese and Chinese word segmentation uses Intl.Segmenter with middle-dot compounds merged; arbitrary morphological boundaries are not claimed equivalent to Kuromoji. English and other non-CJK word patterns are precompiled from @echogarden/text-segmentation 0.8.1.
+
+Alignment changes are local: configurable audio window length, fractional frame conversion, guided teacher-forced batch decoding in the engine adapter, raw cross-attention frame aggregation and the joint gap-alignment boundaries. Timing behaviour is therefore not claimed equivalent to upstream.
+
 ## tiktoken 1.0.22
 
 JavaScript/WASM tokenizer implementation: https://github.com/dqbd/tiktoken (npm package tiktoken 1.0.22). The browser Worker bundles its lite/init implementation and the distribution includes its tiktoken_bg.wasm. This implementation is distinct from the Whisper vocabulary data below.

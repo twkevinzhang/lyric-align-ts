@@ -10,7 +10,7 @@ async function files(root,dir){
  return result;
 }
 async function source(root){
- const paths=[...await files(root,'src'),...await files(root,'vendor'),'package.json','scripts/build.mjs','scripts/assets.mjs','scripts/build-proof.mjs'];
+ const paths=[...await files(root,'src'),'package.json','scripts/build.mjs','scripts/assets.mjs','scripts/build-proof.mjs'];
  const digest=createHash('sha256');
  for(const path of paths)digest.update(path+'\0').update((await readFile(resolve(root,path),'utf8')).replaceAll('\r\n','\n')).update('\0');
  return digest.digest('hex');

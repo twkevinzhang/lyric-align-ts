@@ -1,4 +1,4 @@
-import {Whisper} from '../../vendor/echogarden/Whisper.mjs';
+import {Whisper} from './whisper.mjs';
 import {createTokenizer} from './tokenizer.mjs';
 import {nativeContext,subset,speculativeNativeContext} from './native-context.mjs';
 import {virtualAudio,scaleTimeline} from '../core/audio-time-scale.mjs';

@@ -1,3 +1,4 @@
+// Derived from Echogarden 3.4.0 (MIT; copyright Rotem Dan). Local changes and licence text: THIRD_PARTY_NOTICES.md.
 const logToStderr=()=>{};
 const log = logToStderr;
 export function alignDTWWindowed(sequence1, sequence2, costFunction, windowMaxLength, centerIndexes) {

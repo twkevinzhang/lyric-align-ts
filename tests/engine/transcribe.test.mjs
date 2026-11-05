@@ -1,7 +1,7 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {transcribeAudio} from '../../src/engine/transcribe.mjs';
-import {Whisper} from '../../vendor/echogarden/Whisper.mjs';
+import {Whisper} from '../../src/engine/whisper.mjs';
 
 test('ASR uses independent unrestricted recognition and restores native time scale',async()=>{
  const original=Whisper.prototype.recognize,scales=[],subsets=[];

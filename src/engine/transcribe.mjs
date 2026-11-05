@@ -1,4 +1,4 @@
-import {Whisper} from '../../vendor/echogarden/Whisper.mjs';
+import {Whisper} from './whisper.mjs';
 import {nativeContext} from './native-context.mjs';
 
 /** Independent ASR: no known-token filter, vocabulary subset, or forced lyrics. */
